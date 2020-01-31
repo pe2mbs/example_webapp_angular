@@ -1,0 +1,81 @@
+#
+#   tabsize:  2
+#   value columns: 33, 53, 73
+#
+linux:
+  source:
+    python:                     .
+    angular:                    frontend/src/app
+option:
+  overwrite:                    true
+application:                    solar
+objects:
+- name:                         cu
+  api:                          /api/cu
+  class:                        ControlUnit
+  menu:
+    caption:                    Control unit
+    icon:                       control
+    route:                      /cu
+  table:
+    name:                       CONTROL_UNIT
+    actions:
+    - name:                     new
+      type:                     screen
+      position:                 header
+      route:
+        class:                  ScreenControlUnitComponent
+        params:
+          mode:                 "'new'"
+    - name:                     edit
+      type:                     screen
+      position:                 row
+      route:
+        class:                  ScreenControlUnitComponent
+        params:
+          mode:                 "'edit'"
+          id:                   "'CU_IN'"
+          value:                record.CU_IN
+    - name:                     delete
+      type:                     dialog
+      position:                 cell
+    columns:
+    - name:                     CU_IN               INT                 AUTONUMBER  PRIMARY KEY
+    - name:                     CU_NAME             CHAR(50)
+      label:                    Name control unit
+      unique:                   true
+      ui:
+        type:                   textbox
+      listview:
+        index:                  0
+        width:                  45%
+    - name:                     CU_SERIAL_NO        CHAR(20)            NOT NULL
+      label:                    Serial numnber ID
+      unique:                   true
+      ui:
+        type:                   textbox
+      listview:
+        index:                  1
+        width:                  20%
+    - name:                     CU_CT_ID            INT                 FOREIGN KEY CONTROL_UNIT_TYPE.CT_ID
+      label:                    Control unit type
+      ui:
+        type:                   choice
+        service:
+          name:                 cut
+          class:                ControlUnitType
+          path:                 ../cut/service
+          label:                CT_NAME
+          value:                CT_ID
+      listview:
+        index:                  2
+        width:                  25%
+    - name:                     CU_GRID_SIZE_X      INT                 NOT NULL
+      label:                    Horizatal rows
+      ui:
+        type:                   number
+    - name:                     CU_GRID_SIZE_Y      INT                 NOT NULL
+      label:                    Vertical columns
+      ui:
+        type:                   number
+
