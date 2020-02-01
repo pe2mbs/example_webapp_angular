@@ -1,0 +1,1 @@
+from solar.main import registerApi
