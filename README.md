@@ -2,6 +2,9 @@
 
 This example project is to show how to use the webapp repository to provide the web server for an Angular frontend application.
 
+This example project is under MIT licence
+The webapp repository is under GPL2-only licence.
+
 See for more details the README.md in the webapp folder.
 
 ## Start

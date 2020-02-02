@@ -33,6 +33,13 @@ LOGGING_COMMON: &logging_common
             level: DEBUG
 
 COMMON: &common
+    USE_EXTENSIONS:
+        STOMP:                          false
+        CORS:                           false
+        BCRYPT:                         false
+        JWT:                            false
+        CACHE:                          true
+
     SECRET_KEY:                         insecure
     HOST:                               0.0.0.0
     PORT:                               8000
