@@ -62,11 +62,10 @@ def registerApi():
 
 @yourApi.route( "/api/menu", methods=[ 'GET' ] )
 def getUserMenu():
-    return jsonify( [ { "caption": "Dashboard",
-                        "icon": "dashboard" 
-                        "route": "/dashboard" },
-                      { "Your  
- ] )
+    return jsonify( [ { "caption":  "Dashboard",
+                        "icon":     "dashboard" 
+                        "route":    "/dashboard" }
+                    ] )
 
 
 @yourApi.route( "/api/application", methods=[ 'GET' ] )
