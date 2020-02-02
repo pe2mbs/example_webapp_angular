@@ -35,7 +35,6 @@ LOGGING_COMMON: &logging_common
 COMMON: &common
     USE_EXTENSIONS:
         STOMP:                          false
-        CORS:                           false
         BCRYPT:                         false
         JWT:                            false
         CACHE:                          true
