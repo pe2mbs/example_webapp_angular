@@ -16,7 +16,7 @@ LOGGING_COMMON: &logging_common
 
         logfile:
             class: logging.handlers.RotatingFileHandler
-            filename: solar-webapp.log
+            filename: webapp.log
             maxBytes: 10485760
             backupCount: 7
             formatter: default
@@ -38,7 +38,7 @@ COMMON: &common
     PORT:                               8000
     DEBUG:                              true
     TESTING:                            true
-    API_MODULE:                         solar
+    API_MODULE:                         your_api_module 
     LOGGING:
         <<: *logging_common
 
@@ -63,18 +63,20 @@ COMMON_PROD:    &common_prod
 
 DATABASE:   &database
     ENGINE:                             mysql+pymysql
-    USERNAME:                           testrunweb
-    PASSWORD:                           testrunweb
-    SCHEMA:                             TESTTOOL_DEV
-    HOST:                               sts20029
+    USERNAME:                           webapp
+    PASSWORD:                           webapp
+    SCHEMA:                             WEBAPP_DB
+    HOST:                               localhost
     PORT:                               3306
-
+#
+#	Actual environment configurations
+#
 DEVELOPMENT:    &development
     <<: *common
     ENV:                                dev
-    LOGGING_FOLDER:                     /home/mbertens/src/python/solar/log
-    APP_PATH:                           /home/mbertens/src/python/solar
-    ANGULAR_PATH:                       /home/mbertens/src/python/solar/frontend/dist/angular-app
+    LOGGING_FOLDER:                     {HOME}/src/python/example_webapp_angular/log
+    APP_PATH:                           {HOME}/src/python/example_webapp_angular
+    ANGULAR_PATH:                       {HOME}/src/python/example_webapp_angular/frontend/dist/angular-app
     DATABASE:
         <<: *database
 
@@ -84,9 +86,9 @@ STAGING:
     ENV:                                staging
     DEBUG:                              true
     TESTING:                            true
-    LOGGING_FOLDER:                     /var/log/solar/pilot
-    APP_PATH:                           /opt/pilot/solar
-    ANGULAR_PATH:                       /opt/pilot/solar/frontend/dist/angular-app
+    LOGGING_FOLDER:                     /var/log/example_webapp_angular/pilot
+    APP_PATH:                           /opt/pilot/example_webapp_angular
+    ANGULAR_PATH:                       /opt/pilot/example_webapp_angular/frontend/dist/angular-app
     DATABASE:
         <<: *database
 
@@ -94,16 +96,16 @@ PRODUCTION:
     <<: *common_prod
     SECRET_KEY:                         shouldbereallysecureatsomepoint
     ENV:                                prod
-    LOGGING_FOLDER:                     /var/log/solar/prod
-    APP_PATH:                           /opt/prodution/solar
-    ANGULAR_PATH:                       /opt/prodution/solar/frontend/dist/angular-app
+    LOGGING_FOLDER:                     /var/log/example_webapp_angular/prod
+    APP_PATH:                           /opt/example_webapp_angular/solar
+    ANGULAR_PATH:                       /opt/example_webapp_angular/solar/frontend/dist/angular-app
     DATABASE:
         <<: *database
         SCHEMA:                         SOLAR
 
 COMMON_TASKS:
     webapp:
-        LOGGING.handlers.logfile.filename: solar-webapp.log
+        LOGGING.handlers.logfile.filename: webapp.log
     task1:
         LOGGING.handlers.logfile.filename: task1.log
         DATABASE:
