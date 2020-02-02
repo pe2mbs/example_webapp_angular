@@ -1,5 +1,0 @@
-
-
-
-def registerApi():
-    return
