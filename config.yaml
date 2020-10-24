@@ -44,7 +44,7 @@ COMMON: &common
     PORT:                               8000
     DEBUG:                              true
     TESTING:                            true
-    API_MODULE:                         your_api_module 
+    API_MODULE:                         backend
     LOGGING:
         <<: *logging_common
 
@@ -74,15 +74,13 @@ DATABASE:   &database
     SCHEMA:                             WEBAPP_DB
     HOST:                               localhost
     PORT:                               3306
-#
-#	Actual environment configurations
-#
+
 DEVELOPMENT:    &development
     <<: *common
     ENV:                                dev
-    LOGGING_FOLDER:                     {HOME}/src/python/example_webapp_angular/log
-    APP_PATH:                           {HOME}/src/python/example_webapp_angular
-    ANGULAR_PATH:                       {HOME}/src/python/example_webapp_angular/frontend/dist/angular-app
+    LOGGING_FOLDER:                     log
+    APP_PATH:                           .
+    ANGULAR_PATH:                       frontend/dist/angular-app
     DATABASE:
         <<: *database
 
