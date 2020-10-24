@@ -1,0 +1,3 @@
+[submodule "webapp2"]
+	path = webapp2
+	url = https://github.com/pe2mbs/webapp2.git
