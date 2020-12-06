@@ -1,0 +1,47 @@
+<mat-card>
+    <mat-card-content>
+        <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_user.form">
+            <pyt-checkbox-input-box id="U_ACTIVE.U_ACTIVE" placeholder="Active user" error="true" labelPosition="after" formControlName="U_ACTIVE"></pyt-checkbox-input-box>
+            <pyt-text-input-box id="U_NAME.U_NAME" placeholder="Username" error="true" formControlName="U_NAME"></pyt-text-input-box>
+			<mat-tab-group class="mat-tab-group-screen">
+                <mat-tab label="General" id="gn_user.tab.general">
+                    <mat-card class="mat-tab">
+                        <pyt-choice-input-box id="U_ROLE.U_ROLE" placeholder="User role" error="true" [items]="gn_roleList" formControlName="U_ROLE"></pyt-choice-input-box>
+                        <pyt-text-input-box id="U_EMAIL.U_EMAIL" placeholder="E-Mail address" error="true" formControlName="U_EMAIL"></pyt-text-input-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Password" id="gn_user.tab.password">
+
+                    <mat-card class="mat-tab">
+                        <pyt-password-input-box id="U_HASH_PASSWORD.U_HASH_PASSWORD" placeholder="Password" error="true" formControlName="U_HASH_PASSWORD"></pyt-password-input-box>
+                        <pyt-checkbox-input-box id="U_MUST_CHANGE.U_MUST_CHANGE" placeholder="Must change password" error="true" labelPosition="after" formControlName="U_MUST_CHANGE"></pyt-checkbox-input-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Personal" id="gn_user.tab.personal">
+
+                    <mat-card class="mat-tab">
+                        <pyt-text-input-box id="U_FIRST_NAME.U_FIRST_NAME" placeholder="First name" error="true" formControlName="U_FIRST_NAME"></pyt-text-input-box>
+                        <pyt-text-input-box id="U_MIDDLE_NAME.U_MIDDLE_NAME" placeholder="Middle name" error="true" formControlName="U_MIDDLE_NAME"></pyt-text-input-box>
+                        <pyt-text-input-box id="U_LAST_NAME.U_LAST_NAME" placeholder="Last name" error="true" formControlName="U_LAST_NAME"></pyt-text-input-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Remark" id="gn_user.tab.remark">
+                    <mat-card class="mat-tab">
+						<pyt-monaco-editor-box id="U_REMARK.U_REMARK" placeholder="Remark" language="markdown" height="auto" [minimap]="true" [heightAdjust]="-120" error="true" formControlName="U_REMARK"></pyt-monaco-editor-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Profile" id="gn_user.tab.profile">
+
+                    <mat-card class="mat-tab">
+                        <pyt-choice-input-box id="U_LOCALE.U_LOCALE" placeholder="Locale" error="true" [items]="U_LOCALEList" formControlName="U_LOCALE"></pyt-choice-input-box>
+                        <pyt-choice-input-box id="U_LISTITEMS.U_LISTITEMS" placeholder="Default view items" error="true" [items]="U_LISTITEMSList" formControlName="U_LISTITEMS"></pyt-choice-input-box>
+                    </mat-card>
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button id="gn_user.submit" [disabled]="!formGroup.valid" (click)="onSaveClick()">Save</button>
+        <button mat-button (click)="onCancelClick()" id="gn_user.cancel" tabindex="-1">Cancel</button>
+    </mat-card-actions>
+</mat-card>

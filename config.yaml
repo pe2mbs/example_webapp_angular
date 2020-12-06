@@ -68,19 +68,22 @@ COMMON_PROD:    &common_prod
     TESTING:                            false
 
 DATABASE:   &database
-    ENGINE:                             mysql+pymysql
-    USERNAME:                           webapp
-    PASSWORD:                           webapp
-    SCHEMA:                             WEBAPP_DB
-    HOST:                               localhost
-    PORT:                               3306
+    ENGINE:                             sqlite
+    FILENAME:                           database.db
+    SCHEMA:                             TEST
+#    ENGINE:                             mysql+pymysql
+#    USERNAME:                           webapp
+#    PASSWORD:                           webapp
+#    SCHEMA:                             WEBAPP_DB
+#    HOST:                               localhost
+#    PORT:                               3306
 
 DEVELOPMENT:    &development
     <<: *common
     ENV:                                dev
     LOGGING_FOLDER:                     log
     APP_PATH:                           .
-    ANGULAR_PATH:                       frontend/dist/angular-app
+    ANGULAR_PATH:                       dashboard/dist/dashboard
     DATABASE:
         <<: *database
 
@@ -105,7 +108,6 @@ PRODUCTION:
     ANGULAR_PATH:                       /opt/example_webapp_angular/solar/frontend/dist/angular-app
     DATABASE:
         <<: *database
-        SCHEMA:                         SOLAR
 
 COMMON_TASKS:
     webapp:

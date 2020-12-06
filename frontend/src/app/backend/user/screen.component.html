@@ -1,0 +1,42 @@
+<mat-card>
+    <mat-card-content>
+        <form class="" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="user.form">
+            <pyt-datetime-input-box id="D_LAST_CHANGED.D_LAST_CHANGED" placeholder="Last changed" error="true" format="text" formControlName="D_LAST_CHANGED"></pyt-datetime-input-box>
+            <mat-tab-group class="mat-tab-group-screen">
+                <mat-tab label="General" id="user.tab.general">
+
+                    <mat-card>
+                        <pyt-slidertoggle-input-box id="D_ENABLED.D_ENABLED" placeholder="Active" error="true" color="primary" formControlName="D_ENABLED"></pyt-slidertoggle-input-box>
+                        <pyt-text-input-box id="D_USER_NAME.D_USER_NAME" placeholder="User name" hint="Enter a unique username" error="true" formControlName="D_USER_NAME"></pyt-text-input-box>
+                        <pyt-password-input-box id="D_PASSWORD.D_PASSWORD" placeholder="Password" hint="Enter a password of at least 8 characters, digits and punctations" error="true" formControlName="D_PASSWORD"></pyt-password-input-box>
+                        <pyt-choice-input-box id="D_ROLE_ID.D_ROLE_ID" placeholder="Role" hint="The Role within the team" error="true" [items]="roleList" formControlName="D_ROLE_ID"></pyt-choice-input-box>
+                        <pyt-slider-input-box id="D_SLIDER.D_SLIDER" placeholder="Slider" hint="Set the value of something" error="true" min="0" max="100" interval="1" vertical="false" invert="false" step="1" thumbLabel="true" labelPosition="after" formControlName="D_SLIDER"></pyt-slider-input-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Personal" id="user.tab.personal">
+
+                    <mat-card>
+                        <pyt-text-input-box id="D_FIRST_NAME.D_FIRST_NAME" placeholder="First name" hint="Enter the persons given name (also known as a first name, forename)" error="false" formControlName="D_FIRST_NAME"></pyt-text-input-box>
+                        <pyt-text-input-box id="D_MIDDLE_NAME.D_MIDDLE_NAME" placeholder="Middle name" hint="Enter the persons middle name(s)" error="true" formControlName="D_MIDDLE_NAME"></pyt-text-input-box>
+                        <pyt-text-input-box id="D_LAST_NAME.D_LAST_NAME" placeholder="Last name" hint="Enter the persons surname (also known as a family name)" error="true" formControlName="D_LAST_NAME"></pyt-text-input-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Remark" id="user.tab.remark">
+
+                    <mat-card>
+                        <pyt-textarea-input-box id="D_ROLE_COMMENT.D_ROLE_COMMENT" placeholder="Comment" hint="Free text area" error="true" rows="4" cols="80" formControlName="D_ROLE_COMMENT"></pyt-textarea-input-box>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Roles" id="user.tab.roles">
+
+                    <app-role-table >
+                    </app-role-table>
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button id="user.submit" [disabled]="!formGroup.valid" (click)="onSaveClick()">Save</button>
+        <button mat-button (click)="onCancelClick()" id="user.cancel" tabindex="-1">Cancel</button>
+    </mat-card-actions>
+</mat-card>

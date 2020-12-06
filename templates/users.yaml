@@ -1,0 +1,221 @@
+linux:
+    source:
+        base:                       /home/mbertens/src/python/example_webapp_angular
+        python:                     .
+        angular:                    dashboard/src/app
+application:                        backend
+options:
+    ignore-case-db-ids:             true
+    overwrite:                      true
+    use-module:                     true
+references:
+    app-module:
+        filename:                   app.module.ts
+        class:                      AppModule
+        module:                     app.module.ts
+    app-routing:
+        filename:                   app.routingmodule.ts
+        class:                      AppRoutingModule
+        module:                     app.routingmodule.ts
+objects:
+-   name:                           gn_user
+    title:                          Users
+    remark:                         This is the Users maintenance screen
+    class:                          User
+    uri:                            /api/gn_user
+    menu:
+        caption:                    Administration
+        icon:                       settings
+        index:                      -2
+        menu:
+            caption:                Users
+            icon:                   accessibility
+            route:                  /gn_user
+            index:                  1
+    actions:
+    -   name:                       new
+        label:                      New
+        type:                       screen
+        icon:                       add
+        position:                   header
+        route:
+            class:                  ScreenUserComponent
+            params:
+                id:                 0
+                mode:               "'add'"
+    -   name:                       edit
+        label:                      Edit
+        type:                       screen
+        icon:                       edit
+        position:                   row
+        route:
+            class:                  ScreenUserComponent
+            params:
+                id:                 "'U_ID'"
+                mode:               "'edit'"
+                value:              row.U_ID
+    -   name:                       delete
+        label:                      Delete
+        type:                       dialog
+        icon:                       delete
+        position:                   cell
+        function:                   deleteRecord( i, row, 'U_NAME' )
+    table:
+        name:                       GN_USER
+        tabs:
+            labels:
+            -   General
+            -   Password
+            -   Personal
+            -   Remark
+            -   Profile
+        columns:
+        -   field:                  U_ID                        INT             AUTO NUMBER  PRIMARY KEY
+            ui:
+                type:               label
+        -   field:                  U_ACTIVE                    BOOLEAN         DEFAULT 0
+            label:                  Active user
+            hint:                   When a user is set active (checked) login is posible, otherwise login is not possible.
+            ui:
+                type:               checkbox
+                resolve-list:
+                    true:           'Yes'
+                    false:          'No'
+            listview:
+                width:              5%
+                index:              0
+        -   field:                  U_NAME                      CHAR( 30 )      NOT NULL
+            unique:                 true
+            hint:                   The user name used to identify at login to the application.
+            label:                  Username
+            ui:
+                type:               textbox
+            listview:
+                width:              10%
+                index:              1
+        -   field:                  U_ROLE                      INT             FOREIGN KEY GN_ROLE.R_ID
+            label:                  User role
+            hint:                   The user role in the application
+            ui:
+                type:               choice
+                service:
+                    name:           gn_role
+                    class:          Role
+                    value:          R_ID
+                    label:          R_ROLE
+            listview:
+                width:              15%
+                index:              2
+            tab:
+                label:              General
+                index:              0
+        -   field:                  U_HASH_PASSWORD             CHAR( 255 )     NOT NULL
+            remark:                 This is the encrypted password for verification on login.
+            label:                  Password
+            ui:
+                type:               password
+            tab:
+                label:              Password
+                index:              0
+        -   field:                  U_MUST_CHANGE               BOOLEAN         DEFAULT 1
+            hint:                   When checked the user must change his password after next login.
+            label:                  Must change password
+            ui:
+                type:               checkbox
+            tab:
+                label:              Password
+                index:              1
+        -   field:                  U_FIRST_NAME                CHAR( 50 )      NOT NULL
+            hint:                   The user's name
+            label:                  First name
+            ui:
+                type:               textbox
+            listview:
+                width:              15%
+                index:              3
+            tab:
+                label:              Personal
+                index:              0
+        -   field:                  U_MIDDLE_NAME               CHAR( 50 )      NULL
+            hint:                   The user's additional names
+            label:                  Middle name
+            ui:
+                type:               textbox
+            tab:
+                label:              Personal
+                index:              1
+        -   field:                  U_LAST_NAME                 CHAR( 50 )      NOT NULL
+            hint:                   The user's surname
+            label:                  Last name
+            ui:
+                type:               textbox
+            listview:
+                width:              15%
+                index:              4
+            tab:
+                label:              Personal
+                index:              2
+        -   field:                  U_EMAIL                     CHAR( 100 )      NOT NULL
+            hint:                   The user's E-mail address used to send information messages.
+            label:                  E-Mail address
+            ui:
+                type:               textbox
+            listview:
+                width:              25%
+                index:              3
+            tab:
+                label:              General
+                index:              3
+        -   field:                  U_ACCESS_TOKEN              CHAR( 512 )     NULL
+            remark:                 This is used for the token handling, therefore not shown in the UI
+        -   field:                  U_REFRESH_TOKEN             CHAR( 512 )     NULL
+            remark:                 This is used for the token handling, therefore not shown in the UI
+        -   field:                  U_TOKEN_DT                  TIMESTAMP       NULL
+            remark:                 This is used for the token handling, therefore not shown in the UI
+        -   field:                  U_CREATE_DT                 TIMESTAMP       NULL
+            remark:                 This is used for the token handling, therefore not shown in the UI
+        -   field:                  U_MOD                       TIMESTAMP       NOT NULL
+            remark:                 This is used for tracing changes, therefore not shown in the UI
+            default:                getCurrentUtcDateTime()
+            autoupdate:             getCurrentUtcDateTime()
+        -   field:                  U_MOD_USER                  CHAR( 30 )      NOT NULL
+            remark:                 This is used for tracing changes, therefore not shown in the UI
+            default:                getCurrentUser()
+            autoupdate:             getCurrentUser()
+
+        -   field:                  U_REMARK                    CLOB            NULL
+            label:                  Remark
+            hint:                   Miscellaneous information not related.
+            ui:
+                type:               editor
+                attributes:
+                    language:       markdown
+                    height:         auto
+                    minimap:        ^true
+                    heightAdjust:   ^-120
+            tab:
+                label:              Remark
+                index:              0
+        -   field:                  U_LOCALE                    INT
+            hint:                   The users locale (country and timezone).
+            label:                  Locale
+            ui:
+                type:               choice
+                resolve-list:
+                    1:              nl_NL
+            tab:
+                label:              Profile
+                index:              0
+        -   field:                  U_LISTITEMS                 INT             DEFAULT 10
+            label:                  Default view items
+            hint:                   The default number of items shown in the data views
+            ui:
+                type:               choice
+                resolve-list:
+                    5:              5 Records
+                    10:             10 Records
+                    25:             25 Records
+                    100:            100 Records
+            tab:
+                label:              Profile
+                index:              1

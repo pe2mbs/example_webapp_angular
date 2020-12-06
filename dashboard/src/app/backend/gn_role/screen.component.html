@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-content>
+        <form class="" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_role.form">
+            <pyt-text-input-box id="R_ROLE.R_ROLE" placeholder="Description" error="true" formControlName="R_ROLE"></pyt-text-input-box>
+            <pyt-monaco-editor-box id="R_REMARK.R_REMARK" placeholder="Remark" language="markdown" height="auto" [minimap]="true" [heightAdjust]="-120" error="true" formControlName="R_REMARK"></pyt-monaco-editor-box>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button id="gn_role.submit" [disabled]="!formGroup.valid" (click)="onSaveClick()">Save</button>
+        <button mat-button (click)="onCancelClick()" id="gn_role.cancel" tabindex="-1">Cancel</button>
+    </mat-card-actions>
+</mat-card>

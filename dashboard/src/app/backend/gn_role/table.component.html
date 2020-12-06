@@ -1,0 +1,75 @@
+<mat-card id="gn_role">
+    <mat-card-content>
+        <div class="navigator-row form">
+            <mat-form-field floatPlaceholder="never" color="accent">
+                <input matInput #filter placeholder="Filter Roles" [value]="dataSource.filter" id="gn_role.filter">
+            </mat-form-field>
+            <span class="spacer-search"></span>
+                <span class="spacer"></span><a   mat-icon-button matTooltip = "New" color="primary" (click)="router.navigate( ['/gn_role/new'], { queryParams: { id: 0, mode: 'add' } } )" id="gn_role.new" angular_route="true"><mat-icon aria-label="New">add</mat-icon></a>
+            <span class="spacer-search"></span>
+            <span id="gn_role.header.paginator">
+                <mat-paginator #top_paginator [length]="dataSource.filteredData.length" (page)="pagingEvent( $event )"
+                       [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
+            </span>
+            <span>
+                <button mat-icon-button color="primary" (click)="refresh()" id="gn_role.header.refresh">
+                    <mat-icon aria-label="Refresh the view">refresh</mat-icon>
+                </button>
+            </span>
+        </div>
+        <mat-table id="gn_role.table" #tableRole [dataSource]="dataSource" matSort class="mat-cell" >
+            <!-- R_ROLE Column -->
+            <ng-container matColumnDef="R_ROLE" class="column_R_ROLE">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Description
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row; let i=index;" id="Role.R_ROLE" matTooltip="ID: {{ row.R_ROLE }}"
+                          (dblclick)="router.navigate( ['/gn_role/edit'], { queryParams: { id: 'R_ID', mode: 'edit', value: row.R_ID } } )">
+                    {{ row.R_ROLE }}
+                </mat-cell>
+            </ng-container>
+            <!-- actions -->
+            <ng-container matColumnDef="actions">
+                <!-- Header buttons -->
+                <mat-header-cell *matHeaderCellDef>
+                    Options
+                </mat-header-cell>
+                <!-- Row buttons -->
+                <mat-cell *matCellDef="let row; let i=index;" >
+                    <span class="spacer"></span><button   mat-icon-button matTooltip = "Delete" color="primary" (click)="deleteRecord( i, row, 'R_ROLE' )" id="gn_role.delete"><mat-icon aria-label="Delete">delete</mat-icon></button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns">
+            </mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+        <div class="http-spinner" *ngIf="spinnerService.visibility | async as visibility; else loading_done">
+            <div class="http-spinner-inner">
+                <mat-spinner [diameter]="50"></mat-spinner>
+            </div>
+        </div>
+        <ng-template #loading_done>
+            <div class="no-results" id="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No results
+            </div>
+        </ng-template>
+        <div class="navigator-row">
+            <span>
+            </span>
+            <span class="spacer"></span>
+            <span id="gn_role.botton.paginator">
+                <mat-paginator #bot_paginator [length]="dataSource.filteredData.length" (page)="pagingEvent( $event )"
+                               [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
+            </span>
+            <span>
+                <button mat-icon-button color="primary" (click)="refresh()" id="gn_role.botton.refresh">
+                    <mat-icon aria-label="Refresh the view">refresh</mat-icon>
+                </button>
+            </span>
+        </div>
+    </mat-card-content>
+</mat-card>
+

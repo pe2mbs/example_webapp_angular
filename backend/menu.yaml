@@ -1,0 +1,12 @@
+- caption: Administration
+  children:
+  - caption: Users
+    icon: accessibility
+    id: DC8006E3BF9DA8B8B321707451BCEEDA
+    route: /gn_user
+  - caption: Roles
+    icon: group_work
+    id: 1E1E5E2A9CE10DA0C2505A8FA96B04CB
+    route: /gn_role
+  icon: settings
+  id: E307DB07B3975FEF922A80D07455EE5E
