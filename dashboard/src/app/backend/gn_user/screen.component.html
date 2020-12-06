@@ -3,8 +3,9 @@
         <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_user.form">
             <pyt-checkbox-input-box id="U_ACTIVE.U_ACTIVE" placeholder="Active user" error="true" labelPosition="after" formControlName="U_ACTIVE"></pyt-checkbox-input-box>
             <pyt-text-input-box id="U_NAME.U_NAME" placeholder="Username" error="true" formControlName="U_NAME"></pyt-text-input-box>
-			<mat-tab-group class="mat-tab-group-screen">
+            <mat-tab-group class="mat-tab-group-screen">
                 <mat-tab label="General" id="gn_user.tab.general">
+
                     <mat-card class="mat-tab">
                         <pyt-choice-input-box id="U_ROLE.U_ROLE" placeholder="User role" error="true" [items]="gn_roleList" formControlName="U_ROLE"></pyt-choice-input-box>
                         <pyt-text-input-box id="U_EMAIL.U_EMAIL" placeholder="E-Mail address" error="true" formControlName="U_EMAIL"></pyt-text-input-box>
@@ -26,8 +27,9 @@
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Remark" id="gn_user.tab.remark">
+
                     <mat-card class="mat-tab">
-						<pyt-monaco-editor-box id="U_REMARK.U_REMARK" placeholder="Remark" language="markdown" height="auto" [minimap]="true" [heightAdjust]="-120" error="true" formControlName="U_REMARK"></pyt-monaco-editor-box>
+                        <pyt-monaco-editor-box id="U_REMARK.U_REMARK" placeholder="Remark" language="markdown" [minimap]="true" error="true" formControlName="U_REMARK"></pyt-monaco-editor-box>
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Profile" id="gn_user.tab.profile">

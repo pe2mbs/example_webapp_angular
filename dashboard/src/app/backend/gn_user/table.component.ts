@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:37:30 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-06 15:51:25 version 2.0.607 by user mbertens
 */
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -38,8 +38,8 @@ import { environment } from './../../../environments/environment';
     // tslint:disable-next-line:component-selector
     selector: 'app-gn_user-table',
     templateUrl: './table.component.html',
-	styleUrls: [ './table.component.scss',
-				 '../../common/common-mat-card.scss' ]
+    styleUrls: [ './table.component.scss',
+                 '../../common/common-mat-card.scss' ]
 })
 export class UserTableComponent extends TableBaseComponent<UserRecord> implements OnInit, OnDestroy
 {

@@ -98,7 +98,7 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
         return ( result );
     }
 
-    ngOnInit() 
+    ngOnInit()
     {
         if ( this.debug )
         {
@@ -173,8 +173,8 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
     {
         return ( this.control.value );
     }
-    
-    public set value( v: any ) 
+
+    public set value( v: any )
     {
         return;
     }
@@ -217,7 +217,7 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
         return;
     }
 
-    // event fired when input value is changed. later propagated up 
+    // event fired when input value is changed. later propagated up
     // to the form control using the custom value accessor interface
     onChange( e: Event, value: any )
     {
@@ -227,7 +227,7 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
         }
         // set changed value
         this.value = value;
-        // propagate value into form control using control value 
+        // propagate value into form control using control value
         // accessor interface
         this.propagateChange( this.value );
         return;
@@ -238,7 +238,7 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
     touchedChange   = (_: any) => { };
 
     // From ControlValueAccessor interface
-    writeValue( value: any ) 
+    writeValue( value: any )
     {
         if ( this.debug )
         {
@@ -249,7 +249,7 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
     }
 
     // From ControlValueAccessor interface
-    registerOnChange( fn: any ) 
+    registerOnChange( fn: any )
     {
         if ( this.debug )
         {
@@ -260,7 +260,7 @@ export class PytBaseComponent implements ControlValueAccessor, OnChanges, OnInit
     }
 
     // From ControlValueAccessor interface
-    registerOnTouched( fn: any ) 
+    registerOnTouched( fn: any )
     {
         if ( this.debug )
         {

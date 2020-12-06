@@ -79,7 +79,7 @@ export class TableBaseComponent<T> extends Subscribers implements OnInit, OnDest
         return;
     }
 
-    public ngOnDestroy(): void 
+    public ngOnDestroy(): void
     {
         super.ngOnDestroy();
         return;

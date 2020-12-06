@@ -190,9 +190,7 @@ objects:
                 type:               editor
                 attributes:
                     language:       markdown
-                    height:         auto
                     minimap:        ^true
-                    heightAdjust:   ^-120
             tab:
                 label:              Remark
                 index:              0

@@ -18,13 +18,14 @@
 #   Boston, MA 02110-1301 USA
 #
 */
-import { Component, Input, forwardRef, ViewChild, ElementRef, 
-		 OnInit, OnChanges, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Component, Input, forwardRef, ViewChild, ElementRef,
+		 OnInit, OnChanges, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormGroupDirective } from '@angular/forms';
-import { trigger, state, style, 
+import { trigger, state, style,
 	     transition, animate } from '@angular/animations';
 import { PytBaseComponent } from './base.input.component';
 import { NgxMonacoEditorConfig } from "ngx-monaco-editor";
+import { NgxEditorModel } from 'ngx-monaco-editor';
 
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -64,30 +65,33 @@ export const monacoConfig: NgxMonacoEditorConfig = {
                        [(ngModel)]="code" class="ngx-monaco-editor">
     </ngx-monaco-editor>
     </div>`,
-	styles: [ `:host 
+	styles: [ `:host
+    {
+        height: calc( 100% - 40px );
+    }
+
+    .monaco-code-editor
+    {
+		width: 100%;
+		min-height: 200px;
+		height: calc( 100% - 20px );
+		padding-bottom: 35px;
+		box-sizing: content-box;
+	}
+
+	.ngx-monaco-editor
 	{
-		height: calc( 100% - 40px );
+		height: calc( 100% - 16px );
+		border: 1px solid rgba(0, 0, 0, 0.10) !important;
 	}
 
-	.monaco-code-editor { 
-		width: 100%; 
-		min-height: 200px; 
-		height: calc( 100% - 20px );
-		padding-bottom: 35px; 
-		box-sizing: content-box; 
-	} 
-	.ngx-monaco-editor 
-	{ 
-		height: calc( 100% - 20px );
-		border: 1px solid rgba(0, 0, 0, 0.10) !important; 
-	}
-
-	.label-style { 
-		font-size: inherit; 
-		font-weight: 400; 
-		line-height: 1.125; 
-		font-family: Roboto, monospace; 
-		font-size: 14px; 
+	.label-style
+	{
+		font-size: inherit;
+		font-weight: 400;
+		line-height: 1.125;
+		font-family: Roboto, monospace;
+		font-size: 14px;
 		color: rgba(0, 0, 0, 0.54);`
 	],
     providers: [ CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR ],
@@ -99,8 +103,7 @@ export const monacoConfig: NgxMonacoEditorConfig = {
     ] )
     ]
 } )
-export class PytMonacoEditorComponent extends PytBaseComponent implements OnChanges, OnInit, 
-																AfterViewInit
+export class PytMonacoEditorComponent extends PytBaseComponent implements OnChanges, OnInit, AfterViewInit
 {
     @Input() height: string = 'auto';
     @Input() language: string = "plaintext";
@@ -123,10 +126,10 @@ export class PytMonacoEditorComponent extends PytBaseComponent implements OnChan
         this.monacoOptions.language = this.language;
         this.control.registerOnChange( () => {
             this.code = this.control.value;
-		} );
+        } );
         return;
-	}
-	
+    }
+
     public onEditorInit( $event ): void
     {
         this._editorInstance = $event;
@@ -139,7 +142,7 @@ export class PytMonacoEditorComponent extends PytBaseComponent implements OnChan
             this.control.patchValue( this._editorInstance.getValue() );
             this.control.markAsPending();
             this.control.updateValueAndValidity();
-		} );
+        } );
 		setInterval( () => {
 			this._editorInstance.layout();
 		}, 500 );

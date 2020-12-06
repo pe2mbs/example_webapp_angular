@@ -30,7 +30,7 @@ export class ScreenBaseComponent<T> extends Subscribers implements OnDestroy
         super.ngOnDestroy();
         return;
     }
-	
+
     protected updateFixedValues( fixed_values: any = null ): void
     {
         if ( fixed_values != null )

@@ -17,12 +17,12 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:37:30 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-06 15:51:25 version 2.0.607 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserDataService } from './service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { UserRecord } from './model';
 import { PytSelectList } from '../../common/crud-dataservice';
 import { RoleDataService } from '../gn_role/service';
@@ -32,8 +32,8 @@ import { ScreenBaseComponent } from 'src/app/common/crud-screen-component';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-gn_user-screen',
-	templateUrl: './screen.component.html',
-	styleUrls: [ '../../common/common-mat-card.scss' ]
+    templateUrl: './screen.component.html'
+    styleUrls: [ '../../common/common-mat-card.scss' ]
 })
 export class ScreenUserComponent extends ScreenBaseComponent<UserRecord> implements OnInit, OnDestroy
 {
@@ -155,7 +155,7 @@ export class ScreenUserComponent extends ScreenBaseComponent<UserRecord> impleme
                                     , 'R_ROLE'
                                      ).subscribe( dataList => {
             this.gn_roleList = dataList;
-		} ) );
+        } ) );
         return;
     }
 

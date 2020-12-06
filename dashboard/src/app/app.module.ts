@@ -42,6 +42,11 @@ import { CustomMaterialModule } from './material.module';
     MarkdownModule.forRoot()
   ],
   providers: [
+    {
+      multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService
+    }
   ]
 })
 export class AppModule { }

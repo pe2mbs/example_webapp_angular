@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:37:30 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-06 15:51:25 version 2.0.607 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -89,7 +89,6 @@ def apiUserNew():
     for key, value in data.items():
         setattr( record, key, fieldConversion( record, key, value ) )
 
-    API.app.logger.debug( record )
     API.db.session.add( record )
     API.db.session.commit()
     result = gn_userSchema.jsonify( record )
@@ -195,7 +194,6 @@ def apiUserSelect():
 
     result = []
     q = db.session.query( User ).order_by( getattr( User, label ) )
-    API.app.logger.debug( "apiUserSQL: {}".format( getSqlStatement( q ) ) )
     for record in q.all():
         if len( labels ) > 0:
             fields = [ getattr( record, lbl.strip() ) for lbl in labels ]
