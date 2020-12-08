@@ -164,7 +164,7 @@ def apiRolePatch():
     return result
 
 
-@gn_roleApi.route( '/api/gn_role/select', methods=[ 'GET' ] )
+@gn_roleApi.route( '/api/gn_role/select', methods=[ 'POST' ] )
 def apiRoleSelect():
     labels = []
     data    = request.json

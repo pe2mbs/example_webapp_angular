@@ -42,7 +42,8 @@ import { PytMonacoEditorComponent } from './input-component/monaco.component';
 import { AngularMaterialModule } from '../material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-
+import { BreadcrumbComponent } from './breadcrumb.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
         PytLabelComponent,
         PytCheckboxInputComponent,
         PytSliderToggleInputComponent,
-        PytSliderInputComponent,
+		PytSliderInputComponent,
+		BreadcrumbComponent
     ],
     entryComponents: [
     ],
@@ -75,7 +77,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
         AngularMaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        NgSelectModule,
+		NgSelectModule,
+		BreadcrumbModule,
         NgxMaterialTimepickerModule,
         MonacoEditorModule.forRoot()
     ],

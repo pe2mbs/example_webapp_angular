@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 15:51:25 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -32,7 +32,7 @@ import { ScreenBaseComponent } from 'src/app/common/crud-screen-component';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-gn_user-screen',
-    templateUrl: './screen.component.html'
+    templateUrl: './screen.component.html',
     styleUrls: [ '../../common/common-mat-card.scss' ]
 })
 export class ScreenUserComponent extends ScreenBaseComponent<UserRecord> implements OnInit, OnDestroy

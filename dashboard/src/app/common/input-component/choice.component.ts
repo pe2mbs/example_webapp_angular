@@ -18,16 +18,8 @@
 #   Boston, MA 02110-1301 USA
 #
 */
-import { Component,
-         Input, 
-         forwardRef, 
-         AfterViewInit, 
-         OnChanges, 
-         ViewEncapsulation, 
-         OnInit} from '@angular/core';
-import { NG_VALUE_ACCESSOR, 
-         ControlValueAccessor, 
-         FormGroupDirective} from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, FormGroupDirective } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PytBaseComponent } from './base.input.component';
 
@@ -38,6 +30,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component( {
+    // tslint:disable-next-line:component-selector
     selector: 'pyt-choice-input-box',
     template: `<div class="form">
     <mat-form-field color="accent">

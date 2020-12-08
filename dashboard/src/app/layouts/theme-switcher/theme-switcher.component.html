@@ -1,0 +1,11 @@
+<!-- <button mat-icon-butto mat-button="" (click)="themeSwitcher()">
+	 {{ theme }}
+	</button>
+-->
+<button mat-button [matMenuTriggerFor]="menu"><mat-icon>format_color_fill</mat-icon></button>
+<mat-menu #menu="matMenu">
+	 <button mat-menu-item type="button" *ngFor="let theme of themes" 
+	 			(click)="selectTheme( theme.value )">
+		 {{ theme.label }}
+	</button>
+</mat-menu>

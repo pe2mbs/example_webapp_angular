@@ -35,11 +35,13 @@ import { DeleteRoleDialog } from './delete.dialog';
 import { RoleTableComponent } from './table.component';
 import { RoleDataService } from './service';
 import { DefaultComponent } from 'src/app/layouts/default/default.component';
+import { AuthGuard } from 'src/app/layouts/auth-guard.service';
 
 
 export const gn_roleRoute: Route = {
 	path: '',
 	component: DefaultComponent,
+	canActivate: [ AuthGuard ],
 	children: [ {
 		path:           'gn_role',
 		data:

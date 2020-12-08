@@ -130,7 +130,7 @@ export class CrudDataService<T>
 
     public getSelectListSimple( value: string, label: string, initial: any = null, final: any = null ): Observable<PytSelectList[]>
     {
-        const params = new HttpParams().set('label', label ).set('value', value )
+        const params = new HttpParams().set('label', label ).set('value', value );
         if ( initial != null )
         {
             params.set( 'initial', initial );
@@ -139,7 +139,8 @@ export class CrudDataService<T>
         {
             params.set( 'final', final );
         }
-        return this.httpClient.get<PytSelectList[]>( this._uri + '/select', { params: params } );
+		return this.httpClient.post<PytSelectList[]>( this._uri + '/select', 
+							{ label: label, value: value } );
     }
 
     public getSelectList( value: string, label: string, initial: any = null, final: any = null ): Observable<PytSelectList[]>
@@ -154,7 +155,7 @@ export class CrudDataService<T>
             params.set( 'final', final );
         }
         return ( Observable.create( observer => {
-            this.httpClient.get<PytSelectList[]>( this._uri + '/select', { params: params } )
+            this.httpClient.post<PytSelectList[]>( this._uri + '/select', { label: label, value: value } )
             .subscribe( ( data ) => {
                     if ( this.debug )
                     {
@@ -182,7 +183,7 @@ export class CrudDataService<T>
             params.set( 'final', final );
         }
         return ( Observable.create( observer => {
-            this.httpClient.get<PytSelectList[]>( this._uri + '/select', { params: params } )
+            this.httpClient.post<PytSelectList[]>( this._uri + '/select', { label: label, value: value } )
             .subscribe( ( data ) => {
                     if ( this.debug )
                     {

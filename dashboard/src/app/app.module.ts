@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleModule } from './backend/gn_role/module';
 import { UserModule } from './backend/gn_user/module';
 import { CustomMaterialModule } from './material.module';
+import { ThemeSwitcherComponent } from './layouts/theme-switcher/theme-switcher.component';
 
 
 @NgModule({
@@ -42,11 +43,7 @@ import { CustomMaterialModule } from './material.module';
     MarkdownModule.forRoot()
   ],
   providers: [
-    {
-      multi: true,
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService
-    }
+	ThemeSwitcherComponent
   ]
 })
 export class AppModule { }

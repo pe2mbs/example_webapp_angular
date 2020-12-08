@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 15:51:25 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -35,46 +35,50 @@ import { DeleteUserDialog } from './delete.dialog';
 import { UserTableComponent } from './table.component';
 import { UserDataService } from './service';
 import { DefaultComponent } from 'src/app/layouts/default/default.component';
+import { AuthGuard } from 'src/app/layouts/auth-guard.service';
 
 
 export const gn_userRoute: Route = {
     path: '',
-    component: DefaultComponent,
-    children: [ {
-        path:           'gn_user',
-        data:
+	component: DefaultComponent,
+	canActivate: [ AuthGuard ],
+    children: [
         {
-            breadcrumb: 'Users',
-            title:      'Users'
-        },
-        children: [
+            path:           'gn_user',
+            data:
             {
-                path: '',
-                component: UserTableComponent,
-                data:
-                {
-                    breadcrumb: '',
-                    title:      ''
-                }
+                breadcrumb: 'Users',
+                title:      'Users'
             },
-            {
-                path: 'new',
-                component: ScreenUserComponent,
-                data:
+            children: [
                 {
-                    breadcrumb: 'New',
-                    title:      'New'
-                }
-            },
-            {
-                path: 'edit',
-                component: ScreenUserComponent,
-                data:
+                    path: '',
+                    component: UserTableComponent,
+                    data:
+                    {
+                        breadcrumb: '',
+                        title:      ''
+                    }
+                },
                 {
-                    breadcrumb: 'Edit',
-                    title:      'Edit'
-                }
-            },
+                    path: 'new',
+                    component: ScreenUserComponent,
+                    data:
+                    {
+                        breadcrumb: 'New',
+                        title:      'New'
+                    }
+                },
+                {
+                    path: 'edit',
+                    component: ScreenUserComponent,
+                    data:
+                    {
+                        breadcrumb: 'Edit',
+                        title:      'Edit'
+                    }
+                },
+            ]
         }
     ]
 };
