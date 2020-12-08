@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ThemeSwitcherComponent implements OnInit 
 {
-	private themes = [
+	public themes = [
 		{ label: 'Light', value: 'light-theme' },
 		{ label: 'Dark', value: 'dark-theme' },
 		{ label: 'Extra', value: 'extra-theme' },

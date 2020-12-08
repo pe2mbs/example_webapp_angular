@@ -1,5 +1,5 @@
 from flask import jsonify
-import backend.core.api as CORE
+import webapp2.api as API
 
 
 __version__     = '0.0.0'
@@ -17,22 +17,22 @@ applicInfo = {
     }
 
 
-@CORE.coreApi.route( "/api/application/version", methods=[ 'GET' ] )
+@API.coreApi.route( "/api/application/version", methods=[ 'GET' ] )
 def getAppVersion():
     return __version__
 
 
-@CORE.coreApi.route( "/api/application/copyright", methods=[ 'GET' ] )
+@API.coreApi.route( "/api/application/copyright", methods=[ 'GET' ] )
 def getAppCopyright():
     return __copyright__
 
 
-@CORE.coreApi.route( "/api/application/author", methods=[ 'GET' ] )
+@API.coreApi.route( "/api/application/author", methods=[ 'GET' ] )
 def getAppAuthor():
     return __author__
 
 
-@CORE.coreApi.route( "/api/application/info", methods=[ 'GET' ] )
+@API.coreApi.route( "/api/application/info", methods=[ 'GET' ] )
 def getApplicationInfo():
     return jsonify( applicInfo )
 

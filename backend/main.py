@@ -23,8 +23,8 @@ import logging
 import traceback
 import importlib
 from flask import Blueprint, jsonify
-import webapp2.app as API
-import backend.core.api as CORE
+import webapp2.api as API
+# import backend.core.api
 
 __version__     = '0.0.0'
 __date__        = '1970-01-01'
@@ -49,7 +49,8 @@ def discoverModules():
     return modules
 
 
-CORE.listModules = discoverModules()
+API.listModules = discoverModules()
+API.plugins     = []
 
 def verifyMenuStruct( menu ):
     """Internal function to verify the menu structure, special for the function addMenu()
@@ -97,17 +98,17 @@ def _registerMenu( root_menu, menu, before = None, after = None ):
 
 def registerMenu( menu, before = None, after = None ):
     verifyMenuStruct( menu )
-    _registerMenu( CORE.menuItems, menu, before, after )
+    _registerMenu( API.menuItems, menu, before, after )
     return
 
 
 def registerSubMenu( menu, *args, before = None, after = None ):
     verifyMenuStruct( menu )
-    subMenu = CORE.menuItems
+    subMenu = API.menuItems
     found = False
     for arg in args:
         found = False
-        for idx, item in enumerate( CORE.menuItems ):
+        for idx, item in enumerate( API.menuItems ):
             if item[ 'caption' ] == arg:
                 subMenu = item
                 found = True
@@ -127,18 +128,18 @@ def registerApi( app, cors ):
     logger = app.logger
     # mapDrive( "E:", "\\\\sfp09021\\testrun", None, None, True )
     with open( os.path.join( os.path.dirname( __file__ ),'menu.yaml' ),'r' ) as stream:
-        CORE.menuItems = yaml.load( stream,Loader = yaml.Loader )
+        API.menuItems = yaml.load( stream,Loader = yaml.Loader )
 
     releaseFile = os.path.join( os.path.dirname( __file__ ),'release.yaml' )
     if os.path.isfile( releaseFile ):
         with open( releaseFile,'r' ) as stream:
-            CORE.applicInfo = yaml.load( stream,Loader = yaml.Loader )
+            API.applicInfo = yaml.load( stream,Loader = yaml.Loader )
 
     setattr( app,'registerMenu',registerMenu )
     setattr( app,'registerSubMenu',registerSubMenu )
-    for module in CORE.listModules:
+    for module in API.listModules:
         app.logger.debug( 'registering module {0}'.format( module ) )
-        module.registerApi( app,cors )
+        module.registerApi( app, cors )
         # if hasattr( module, 'menuItem' ):
         #     registerSubMenu( module.menuItem )
 
@@ -151,7 +152,7 @@ def registerApi( app, cors ):
     logger.info( 'Register Menu route' )
     app.register_blueprint( applicApi )
     # This is temp. hook to load plugins
-    for plugin in CORE.plugins:
+    for plugin in API.plugins:
         try:
             app.logger.debug( 'registering plugin {0}'.format( plugin ) )
             plugin.registerApi( app,cors )
@@ -164,7 +165,7 @@ def registerApi( app, cors ):
 
 def registerExtensions():
     API.app.logger.info( 'Register extensions' )
-    for module in CORE.listModules:
+    for module in API.listModules:
         if hasattr( module, 'registerExtensions' ):
             module.registerExtensions()
 
@@ -173,7 +174,7 @@ def registerExtensions():
 
 def registerShellContext():
     API.app.logger.info( 'Register shell context' )
-    for module in CORE.listModules:
+    for module in API.listModules:
         if hasattr( module, 'registerShellContext' ):
             module.registerShellContext()
 
@@ -182,7 +183,7 @@ def registerShellContext():
 
 def registerCommands():
     API.app.logger.info( 'Register extra commands' )
-    for module in CORE.listModules:
+    for module in API.listModules:
         if hasattr( module, 'registerCommands' ):
             module.registerCommands()
 
@@ -191,9 +192,9 @@ def registerCommands():
 
 @applicApi.route( "/api/menu", methods=[ 'GET' ] )
 def getAppMenu():
-    return jsonify( CORE.menuItems )
+    return jsonify( API.menuItems )
 
 
 @applicApi.route( "/api/application/menu", methods=[ 'GET' ] )
 def getUserMenu():
-    return jsonify( CORE.menuItems )
+    return jsonify( API.menuItems )

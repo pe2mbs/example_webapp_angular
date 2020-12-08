@@ -1,11 +1,9 @@
 <mat-card class="login-card">
 	<h2 mat-card-title>Inloggen</h2>
 	<form [formGroup]="loginForm" novalidate>
-
 		<mat-form-field>
 			<!-- hieronder de formControlName zoals in de formgroup is beschreven -->
-			<input matInput placeholder="Username" formControlName="userid" [formControl]="userid"
-				[errorStateMatcher]="matcher">
+			<input matInput placeholder="Username" formControlName="userid" [formControl]="userid">
 			<mat-error *ngIf="userid.hasError('minlength') || userid.hasError('maxlength')">
 				Username must be 7 characters
 			</mat-error>
@@ -15,8 +13,7 @@
 		</mat-form-field>
 
 		<mat-form-field>
-			<input matInput [type]="showPw ? 'text' : 'password'" placeholder="Password" formControlName='password'
-				[errorStateMatcher]="matcher">
+			<input matInput [type]="showPw ? 'text' : 'password'" placeholder="Password" formControlName='password'>
 			<mat-icon matSuffix (click)="showPw = !showPw">{{showPw ? 'visibility_off' : 'visibility'}}</mat-icon>
 			<mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">
 				Password must be atleast {{ password.errors.minlength.requiredLength }} characters

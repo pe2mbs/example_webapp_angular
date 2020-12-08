@@ -66,7 +66,7 @@ const defaultRoute: Route = {
 		GridsterModule,
 		RouterModule.forChild( [ defaultRoute ] )
 	],
-	exports:[
+	exports: [
 		DefaultComponent,
 		DashboardComponent 
 	],

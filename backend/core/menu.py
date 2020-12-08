@@ -1,7 +1,7 @@
-import backend.core.api as CORE
+import webapp2.api as API
 
 
-CORE.menuItems = [
+API.menuItems = [
     { 'caption': 'Dashboard',
       'icon': 'dashboard',
       'route': '/dashboard'
