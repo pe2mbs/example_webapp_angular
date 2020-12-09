@@ -11,7 +11,7 @@ import {filter} from 'rxjs/operators';
 export class BreadcrumbComponent implements OnInit
 {
     static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
-    readonly home = {icon: 'pi pi-home', url: '/#/'};
+    readonly home = { icon: 'pi pi-home', url: '/#/' };
     menuItems: MenuItem[];
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute)
@@ -19,7 +19,7 @@ export class BreadcrumbComponent implements OnInit
         return;
     }
 
-    ngOnInit(): void
+    public ngOnInit(): void
     {
         this.router.events.pipe( filter( event => event instanceof NavigationEnd ) ).subscribe( () => {
             this.menuItems = this.createBreadcrumbs( this.activatedRoute.root );

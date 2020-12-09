@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, 
 		 LocationStrategy, 
 		 HashLocationStrategy } from '@angular/common';
-import { DefaultComponent } from './default/default.component';
+import { DefaultComponent } from './default.component';
 import { DashboardComponent } from 'src/app/modules/dashboard/dashboard.component';
 import { RouterModule, Route } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './footer.component';
 import { NavSidebarComponent } from './sidebar/sidebar.component';
-import { AngularMaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HelpComponent } from './help/help.component';
 import { HelpService } from './help/service.service';
@@ -25,9 +24,84 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserProfileComponent } from './user.profile/user.profile.component';
-import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
+import { UserProfileComponent } from './user-profile.component';
+import { ThemeSwitcherComponent } from './theme-switcher.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { PortalModule } from '@angular/cdk/portal';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginDialogComponent } from './login/login.dialog.component';
+import { SignupDialogComponent } from './login/signup.dialog.component';
 
+
+const materialModules = [
+	CdkTreeModule,
+	MatAutocompleteModule,
+	MatButtonModule,
+	MatCardModule,
+	MatCheckboxModule,
+	MatChipsModule,
+	MatDividerModule,
+	MatExpansionModule,
+	MatIconModule,
+	MatInputModule,
+	MatListModule,
+	MatMenuModule,
+	MatProgressSpinnerModule,
+	MatPaginatorModule,
+	MatRippleModule,
+	MatSelectModule,
+	MatSidenavModule,
+	MatSnackBarModule,
+	MatSortModule,
+	MatTableModule,
+	MatTabsModule,
+	MatToolbarModule,
+	MatFormFieldModule,
+	MatButtonToggleModule,
+	MatTreeModule,
+	OverlayModule,
+	PortalModule,
+	MatBadgeModule,
+	MatGridListModule,
+	MatRadioModule,
+	MatDatepickerModule,
+	MatTooltipModule,
+	MatSlideToggleModule,
+	MatSliderModule,
+	MatDialogModule
+];
 
 const defaultRoute: Route = { 	
 	path: '',
@@ -42,6 +116,33 @@ const defaultRoute: Route = {
 
 @NgModule({
 	declarations: [
+		DashboardComponent,
+		HeaderComponent,
+		FooterComponent,
+		NavSidebarComponent,
+		HelpComponent,
+		HelpDialogComponent,
+		MenuListItemComponent,
+		LoginComponent,
+		LoginDialogComponent,
+		SignupDialogComponent,
+		UserProfileComponent,
+		ThemeSwitcherComponent,
+		DefaultComponent,
+  	],
+  	imports: [
+		CommonModule,
+		BrowserModule,
+		FormsModule,
+		ReactiveFormsModule,
+		RouterModule,
+		FlexLayoutModule,
+		MarkdownModule.forChild(),
+		GridsterModule,
+		RouterModule.forChild( [ defaultRoute ] ),
+		...materialModules
+	],
+	exports:[
 		DefaultComponent,
 		DashboardComponent,
 		HeaderComponent,
@@ -53,25 +154,12 @@ const defaultRoute: Route = {
 		LoginComponent,
 		UserProfileComponent,
 		ThemeSwitcherComponent,
-  	],
-  	imports: [
-		CommonModule,
-		BrowserModule,
-		FormsModule,
-		ReactiveFormsModule,
-		RouterModule,
-		AngularMaterialModule,
-		FlexLayoutModule,
-		MarkdownModule.forChild(),
-		GridsterModule,
-		RouterModule.forChild( [ defaultRoute ] )
-	],
-	exports:[
-		DefaultComponent,
-		DashboardComponent 
+		...materialModules
 	],
 	entryComponents: [
-		HelpDialogComponent
+		HelpDialogComponent,
+		LoginDialogComponent,
+		SignupDialogComponent
 	],
 	providers: [
 		HelpService,
@@ -79,6 +167,7 @@ const defaultRoute: Route = {
     	AuthGuard,
 		AdminAuthGuard,
 		AuthService,
+		ThemeSwitcherComponent,
 		{
 		  provide: LocationStrategy,
 		  useClass: HashLocationStrategy
@@ -92,4 +181,22 @@ const defaultRoute: Route = {
 } )
 export class DefaultModule 
 { 
+	static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DefaultModule,
+            providers: [
+                HelpService,
+				NavService,
+    			AuthGuard,
+				AdminAuthGuard,
+				AuthService,
+				ThemeSwitcherComponent
+            ]
+        };
+    }
+    static forChild(): ModuleWithProviders
+    {
+        return { ngModule: DefaultModule };
+    }
 }
+

@@ -1,0 +1,58 @@
+<mat-dialog-content>
+	<h2 mat-card-title>Sign up</h2>
+		<form [formGroup]="signupForm" novalidate class="signup-form">
+		<mat-form-field class="form-field">
+			<input matInput placeholder="Username" formControlName="userid">
+			<mat-error *ngIf="userid.hasError('minlength') || userid.hasError('maxlength')">
+				Username must be 7 characters
+			</mat-error>
+			<mat-error *ngIf="userid.hasError('required')">
+				Username is mandatory
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-field">
+			<input matInput [type]="showPw ? 'text' : 'password'" placeholder="Password" formControlName='password'>
+			<mat-icon matSuffix (click)="showPw = !showPw">{{showPw ? 'visibility_off' : 'visibility'}}</mat-icon>
+			<mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">
+				Password must be atleast {{ password.errors.minlength.requiredLength }} characters
+			</mat-error>
+			<mat-error *ngIf="password.hasError('required')">
+				Password is mandatory
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-field">
+			<input matInput placeholder="E-Mail" formControlName='email'>
+			<mat-error *ngIf="email.hasError('required')">
+				E-Mail is mandatory
+			</mat-error>
+		</mat-form-field>
+	
+		<mat-form-field class="form-field">
+			<input matInput placeholder="First name" formControlName='firstname'>
+			<mat-error *ngIf="firstname.hasError('required')">
+				First name is mandatory
+			</mat-error>
+		</mat-form-field>
+	
+		<mat-form-field class="form-field">
+			<input matInput placeholder="Middle name(s)" formControlName='middlename'>
+		</mat-form-field>
+	
+		<mat-form-field class="form-field">
+			<input matInput placeholder="Surname" formControlName='lastname'>
+			<mat-error *ngIf="lastname.hasError('required')">
+				Surname is mandatory
+			</mat-error>
+		</mat-form-field>
+	
+
+	</form>	
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-raised-button (click)="onSignupClick()" 
+			[color]="signupForm.valid ? 'warn' : 'primary'"
+			[disabled]="signupForm.valid ? false : true">Signup</button>
+	<button mat-raised-button (click)="onCancelClick()">Cancel</button>
+</mat-dialog-actions>

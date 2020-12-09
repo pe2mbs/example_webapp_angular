@@ -85,3 +85,50 @@ def getUserAuthenticate():
         API.app.logger.error( traceback.format_exc() )
 
     return jsonify( result = False )
+
+@entryPointApi.route( '/api/users/signup',  methods=[ 'POST' ] )
+def getUserSignup():
+    data = request.json
+    API.app.logger.info( data )
+    if data is None:
+        return "Invalid request, missing user data", 500
+
+    username = data.get( 'username', None )
+    passwd = data.get( 'password', None )
+    email = data.get( 'email', None )
+    firstname = data.get( 'firstname', None )
+    middlename = data.get( 'middlename', None )
+    lastname = data.get( 'lastname', None )
+    try:
+        userRecord: user.User = API.db.session.query( user.User ).filter( user.User.U_NAME == username ).one()
+        if userRecord.U_EMAIL == email and userRecord.U_FIRST_NAME == firstname and userRecord.U_LAST_NAME == lastename \
+                and userRecord.U_MIDDLE_NAME == middlename:
+            # just reset the password
+            userRecord.U_HASH_PASSWORD = passwd
+            API.db.session.commit()
+            return jsonify( result = True )
+
+    except NoResultFound:
+        try:
+            API.db.session.add( user.User( U_NAME = username,
+                                           U_FIRST_NAME = firstname,
+                                           U_LAST_NAME = lastname,
+                                           U_MIDDLE_NAME = middlename,
+                                           U_EMAIL = email,
+                                           U_HASH_PASSWORD = passwd,
+                                           U_ROLE = 1,                  # Should be the default Role
+                                           U_ACTIVE = True,
+                                           U_LISTITEMS = 25,
+                                           U_LOCALE = 1,                # Should be the default locale
+                                           U_MOD = datetime.utcnow(),
+                                           U_MOD_USER = 'signup' ) )
+            API.db.session.commit()
+            return jsonify( result = True )
+
+        except Exception:
+            API.app.logger.error( traceback.format_exc() )
+
+    except Exception:
+        API.app.logger.error( traceback.format_exc() )
+
+    return jsonify( result = False )

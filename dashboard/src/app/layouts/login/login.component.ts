@@ -1,99 +1,40 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../auth.service';
-
-
-export interface Credentials 
-{
-    userid: string;
-    password: string;
-    keepsignedin: boolean;
-}
-
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginDialogComponent } from './login.dialog.component';
 
 @Component({
-    selector: 'app-signin-dialog',
-    templateUrl: './login.component.html',
-	styles: [ `.login-card 
-{ 
-	
-}
-
-mat-form-field
-{
-	width: 100%;
-}	
-	` ]
+	selector: 'app-signin-dialog',
+	template: '<div></div>'
 })
-export class LoginComponent 
+export class LoginComponent implements OnInit
 {
-    public showPw: boolean = false;
-    public keepSignedIn: boolean;
-    public invalidLogin: boolean;
-    public loginForm: FormGroup;
-
-    constructor( private fb: FormBuilder,
-				 private router: Router,
-        		 private authService: AuthService,
-        		 private route: ActivatedRoute ) 
+	constructor( public dialog: MatDialog 
+			   , private route: ActivatedRoute
+			   , private router: Router ) 
 	{ 
-		this.loginForm = fb.group( {
-			userid : new FormControl(
-				'',
-				[Validators.required, Validators.minLength( 7 ) ]
-			),
-			password : new FormControl(
-				'',
-				[Validators.required, Validators.minLength( 6 ) ]
-			),
-			keepSignedIn : new FormControl()
-		} );
 		return;
 	}
 
-	public onSubmit(): void 
+	public ngOnInit(): void
 	{
-		const credentials: Credentials = { 
-				userid: this.loginForm.value.userid, 
-				password: this.loginForm.value.password,
-				keepsignedin: this.loginForm.value.keepSignedIn
-		};
-		this.authService.login( credentials ).subscribe( 
-			result => {
-				if ( result ) 
-				{
-					const returnUrl = this.route.snapshot.queryParamMap.get( 'returnUrl' );
-					console.log( 'returnUrl', returnUrl );
-					if ( returnUrl === undefined || returnUrl == null )
-					{
-						this.router.navigate( [ '/' ] );	
-					}
-					this.router.navigate( [ returnUrl ] );
-				} 
-				else 
-				{
-					this.invalidLogin = true;
-            	}
-        	},
-        	err => {
-				this.invalidLogin = true;
-        } );
-
-    }
-
-	public onCancel(): void 
-	{
+		const dialogRef = this.dialog.open( LoginDialogComponent, {  
+			autoFocus: true,
+			width: '500px',
+			height: '360px',
+			data: null
+		} );
+	    dialogRef.afterClosed().subscribe( result => {
+			console.log( `Dialog result: ${result}` );
+			const returnUrl = this.route.snapshot.queryParamMap.get( 'returnUrl' );
+			console.log( 'returnUrl', returnUrl );
+			if ( returnUrl === undefined || returnUrl == null )
+			{
+				this.router.navigate( [ '/' ] );	
+			}
+			this.router.navigate( [ returnUrl ] );
+    	} );
 		return;
-    }
+	}
 
-	get userid() 
-	{
-        return this.loginForm.get( 'userid' );
-    }
-
-	get password() 
-	{
-        return this.loginForm.get( 'password' );
-    }
 }

@@ -1,0 +1,13 @@
+//include material theming
+@import '~@angular/material/theming';
+@include mat-core();
+
+$ewl-primary: 	mat-palette($mat-indigo);
+$ewl-accent:  	mat-palette($mat-pink, A200, A100, A400);
+$ewl-warn:    	mat-palette($mat-red);
+$ewl-app-theme:	mat-light-theme($ewl-primary, $ewl-accent, $ewl-warn);
+
+.equensworldline-theme
+{
+  	@include angular-material-theme($ewl-app-theme)
+}

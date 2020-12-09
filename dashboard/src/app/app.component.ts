@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeSwitcherComponent } from './layouts/theme-switcher/theme-switcher.component';
+import { ThemeSwitcherComponent } from './layouts/theme-switcher.component';
 
 @Component({
   selector: 'app-root',

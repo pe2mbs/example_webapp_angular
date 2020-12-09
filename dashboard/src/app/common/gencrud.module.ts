@@ -39,11 +39,11 @@ import { PytCheckboxInputComponent } from './input-component/checkbox.component'
 import { PytSliderToggleInputComponent } from './input-component/slidertoggle.component';
 import { PytSliderInputComponent } from './input-component/slider.component';
 import { PytMonacoEditorComponent } from './input-component/monaco.component';
-import { AngularMaterialModule } from '../material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { DefaultModule } from '../layouts/default.module';
 
 @NgModule({
     declarations: [
@@ -74,7 +74,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     ],
     imports: [
         CommonModule,
-        AngularMaterialModule,
+        DefaultModule,
         FormsModule,
         ReactiveFormsModule,
 		NgSelectModule,

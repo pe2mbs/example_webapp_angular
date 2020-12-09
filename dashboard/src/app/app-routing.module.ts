@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DefaultComponent } from './layouts/default/default.component';
+import { DefaultComponent } from './layouts/default.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { PostsComponent } from './modules/posts/posts.component';
 import { AuthGuard } from './layouts/auth-guard.service';
 
 
@@ -15,10 +14,6 @@ const routes: Routes = [
 				path: '',
 				component: DashboardComponent
 			},
-			{
-				path: 'posts',
-				component: PostsComponent
-			}
 		]
 	}
 ];

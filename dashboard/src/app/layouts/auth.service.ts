@@ -8,8 +8,19 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 interface AuthResponse
 {
 	result: boolean;
-	token: string;
+	token?: string;
 }
+
+export interface SignupData
+{
+	username: string;
+	password: string;
+	email: string;
+	firstname: string;
+	middlename: string;
+	lastname: string;
+}
+
 
 @Injectable()
 export class AuthService 
@@ -53,7 +64,16 @@ export class AuthService
 				}
 			} ) 
 		) );
-  	}
+	}
+	  
+	public signup( data: SignupData )
+	{
+		return ( this.http.post<AuthResponse>( '/api/users/signup', JSON.stringify( data ) ).pipe( 
+			map( response => {
+				return ( response && response.result ); 
+			} )  
+		) );
+	}
 
 	public logout(): void
 	{

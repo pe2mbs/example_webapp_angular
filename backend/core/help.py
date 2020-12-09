@@ -1,10 +1,9 @@
 import os
 from flask import jsonify
 import webapp2.api as API
-import backend.core.api as CORE
 
 
-@CORE.coreApi.route( '/api/help/<helpitem>', methods=[ 'GET' ] )
+@API.coreApi.route( '/api/help/<helpitem>', methods=[ 'GET' ] )
 def getHelp( helpitem ):
     helpPath = os.path.abspath( API.app.config.get( 'HELP_PATH', 'help' ) )
 

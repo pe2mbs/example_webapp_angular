@@ -1,12 +1,13 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { getTreeControlFunctionsMissingError } from '@angular/cdk/tree';
 
 @Component({
   	selector: 'app-header',
   	templateUrl: './header.component.html',
-  	styleUrls: ['./header.component.scss']
+  	styles: [ 'ul li { list-style: none; }' ]
 })
-export class HeaderComponent implements OnInit 
+export class HeaderComponent
 {
 	// tslint:disable-next-line:no-output-on-prefix
 	@Output() onToggleSidebar: EventEmitter<any> = new EventEmitter(); 
@@ -16,13 +17,9 @@ export class HeaderComponent implements OnInit
 		return;
 	}
 
-	ngOnInit() 
-	{
-		return;
-	}
-
 	public toggleSidebar()
 	{
 		this.onToggleSidebar.emit();
+		return;
 	}
 }

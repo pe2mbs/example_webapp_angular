@@ -1,0 +1,35 @@
+<mat-dialog-content>
+	<h2 mat-card-title>Login</h2>
+		<form [formGroup]="loginForm" novalidate class="login-form">
+		<mat-form-field class="form-field">
+			<!-- hieronder de formControlName zoals in de formgroup is beschreven -->
+			<input matInput placeholder="Username" formControlName="userid" [formControl]="userid">
+			<mat-error *ngIf="userid.hasError('minlength') || userid.hasError('maxlength')">
+				Username must be 7 characters
+			</mat-error>
+			<mat-error *ngIf="userid.hasError('required')">
+				Username is mandatory
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-field">
+			<input matInput [type]="showPw ? 'text' : 'password'" placeholder="Password" formControlName='password'>
+			<mat-icon matSuffix (click)="showPw = !showPw">{{showPw ? 'visibility_off' : 'visibility'}}</mat-icon>
+			<mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">
+				Password must be atleast {{ password.errors.minlength.requiredLength }} characters
+			</mat-error>
+			<mat-error *ngIf="password.hasError('required')">
+				Password is mandatory
+			</mat-error>
+		</mat-form-field>
+		<mat-checkbox name="keepSignedIn" formControlName='keepSignedIn' class="form-field" >
+			Keep me signed in
+		</mat-checkbox>
+	</form>	
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-raised-button (click)="onSignupClick()">Signup</button>
+	<button mat-raised-button cdkFocusInitial (click)="onLogonClick()" [color]="!loginForm.valid ? 'primary' : 'warn'">
+		Login<span *ngIf="invalidLogin"> mislukt, opnieuw</span>
+	</button>
+</mat-dialog-actions>

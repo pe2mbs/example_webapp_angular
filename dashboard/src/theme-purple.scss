@@ -1,0 +1,14 @@
+//include material theming
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Define an purple theme.
+$purple-primary: 	mat-palette($mat-purple);
+$purple-accent:  	mat-palette($mat-amber, A200, A100, A400);
+$purple-warn:    	mat-palette($mat-deep-orange);
+$purple-app-theme:	mat-dark-theme($purple-primary, $purple-accent, $purple-warn);
+
+.purple-theme
+{
+	@include angular-material-theme($purple-app-theme)
+}

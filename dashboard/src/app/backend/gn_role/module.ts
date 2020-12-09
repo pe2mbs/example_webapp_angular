@@ -24,7 +24,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CustomMaterialModule } from '../../material.module';
 import { GenCrudModule } from '../../common/gencrud.module';
 import { SpinnerService } from '../../common/spinner-service';
 import { CustomHttpInterceptor } from '../../common/http-interceptor';
@@ -34,8 +33,9 @@ import { ScreenRoleComponent } from './screen.component';
 import { DeleteRoleDialog } from './delete.dialog';
 import { RoleTableComponent } from './table.component';
 import { RoleDataService } from './service';
-import { DefaultComponent } from 'src/app/layouts/default/default.component';
+import { DefaultComponent } from 'src/app/layouts/default.component';
 import { AuthGuard } from 'src/app/layouts/auth-guard.service';
+import { DefaultModule } from 'src/app/layouts/default.module';
 
 
 export const gn_roleRoute: Route = {
@@ -111,7 +111,7 @@ export const gn_roleRoute: Route = {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        CustomMaterialModule,
+        DefaultModule,
         GenCrudModule,
         RouterModule.forChild( [ gn_roleRoute ] )
     ],
