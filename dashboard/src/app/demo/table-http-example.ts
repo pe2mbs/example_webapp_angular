@@ -6,6 +6,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ExampleHttpDatabase } from './table-http-service';
 import { FilterRecord } from '../common/filter-header.component';
+import { Router } from '@angular/router';
 
 export class CardTableBase<T> implements AfterViewInit
 {
@@ -113,7 +114,8 @@ export class RecordLocksRecord
 // tslint:disable-next-line:component-class-suffix
 export class TableHttpExample extends CardTableBase<RecordLocksRecord>  
 {
-	constructor( private _service: ExampleHttpDatabase ) 
+	constructor( private _service: ExampleHttpDatabase,
+				 public router: Router ) 
 	{
 		super( _service,
 			   [ 'L_USER', 'L_START_DATE', 'L_TABLE', 'L_RECORD_ID' ] );
