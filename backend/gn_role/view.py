@@ -16,16 +16,16 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:21:29 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
+from webapp2.common.crud import CrudInterface, RecordLock
 import traceback
 from backend.gn_role.model import Role
-from backend.gn_role.schema import gn_roleSchema, gn_rolesSchema
-from backend.common import fieldConversion
+from backend.gn_role.schema import RoleSchema
 
-db = API.db
+
 gn_roleApi = Blueprint( 'gn_roleApi', __name__ )
 
 
@@ -42,6 +42,7 @@ def registerApi( *args ):
 
         if hasattr( EP, 'registerWebSocket' ):
             EP.registerWebSocket()
+
     except ModuleNotFoundError:
         pass
 
@@ -52,180 +53,31 @@ def registerApi( *args ):
     return
 
 
-def removeGeneratedFieldsFromRecord( record ):
-    for field in ( "R_ID", ):
-        if field in record:
-            del record[ field ]
 
-    return record
-
-
-@gn_roleApi.route( '/api/gn_role/list/<id>/<value>', methods=[ 'GET' ] )
-def getRoleListFiltered( id, value ):
-    filter = { id: value }
-    recordList = db.session.query( Role ).filter_by( **filter ).order_by( Role.R_ID ).all()
-    result = gn_rolesSchema.jsonify( recordList )
-    API.app.logger.debug( 'GET: /api/gn_role/list/{0}/{1} => {2}'.format( id, value, result ) )
-    return result
+class RoleRecordLock( RecordLock ):
+    def __init__(self):
+        RecordLock.__init__( self, 'gn_role', 'R_ID' )
+        return
 
 
-@gn_roleApi.route( '/api/gn_role/list', methods=[ 'GET' ] )
-def getRoleList():
-    recordList = db.session.query( Role ).order_by( Role.R_ID ).all()
-    result = gn_rolesSchema.jsonify( recordList )
-    API.app.logger.debug( 'GET: /api/gn_role/list => {0}'.format( result ) )
-    return result
+class RoleCurdInterface( CrudInterface ):
+    _model_cls = Role
+    _lock_cls = RoleRecordLock
+    _schema_cls = RoleSchema()
+    _schema_list_cls = RoleSchema( many = True )
+    _uri = '/api/gn_role'
+
+    def __init__( self ):
+        CrudInterface.__init__( self, gn_roleApi )
+        return
+
+    def beforeUpdate( self, record ):
+        for field in ( "R_ID", ):
+            if field in record:
+                del record[ field ]
+
+        return record
 
 
-@gn_roleApi.route( '/api/gn_role/new', methods = [ 'POST' ] )
-def apiRoleNew():
-    data    = request.json
-    if data is None:
-        return "Invalid request, missing RoleRecord", 500
-
-    API.app.logger.info( 'POST: /api/gn_role/new {0}'.format( repr( data ) ) )
-    data = removeGeneratedFieldsFromRecord( data )
-    record = Role()
-    for key, value in data.items():
-        setattr( record, key, fieldConversion( record, key, value ) )
-
-    API.db.session.add( record )
-    API.db.session.commit()
-    result = gn_roleSchema.jsonify( record )
-    API.app.logger.debug( 'getRoleNew() => {0}'.format( result ) )
-    return result
-
-
-@gn_roleApi.route( '/api/gn_role/get', methods = [ 'GET' ] )
-def apiRoleGet():
-    data    = request.json
-    if data is None:
-        return "Invalid request, missing RoleRecord", 500
-
-    API.app.logger.info( 'GET: /api/gn_role/get {0}'.format( repr( data ) ) )
-    record = Role.query.get( int( data[ 'R_ID' ] ) )
-    result = gn_roleSchema.jsonify( record )
-    API.app.logger.debug( 'getRoleGet() => {0}'.format( result ) )
-    return result
-
-
-@gn_roleApi.route( '/api/gn_role/get/<int:id>', methods = [ 'GET' ] )
-def apiRoleGetId( id ):
-    API.app.logger.info( 'GET: /api/gn_role/get/{0}'.format( id ) )
-    record = Role.query.get( int( id ) )
-    result = gn_roleSchema.jsonify( record )
-    API.app.logger.debug( 'getRoleGet() => {0}'.format( result ) )
-    return result
-
-
-@gn_roleApi.route( '/api/gn_role/<int:id>', methods = [ 'DELETE' ] )
-def apiRoleDelete( id ):
-    API.app.logger.info( 'DELETE: /api/gn_role/delete {0}'.format( id ) )
-    record = Role.query.get( int( id ) )
-    API.db.session.delete( record )
-    API.db.session.commit()
-    result = jsonify( ok = True )
-    API.app.logger.debug( 'getRoleDelete() => {0}'.format( result ) )
-    return result
-
-
-@gn_roleApi.route( '/api/gn_role/put', methods=[ 'POST' ] )
-def apiRolePut():
-    data    = request.json
-    if data is None:
-        return "Invalid request, missing RoleRecord", 500
-
-    API.app.logger.info( 'POST: /api/gn_role/put {0}'.format( repr( data ) ) )
-    record = Role.query.get( data[ 'R_ID' ] )
-    data = removeGeneratedFieldsFromRecord( data )
-    for key, value in data.items():
-        if key != 'R_ID' and not key.endswith( '_REL' ):
-            setattr( record, key, fieldConversion( record, key, value ) )
-
-    API.db.session.commit()
-    result = gn_roleSchema.jsonify( record )
-    API.app.logger.debug( 'getRolePut() => {0}'.format( result ) )
-    return result
-
-
-@gn_roleApi.route( '/api/gn_role/update', methods=[ 'POST' ] )
-def apiRolePatch():
-    data    = request.json
-    API.app.logger.info( 'POST: /api/gn_role/update {0}'.format( repr( data ) ) )
-    record = Role.query.get( data[ 'R_ID' ] )
-    data = removeGeneratedFieldsFromRecord( data )
-    for key, value in data.items():
-        if key != 'R_ID' and not key.endswith( '_REL' ):
-            setattr( record, key, fieldConversion( record, key, value ) )
-
-    API.db.session.commit()
-    result = gn_roleSchema.jsonify( record )
-    API.app.logger.debug( 'getRolePatch() => {0}'.format( result ) )
-    return result
-
-
-@gn_roleApi.route( '/api/gn_role/select', methods=[ 'POST' ] )
-def apiRoleSelect():
-    labels = []
-    data    = request.json
-    if data is None:
-        data = request.args
-
-    API.app.logger.info( 'GET /api/gn_role/select: {0}'.format( repr( data ) ) )
-    value = data.get( 'value', 'R_ID' )    # primary key
-    label = data.get( 'label', 'R_ROLE' )  # first field name
-    if ',' in label:
-        labels = label.strip().split( ',' )
-        separator = ' '
-        label = labels[ 0 ]
-
-    elif '-' in label:
-        labels = label.strip().split( '-' )
-        separator = '-'
-        label = labels[ 0 ]
-
-    elif ';' in label:
-        labels = label.strip().split( ';' )
-        separator = '; '
-        label = labels[ 0 ]
-
-    initialItem = data.get( 'initialItem', None )
-    finalItem   = data.get( 'finalItem', None )
-
-    result = []
-    q = db.session.query( Role ).order_by( getattr( Role, label ) )
-    for record in q.all():
-        if len( labels ) > 0:
-            fields = [ getattr( record, lbl.strip() ) for lbl in labels ]
-            result.append( { 'value': getattr( record, value ),
-                             'label': separator.join( fields ) } )
-
-        else:
-            result.append( { 'value': getattr( record, value ),
-                             'label': getattr( record, label ) } )
-
-    if initialItem is not None:
-        result.insert( 0, initialItem )
-
-    if finalItem is not None:
-        result.append( finalItem )
-
-    API.app.logger.debug( 'apiRoleSelect => {0}'.format( result ) )
-    return jsonify( result )
-
-
-@gn_roleApi.route( '/api/gn_role/lock', methods=[ 'POST' ] )
-def apiRoleLock():
-    data    = request.json
-    API.app.logger.info( 'POST: /api/gn_role/lock {0}'.format( repr( data ) ) )
-    # TODO: This needs to be implemented for correct multiuser support
-    return jsonify( { 'result': 'OK' } )
-
-
-@gn_roleApi.route( '/api/gn_role/unlock', methods=[ 'POST' ] )
-def apiRoleUnlock():
-    data    = request.json
-    API.app.logger.info( 'POST: /api/gn_role/unlock {0}'.format( repr( data ) ) )
-    # TODO: This needs to be implemented for correct multiuser support
-    return jsonify( { 'result': 'OK' } )
+gn_role = RoleCurdInterface()
 

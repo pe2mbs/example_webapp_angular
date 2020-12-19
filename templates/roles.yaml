@@ -71,14 +71,6 @@ objects:
             listview:
                 index:              0
                 width:              90%
-        -   field:                  R_MOD                       TIMESTAMP       NOT NULL
-            remark:                 This is used for tracing changes, therefore not shown in the UI
-            default:                getCurrentUtcDateTime()
-            autoupdate:             getCurrentUtcDateTime()
-        -   field:                  R_USER_MOD                  CHAR( 30 )      NOT NULL
-            remark:                 This is used for tracing changes, therefore not shown in the UI
-            default:                getCurrentUser()
-            autoupdate:             getCurrentUser()
         -   field:                  R_REMARK                    CLOB            NULL
             label:                  Remark
             hint:                   Miscellaneous information not related.

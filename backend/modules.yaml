@@ -1,9 +1,12 @@
-- model: User
-  module: backend.user
-  table: wa_users
 - model: Role
   module: backend.gn_role
   table: gn_role
 - model: User
   module: backend.gn_user
   table: gn_user
+- model: RecordLocks
+  module: backend.locking
+  table: locking
+- model: Tracking
+  module: backend.tracking
+  table: tracking

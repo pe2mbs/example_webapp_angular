@@ -11,6 +11,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleModule } from './backend/gn_role/module';
 import { UserModule } from './backend/gn_user/module';
+import { RecordLocksModule } from './backend/locking/module';
+import { TrackingModule } from './backend/tracking/module';
+import { ExampleHttpDatabase } from './demo/table-http-service';
+import { TableHttpExample } from './demo/table-http-example';
 
 
 @NgModule({
@@ -19,22 +23,26 @@ import { UserModule } from './backend/gn_user/module';
   ],
   declarations: [
     AppComponent,
+    TableHttpExample
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DefaultModule,
     HttpClientModule,
     GridsterModule,
     GenCrudModule,
+    DefaultModule,
     FormsModule,
-	ReactiveFormsModule,
-	MarkdownModule.forRoot(),
-	RoleModule,
-	UserModule,   
+    ReactiveFormsModule,
+    MarkdownModule.forRoot(),
+    RoleModule,
+    RecordLocksModule,
+    TrackingModule,
+    UserModule
   ],
   providers: [
+    ExampleHttpDatabase
   ]
 })
 export class AppModule { }

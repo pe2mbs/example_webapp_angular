@@ -5,8 +5,11 @@
 export const environment = 
 {
   	production: false,
-	  apiUrl: '/api',
-	  defaultTheme: 'dark'
+	apiUrl: '/api',
+	defaultTheme: 'dark',
+	headerTitle: 'Wepapp2 core application',
+	headerLogo: 'logo.png',
+	footerText: 'DEVELOPMENT - Webapp2 Python-flask angular core, &copy; 2019-2020 All rights reserved by Marc Bertens-Nguyen'
 };
 
 /*

@@ -1,6 +1,12 @@
-<mat-card>
+<mat-card id="gn_role.details" class="standard-container-details">
+	<mat_card-header class="header-breadcrumb">
+		<div fxFlex fxLayout="row">
+			<app-breadcrumb fxFlex="95"></app-breadcrumb>
+			<app-help fxFlex="5" fxLayoutAlign="end" helpitem="gn_role"></app-help>
+		</div>
+	</mat_card-header>
     <mat-card-content>
-        <form class="" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_role.form">
+        <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_role.form">
             <pyt-text-input-box id="R_ROLE.R_ROLE" placeholder="Description" error="true" formControlName="R_ROLE"></pyt-text-input-box>
             <pyt-monaco-editor-box id="R_REMARK.R_REMARK" placeholder="Remark" language="markdown" height="auto" [minimap]="true" [heightAdjust]="-120" error="true" formControlName="R_REMARK"></pyt-monaco-editor-box>
         </form>

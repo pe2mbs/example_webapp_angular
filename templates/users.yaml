@@ -81,9 +81,6 @@ objects:
                 resolve-list:
                     true:           'Yes'
                     false:          'No'
-            listview:
-                width:              5%
-                index:              0
         -   field:                  U_NAME                      CHAR( 30 )      NOT NULL
             unique:                 true
             hint:                   The user name used to identify at login to the application.
@@ -91,8 +88,8 @@ objects:
             ui:
                 type:               textbox
             listview:
-                width:              10%
-                index:              1
+                width:              150px
+                index:              0
         -   field:                  U_ROLE                      INT             FOREIGN KEY GN_ROLE.R_ID
             label:                  User role
             hint:                   The user role in the application
@@ -103,9 +100,6 @@ objects:
                     class:          Role
                     value:          R_ID
                     label:          R_ROLE
-            listview:
-                width:              15%
-                index:              2
             tab:
                 label:              General
                 index:              0
@@ -131,8 +125,8 @@ objects:
             ui:
                 type:               textbox
             listview:
-                width:              15%
-                index:              3
+                width:              30%
+                index:              1
             tab:
                 label:              Personal
                 index:              0
@@ -150,8 +144,8 @@ objects:
             ui:
                 type:               textbox
             listview:
-                width:              15%
-                index:              4
+                width:              30%
+                index:              2
             tab:
                 label:              Personal
                 index:              2
@@ -161,7 +155,7 @@ objects:
             ui:
                 type:               textbox
             listview:
-                width:              25%
+                width:              30%
                 index:              3
             tab:
                 label:              General
@@ -174,15 +168,6 @@ objects:
             remark:                 This is used for the token handling, therefore not shown in the UI
         -   field:                  U_CREATE_DT                 TIMESTAMP       NULL
             remark:                 This is used for the token handling, therefore not shown in the UI
-        -   field:                  U_MOD                       TIMESTAMP       NOT NULL
-            remark:                 This is used for tracing changes, therefore not shown in the UI
-            default:                getCurrentUtcDateTime()
-            autoupdate:             getCurrentUtcDateTime()
-        -   field:                  U_MOD_USER                  CHAR( 30 )      NOT NULL
-            remark:                 This is used for tracing changes, therefore not shown in the UI
-            default:                getCurrentUser()
-            autoupdate:             getCurrentUser()
-
         -   field:                  U_REMARK                    CLOB            NULL
             label:                  Remark
             hint:                   Miscellaneous information not related.

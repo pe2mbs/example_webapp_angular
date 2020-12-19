@@ -11,7 +11,6 @@ export class TableBaseComponent<T> extends Subscribers implements OnInit, OnDest
     index: number;
     @Input() id: any;
     @Input() value: any;
-    @Input() caption: boolean = true;
     public mode: string;
     protected backendFilter: any = null;
     public pageSize: number = 10;
@@ -36,13 +35,14 @@ export class TableBaseComponent<T> extends Subscribers implements OnInit, OnDest
         return;
     }
 
+    public applyFilter( dummy: T )
+    {
+        return;
+    }
+
     public ngOnInit(): void
     {
         let tmp = localStorage.getItem( this.componentName + '.size' );
-        if ( this.caption === undefined && this.caption === null )
-        {
-            this.caption = true;
-        }
         if ( tmp !== null )
         {
             this.pageSize = +tmp;
@@ -75,7 +75,6 @@ export class TableBaseComponent<T> extends Subscribers implements OnInit, OnDest
         {
             this.bot_paginator.pageIndex = +tmp;
         }
-        this.subscribeFilter();
         return;
     }
 
@@ -157,7 +156,6 @@ export class TableBaseComponent<T> extends Subscribers implements OnInit, OnDest
         this.top_paginator.length = $event.length;
         this.top_paginator.pageSize = $event.pageSize;
         this.top_paginator.pageIndex = $event.pageIndex;
-
         this.paginatorEvent.emit( $event );
         return ( $event );
     }
@@ -165,29 +163,6 @@ export class TableBaseComponent<T> extends Subscribers implements OnInit, OnDest
     protected refreshTable(): void
     {
         this.bot_paginator._changePageSize( this.bot_paginator.pageSize );
-        return;
-    }
-
-    public subscribeFilter(): void
-    {
-        this.registerSubscription( fromEvent( this.filter.nativeElement, 'keyup' ).subscribe( () => {
-            if ( !this.dataSource )
-            {
-                return;
-            }
-            this.setFilter( this.filter.nativeElement.value );
-        } ) );
-        if ( this.mode !== 'filter' )
-        {
-            const tmp = localStorage.getItem( this.componentName + '.filter' );
-            if ( tmp !== null )
-            {
-                this.setFilter( tmp );
-            }
-            this.registerSubscription( this.dataSource.filterChange.subscribe( value => {
-                localStorage.setItem( this.componentName + '.filter', value );
-            } ) );
-        }
         return;
     }
 

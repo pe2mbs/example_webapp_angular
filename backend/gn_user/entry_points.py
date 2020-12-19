@@ -119,9 +119,7 @@ def getUserSignup():
                                            U_ROLE = 1,                  # Should be the default Role
                                            U_ACTIVE = True,
                                            U_LISTITEMS = 25,
-                                           U_LOCALE = 1,                # Should be the default locale
-                                           U_MOD = datetime.utcnow(),
-                                           U_MOD_USER = 'signup' ) )
+                                           U_LOCALE = 1 ) )                # Should be the default locale
             API.db.session.commit()
             return jsonify( result = True )
 

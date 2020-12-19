@@ -36,7 +36,7 @@
     "ngx-monaco-editor": "^8.1.1",
     "npm": "^6.14.9",
     "primeicons": "^4.1.0",
-    "primeng": "^11.0.0-rc.2",
+    "primeng": "^8.1.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "url-polyfill": "^1.1.12",

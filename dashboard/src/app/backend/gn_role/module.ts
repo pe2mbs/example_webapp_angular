@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:21:29 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenCrudModule } from '../../common/gencrud.module';
+import { DefaultModule } from '../../layouts/default.module';
 import { SpinnerService } from '../../common/spinner-service';
 import { CustomHttpInterceptor } from '../../common/http-interceptor';
 
@@ -33,52 +34,51 @@ import { ScreenRoleComponent } from './screen.component';
 import { DeleteRoleDialog } from './delete.dialog';
 import { RoleTableComponent } from './table.component';
 import { RoleDataService } from './service';
-import { DefaultComponent } from 'src/app/layouts/default.component';
-import { AuthGuard } from 'src/app/layouts/auth-guard.service';
-import { DefaultModule } from 'src/app/layouts/default.module';
+import { DefaultComponent } from '../../layouts/default.component';
 
 
 export const gn_roleRoute: Route = {
-	path: '',
-	component: DefaultComponent,
-	canActivate: [ AuthGuard ],
-	children: [ {
-		path:           'gn_role',
-		data:
-		{
-			breadcrumb: 'Roles',
-			title:      'Roles'
-		},
-		children: [
-			{
-				path: '',
-				component: RoleTableComponent,
-				data:
-				{
-					breadcrumb: '',
-					title:      ''
-				}
-			},
-			{
-				path: 'new',
-				component: ScreenRoleComponent,
-				data:
-				{
-					breadcrumb: 'New',
-					title:      'New'
-				}
-			},
-			{
-				path: 'edit',
-				component: ScreenRoleComponent,
-				data:
-				{
-					breadcrumb: 'Edit',
-					title:      'Edit'
-				}
-			},
-		]
-	} ]
+    path: '',
+    component: DefaultComponent,
+    children: [
+        {
+            path:           'gn_role',
+            data:
+            {
+                breadcrumb: 'Roles',
+                title:      'Roles'
+            },
+            children: [
+                {
+                    path: '',
+                    component: RoleTableComponent,
+                    data:
+                    {
+                        breadcrumb: 'Overview',
+                        title:      ''
+                    }
+                },
+                {
+                    path: 'new',
+                    component: ScreenRoleComponent,
+                    data:
+                    {
+                        breadcrumb: 'New',
+                        title:      'New'
+                    }
+                },
+                {
+                    path: 'edit',
+                    component: ScreenRoleComponent,
+                    data:
+                    {
+                        breadcrumb: 'Edit',
+                        title:      'Edit'
+                    }
+                },
+            ]
+        }
+    ]
 };
 
 /*

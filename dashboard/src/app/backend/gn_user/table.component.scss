@@ -17,132 +17,45 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
-.spacer
-{
-    flex: 1 1 auto;
-}
-
-.spacer-nav
-{
-    width: 10px;
-}
-
-#User-paginator
-{
-    width: 400px;
-}
-
-.spacer-end
-{
-    width: 10px;
-}
-
-.navigator-row
-{
-    display: flex;
-    box-sizing: border-box;
-    padding: 16px 1%;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    white-space: nowrap;
-}
-
-/* Filter */
-.form 
-{
-    min-height: 56px;
-    max-height: 56px;
-    display: flex;
-    align-items: center;
-    padding: 0px 0px 8px 24px;
-    font-size: 20px;
-    justify-content: space-between;
-    border-bottom: 1px solid transparent;
-}
-
-h2
-{
-    display: block;
-    font-size: 1.5em;
-    margin-top: 0.24em;
-    margin-bottom: 0;
-    margin-left: 24px;
-    margin-right: 0;
-    font-weight: bold;
-}
-  
-.mat-form-field 
-{
-    font-size: 14px;
-    flex-grow: 1;
-    margin-top: 8px;
-}
-  
-/* Mat table */
-.no-results 
-{
-    display: flex;
-    justify-content: center;
-    padding: 14px;
-    font-size: 14px;
-    font-style: italic;
-}
-
-.mat-cell:nth-child( 1 ),
-.mat-header-cell:nth-child( 1 )
-{
-    // Field U_ACTIVE
-    flex: 0 0 5%;
-}
-.mat-cell:nth-child( 2 ),
-.mat-header-cell:nth-child( 2 )
+.mat-cell:nth-child( 1 ), .mat-header-cell:nth-child( 1 )
 {
     // Field U_NAME
-    flex: 0 0 10%;
+    // using fixed width
+    flex: 0 0 150px;
 }
-.mat-cell:nth-child( 3 ),
-.mat-header-cell:nth-child( 3 )
-{
-    // Field U_ROLE
-    flex: 0 0 15%;
-}
-.mat-cell:nth-child( 4 ),
-.mat-header-cell:nth-child( 4 )
+.mat-cell:nth-child( 2 ), .mat-header-cell:nth-child( 2 )
 {
     // Field U_FIRST_NAME
-    flex: 0 0 15%;
+    // using variable width
+    flex: 1 1 30%;
 }
-.mat-cell:nth-child( 5 ),
-.mat-header-cell:nth-child( 5 )
-{
-    // Field U_EMAIL
-    flex: 0 0 25%;
-}
-.mat-cell:nth-child( 6 ),
-.mat-header-cell:nth-child( 6 )
+.mat-cell:nth-child( 3 ), .mat-header-cell:nth-child( 3 )
 {
     // Field U_LAST_NAME
-    flex: 0 0 15%;
+    // using variable width
+    flex: 1 1 30%;
+}
+.mat-cell:nth-child( 4 ), .mat-header-cell:nth-child( 4 )
+{
+    // Field U_EMAIL
+    // using variable width
+    flex: 1 1 30%;
+}
+.mat-cell:nth-child( 5 ), .mat-header-cell:nth-child( 5 )
+{
+    // Options, using fixed with
+    flex: 0 0 50px;
 }
 
-.mat-cell:nth-child( 7 ),
-.mat-header-cell:nth-child( 7 )
+.mat-row:nth-child( even )
 {
-    flex: 0 0 5%;
+    background-color: #f5f5f5;
 }
 
-.http-spinner
+.mat-row:nth-child( odd )
 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: white;
 }
 
-.http-spinner-inner
-{
-    height: 60px;
-    padding: 12px;
-}

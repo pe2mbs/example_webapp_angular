@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { EventEmitter } from '@angular/core';
 import { CrudDataSource } from '../../common/crud-datasource';
@@ -45,19 +45,14 @@ export class UserDataSource extends CrudDataSource<UserRecord>
     {
         switch ( active ) 
         {
-        case 'U_ACTIVE':
-            return ( [ a.U_ACTIVE_LABEL, b.U_ACTIVE_LABEL ] );
         case 'U_NAME':
             return ( [ a.U_NAME, b.U_NAME ] );
-        case 'U_ROLE':
-            // TODO: fix the the resolved items
-            return ( [ a.U_ROLE_FK.R_ROLE, b.U_ROLE_FK.R_ROLE ] );
         case 'U_FIRST_NAME':
             return ( [ a.U_FIRST_NAME, b.U_FIRST_NAME ] );
-        case 'U_EMAIL':
-            return ( [ a.U_EMAIL, b.U_EMAIL ] );
         case 'U_LAST_NAME':
             return ( [ a.U_LAST_NAME, b.U_LAST_NAME ] );
+        case 'U_EMAIL':
+            return ( [ a.U_EMAIL, b.U_EMAIL ] );
         }
         return ( [ null, null ] );        
     }
@@ -65,12 +60,10 @@ export class UserDataSource extends CrudDataSource<UserRecord>
     public makeSearchString( record: any ): string
     {
         let searchString: string = '';
-        searchString += record.U_ACTIVE_LABEL;
         searchString += record.U_NAME;
-        searchString += record.U_ROLE_FK.R_ROLE;
         searchString += record.U_FIRST_NAME;
-        searchString += record.U_EMAIL;
         searchString += record.U_LAST_NAME;
+        searchString += record.U_EMAIL;
         return ( searchString.toLowerCase() );
     }
 }

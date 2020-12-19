@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#      gencrud: 2020-12-05 15:21:29 version 2.0.607 by user mbertens
+#      gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 #
 from backend.gn_role.schema import *
 from backend.gn_role.model import *

@@ -1,32 +1,40 @@
 <mat-toolbar color="primary">
-	<mat-toolbar-row>
-		<button mat-icon-button (click)="toggleSidebar()">
-			<mat-icon>menu</mat-icon>	
-		</button>
-		<span>App logo</span>
-		<span>App title</span>
-		<div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
-			<ul fxLayout="row" fxLayoutGap="20px">
-				<li>
-					<app-theme-switcher></app-theme-switcher>
-				</li>
-				<li>
-					<button mat-icon-button>
-						<mat-icon>settings</mat-icon>
-					</button>
-				</li>
-				<li>
-					<app-help helpitem="main"></app-help>
-				</li>
-				<li>
-					<button mat-button [matMenuTriggerFor]="menu">
-						<mat-icon>person_outline</mat-icon>
-					</button>
-					<mat-menu #menu="matMenu">
-						<app-user-profile></app-user-profile>
-					</mat-menu>
-				</li>
-			</ul>
-		</div>
+	<mat-toolbar-row fxLayout="row">
+		<span fxFlex="5">
+			<button mat-icon-button (click)="toggleSidebar()">
+				<mat-icon>menu</mat-icon>	
+			</button>
+		</span>
+		<span fxFlex="30" class="logo">
+			<a href="/#/">
+				<img src="assets/logo-equensWorldline.png" alt="equensWorldline" size="40">
+			</a>
+		</span>
+		<span fxFlex="50">{{ headerTitle }}</span>
+		<span fxFlex="40">
+			<div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+				<ul fxLayout="row" fxLayoutGap="20px">
+					<li>
+						<app-theme-switcher></app-theme-switcher>
+					</li>
+					<li>
+						<button mat-icon-button>
+							<mat-icon>settings</mat-icon>
+						</button>
+					</li>
+					<li>
+						<app-help helpitem="main"></app-help>
+					</li>
+					<li>
+						<button mat-button [matMenuTriggerFor]="menu">
+							<mat-icon>person_outline</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu">
+							<app-user-profile></app-user-profile>
+						</mat-menu>
+					</li>
+				</ul>
+			</div>
+		</span>
 	</mat-toolbar-row>
 </mat-toolbar>

@@ -12,7 +12,7 @@ export class HelpService
 		return;
 	}
 
-	public getHelp( name: string ): Observable<string>
+	public getHelp( name: string, fallback: string ): Observable<string>
 	{
 		return ( this.httpSession.get<string>( '/api/help/' + name ) );
 	}

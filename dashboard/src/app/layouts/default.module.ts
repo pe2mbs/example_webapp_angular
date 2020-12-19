@@ -63,9 +63,13 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginDialogComponent } from './login/login.dialog.component';
 import { SignupDialogComponent } from './login/signup.dialog.component';
+import { BreadcrumbComponent } from './breadcrumb.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 const materialModules = [
+	BreadcrumbModule,
 	CdkTreeModule,
 	MatAutocompleteModule,
 	MatButtonModule,
@@ -79,6 +83,7 @@ const materialModules = [
 	MatListModule,
 	MatMenuModule,
 	MatProgressSpinnerModule,
+	MatProgressBarModule,
 	MatPaginatorModule,
 	MatRippleModule,
 	MatSelectModule,
@@ -100,7 +105,8 @@ const materialModules = [
 	MatTooltipModule,
 	MatSlideToggleModule,
 	MatSliderModule,
-	MatDialogModule
+	MatDialogModule,
+	FlexLayoutModule
 ];
 
 const defaultRoute: Route = { 	
@@ -129,6 +135,7 @@ const defaultRoute: Route = {
 		UserProfileComponent,
 		ThemeSwitcherComponent,
 		DefaultComponent,
+		BreadcrumbComponent,
   	],
   	imports: [
 		CommonModule,
@@ -136,7 +143,6 @@ const defaultRoute: Route = {
 		FormsModule,
 		ReactiveFormsModule,
 		RouterModule,
-		FlexLayoutModule,
 		MarkdownModule.forChild(),
 		GridsterModule,
 		RouterModule.forChild( [ defaultRoute ] ),
@@ -144,6 +150,7 @@ const defaultRoute: Route = {
 	],
 	exports:[
 		DefaultComponent,
+		BreadcrumbComponent,
 		DashboardComponent,
 		HeaderComponent,
 		FooterComponent,

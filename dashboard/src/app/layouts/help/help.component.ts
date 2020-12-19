@@ -5,11 +5,13 @@ import { HelpService } from './service.service';
 
 @Component({
 	selector: 'app-help',
-	template: `<button mat-icon-button (click)="helpButton()"><mat-icon>help_outline</mat-icon></button>`,
+	template: `<button mat-icon-button [color]="color" (click)="helpButton()"><mat-icon>help_outline</mat-icon></button>`,
 } )
 export class HelpComponent
 {
 	@Input() helpitem: string;
+	@Input() fallback: string;
+	@Input() color: string;
 
 	constructor( public dialog: MatDialog
 		       , public service: HelpService ) 
@@ -22,7 +24,7 @@ export class HelpComponent
 		const helpdata: HelpDialogData =
 		{
 			name: this.helpitem,
-			text: this.service.getHelp( this.helpitem ),
+			text: this.service.getHelp( this.helpitem, this.fallback ),
 		};
 		console.log( 'helpButton' );
 		const dialogRef = this.dialog.open( HelpDialogComponent, {  

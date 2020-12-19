@@ -1,5 +1,38 @@
 import { Component } from '@angular/core';
 
+const CSS_TEMPLATE = `
+:host 
+{ 
+	display: flex; 
+	flex-direction: column; 
+	height: 100%; 
+	overflow: hidden!important;
+}	
+
+::ng-deep .mat-drawer-inner-container 
+{	 
+	overflow: hidden!important;  
+}
+
+mat-drawer-container 
+{ 
+	height: 100%; 
+	overflow: hidden!important;
+}
+
+.mat-drawer 
+{ 
+	width: 260px; 
+	max-width: 300px; 
+	overflow: hidden!important; 
+}
+
+mat-drawer-content 
+{ 
+	padding-left: 5px; 
+}`;
+
+
 @Component({
   	selector: 'app-default',
 	  template: `<app-header (onToggleSidebar)="doToggleSidebar( $event )"></app-header>
@@ -12,10 +45,7 @@ import { Component } from '@angular/core';
 	</mat-drawer-content>
 </mat-drawer-container>
 <app-footer></app-footer>`,
-  	styles: [ ':host { display: flex; flex-direction: column; height: 100%; }',
-	  		  'mat-drawer { min-width: 200px; }',
-	  		  'mat-drawer-container { height: 100%; }',
-	  		  'mat-drawer-content { padding: 10px; }']
+  	styles: [ CSS_TEMPLATE ]
 })
 export class DefaultComponent 
 {

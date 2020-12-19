@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -141,8 +141,6 @@ export class ScreenUserComponent extends ScreenBaseComponent<UserRecord> impleme
                     U_REFRESH_TOKEN: this.row.U_REFRESH_TOKEN,
                     U_TOKEN_DT: this.row.U_TOKEN_DT,
                     U_CREATE_DT: this.row.U_CREATE_DT,
-                    U_MOD: this.row.U_MOD,
-                    U_MOD_USER: this.row.U_MOD_USER,
                     U_REMARK: this.row.U_REMARK,
                     U_LOCALE: this.row.U_LOCALE,
                     U_LISTITEMS: this.row.U_LISTITEMS,
@@ -227,16 +225,6 @@ export class ScreenUserComponent extends ScreenBaseComponent<UserRecord> impleme
     public get U_CREATE_DT()
     {
         return ( this.formGroup.get( 'U_CREATE_DT' ) );
-    }
-
-    public get U_MOD()
-    {
-        return ( this.formGroup.get( 'U_MOD' ) );
-    }
-
-    public get U_MOD_USER()
-    {
-        return ( this.formGroup.get( 'U_MOD_USER' ) );
     }
 
     public get U_REMARK()

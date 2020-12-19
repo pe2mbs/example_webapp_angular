@@ -1,4 +1,10 @@
-<mat-card>
+<mat-card id="gn_user.details" class="standard-container-details">
+	<mat_card-header class="header-breadcrumb">
+		<div fxFlex fxLayout="row">
+			<app-breadcrumb fxFlex="95"></app-breadcrumb>
+			<app-help fxFlex="5" fxLayoutAlign="end" helpitem="gn_role"></app-help>
+		</div>
+	</mat_card-header>
     <mat-card-content>
         <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_user.form">
             <pyt-checkbox-input-box id="U_ACTIVE.U_ACTIVE" placeholder="Active user" error="true" labelPosition="after" formControlName="U_ACTIVE"></pyt-checkbox-input-box>

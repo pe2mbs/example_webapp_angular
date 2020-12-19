@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:21:29 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -30,8 +30,8 @@ import { ScreenBaseComponent } from 'src/app/common/crud-screen-component';
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-gn_role-screen',
-	templateUrl: './screen.component.html',
-	styleUrls: [ '../../common/common-mat-card.scss' ]
+    templateUrl: './screen.component.html',
+    styleUrls: [ '../../common/common-mat-card.scss' ]
 })
 export class ScreenRoleComponent extends ScreenBaseComponent<RoleRecord> implements OnInit, OnDestroy
 {
@@ -71,8 +71,6 @@ export class ScreenRoleComponent extends ScreenBaseComponent<RoleRecord> impleme
                 this.formGroup.patchValue( {
                     R_ID: this.row.R_ID,
                     R_ROLE: this.row.R_ROLE,
-                    R_MOD: this.row.R_MOD,
-                    R_USER_MOD: this.row.R_USER_MOD,
                     R_REMARK: this.row.R_REMARK,
                 } );
                 this.updateFixedValues();
@@ -90,16 +88,6 @@ export class ScreenRoleComponent extends ScreenBaseComponent<RoleRecord> impleme
     public get R_ROLE()
     {
         return ( this.formGroup.get( 'R_ROLE' ) );
-    }
-
-    public get R_MOD()
-    {
-        return ( this.formGroup.get( 'R_MOD' ) );
-    }
-
-    public get R_USER_MOD()
-    {
-        return ( this.formGroup.get( 'R_USER_MOD' ) );
     }
 
     public get R_REMARK()

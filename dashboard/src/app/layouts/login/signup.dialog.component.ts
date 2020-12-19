@@ -13,7 +13,8 @@ import { SignupData } from '../auth.service';
 export class SignupDialogComponent
 {
 	public signupForm: FormGroup;
-
+	public showPw: boolean = false;
+	
 	constructor( public dialogRef: MatDialogRef<SignupDialogComponent>
 			   , @Inject( MAT_DIALOG_DATA ) public data: any
 			   , private fb: FormBuilder )

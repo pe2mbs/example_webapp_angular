@@ -2,11 +2,27 @@
   children:
   - caption: Users
     icon: accessibility
-    id: DC8006E3BF9DA8B8B321707451BCEEDA
+    id: F19874EA16DB0675ABBE9EC7DB1F341A
     route: /gn_user
   - caption: Roles
     icon: group_work
-    id: 1E1E5E2A9CE10DA0C2505A8FA96B04CB
+    id: BBD58F23590A9F3AAED4D61B35C4BA9E
     route: /gn_role
+  - caption: DataBase
+    children:
+    - caption: Record locks
+      icon: lock
+      id: BE9FEC720351A0A2BD63F289C2FBB9F2
+      route: /locking
+    - caption: Record changes
+      icon: track_changes
+      id: 49C89CF0D0D30046026872A2DB4A828D
+      route: /tracking
+    icon: data_usage
+    id: 19C95EB738E52DA7F0F23FF90FE74038
   icon: settings
-  id: E307DB07B3975FEF922A80D07455EE5E
+  id: 7258E7251413465E0A3EB58094430BDE
+- caption: Demo
+  icon: settings
+  id: 19C95EB738E52455F0F23FF90FE74038
+  route: /demo

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -43,15 +43,9 @@ import { environment } from './../../../environments/environment';
 })
 export class UserTableComponent extends TableBaseComponent<UserRecord> implements OnInit, OnDestroy
 {
-    displayedColumns = [
-                            'U_ACTIVE',
-                            'U_NAME',
-                            'U_ROLE',
-                            'U_FIRST_NAME',
-                            'U_EMAIL',
-                            'U_LAST_NAME',
-                            'actions'
-                        ];
+    public filterRecord: UserRecord = new UserRecord();
+    public searchValue: any = {};
+    displayedColumns = [ 'U_NAME', 'U_FIRST_NAME', 'U_LAST_NAME', 'U_EMAIL', 'actions' ];
     constructor( public httpClient: HttpClient
                  , public route: ActivatedRoute
                  , public dialog: MatDialog

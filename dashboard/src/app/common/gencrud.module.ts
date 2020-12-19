@@ -41,9 +41,10 @@ import { PytSliderInputComponent } from './input-component/slider.component';
 import { PytMonacoEditorComponent } from './input-component/monaco.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { BreadcrumbComponent } from './breadcrumb.component';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DefaultModule } from '../layouts/default.module';
+import { FilterHeaderComponent, FilterItemDirective } from './filter-header.component';
+import { ClickStopPropagation } from './click-stop-propagation';
+
 
 @NgModule({
     declarations: [
@@ -65,8 +66,10 @@ import { DefaultModule } from '../layouts/default.module';
         PytLabelComponent,
         PytCheckboxInputComponent,
         PytSliderToggleInputComponent,
-		PytSliderInputComponent,
-		BreadcrumbComponent
+        PytSliderInputComponent,
+        FilterHeaderComponent,
+        ClickStopPropagation,
+        FilterItemDirective
     ],
     entryComponents: [
     ],
@@ -77,8 +80,7 @@ import { DefaultModule } from '../layouts/default.module';
         DefaultModule,
         FormsModule,
         ReactiveFormsModule,
-		NgSelectModule,
-		BreadcrumbModule,
+        NgSelectModule,
         NgxMaterialTimepickerModule,
         MonacoEditorModule.forRoot()
     ],
@@ -102,6 +104,7 @@ import { DefaultModule } from '../layouts/default.module';
         PytCheckboxInputComponent,
         PytSliderToggleInputComponent,
         PytSliderInputComponent,
+        FilterHeaderComponent
     ]
 })
 export class GenCrudModule

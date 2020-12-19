@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-06 17:30:48 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenCrudModule } from '../../common/gencrud.module';
+import { DefaultModule } from '../../layouts/default.module';
 import { SpinnerService } from '../../common/spinner-service';
 import { CustomHttpInterceptor } from '../../common/http-interceptor';
 
@@ -33,15 +34,12 @@ import { ScreenUserComponent } from './screen.component';
 import { DeleteUserDialog } from './delete.dialog';
 import { UserTableComponent } from './table.component';
 import { UserDataService } from './service';
-import { DefaultComponent } from 'src/app/layouts/default.component';
-import { AuthGuard } from 'src/app/layouts/auth-guard.service';
-import { DefaultModule } from 'src/app/layouts/default.module';
+import { DefaultComponent } from '../../layouts/default.component';
 
 
 export const gn_userRoute: Route = {
     path: '',
-	component: DefaultComponent,
-	canActivate: [ AuthGuard ],
+    component: DefaultComponent,
     children: [
         {
             path:           'gn_user',
@@ -56,7 +54,7 @@ export const gn_userRoute: Route = {
                     component: UserTableComponent,
                     data:
                     {
-                        breadcrumb: '',
+                        breadcrumb: 'Overview',
                         title:      ''
                     }
                 },

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-05 15:21:29 version 2.0.607 by user mbertens
+#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
 */
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -38,14 +38,13 @@ import { environment } from './../../../environments/environment';
     selector: 'app-gn_role-table',
     templateUrl: './table.component.html',
     styleUrls: [ './table.component.scss',
-				 '../../common/common-mat-card.scss' ]
+                 '../../common/common-mat-card.scss' ]
 })
 export class RoleTableComponent extends TableBaseComponent<RoleRecord> implements OnInit, OnDestroy
 {
-    displayedColumns = [
-                            'R_ROLE',
-                            'actions'
-                        ];
+    public filterRecord: RoleRecord = new RoleRecord();
+    public searchValue: any = {};
+    displayedColumns = [ 'R_ROLE', 'actions' ];
     constructor( public httpClient: HttpClient
                  , public route: ActivatedRoute
                  , public dialog: MatDialog
