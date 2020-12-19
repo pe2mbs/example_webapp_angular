@@ -148,7 +148,7 @@ const defaultRoute: Route = {
 		RouterModule.forChild( [ defaultRoute ] ),
 		...materialModules
 	],
-	exports:[
+	exports: [
 		DefaultComponent,
 		BreadcrumbComponent,
 		DashboardComponent,

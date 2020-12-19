@@ -11,7 +11,6 @@
 				Username is mandatory
 			</mat-error>
 		</mat-form-field>
-
 		<mat-form-field class="form-field">
 			<input matInput [type]="showPw ? 'text' : 'password'" placeholder="Password" formControlName='password'>
 			<mat-icon matSuffix (click)="showPw = !showPw">{{showPw ? 'visibility_off' : 'visibility'}}</mat-icon>

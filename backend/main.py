@@ -137,7 +137,7 @@ def registerApi( app, cors ):
     setattr( app,'registerSubMenu',registerSubMenu )
     for module in API.listModules:
         app.logger.debug( 'registering module {0}'.format( module ) )
-        module.registerApi( app,cors )
+        module.registerApi( app, cors )
         # if hasattr( module, 'menuItem' ):
         #     registerSubMenu( module.menuItem )
 
