@@ -35,7 +35,8 @@ mat-drawer-content
 
 @Component({
   	selector: 'app-default',
-	  template: `<app-header (onToggleSidebar)="doToggleSidebar( $event )"></app-header>
+      template: `<app-header (onToggleSidebar)="doToggleSidebar( $event )"></app-header>
+<news-ticker></news-ticker>      
 <mat-drawer-container>
 	<mat-drawer mode="side" [opened]="sideBarOpen">
 		<nav-sidebar></nav-sidebar>

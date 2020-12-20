@@ -67,6 +67,8 @@ import { BreadcrumbComponent } from './breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SignedOutComponent } from './signedout.component';
+import { TickerComponent } from './ticker/ticker.component';
+import { TickerDataService } from './ticker/service';
 
 
 const materialModules = [
@@ -137,7 +139,8 @@ const defaultRoute: Route = {
 		ThemeSwitcherComponent,
         DefaultComponent,
         SignedOutComponent,
-		BreadcrumbComponent,
+        BreadcrumbComponent,
+        TickerComponent
   	],
   	imports: [
 		CommonModule,
@@ -176,7 +179,8 @@ const defaultRoute: Route = {
     	AuthGuard,
 		AdminAuthGuard,
 		AuthService,
-		ThemeSwitcherComponent,
+        ThemeSwitcherComponent,
+        TickerDataService,
 		{
 		  provide: LocationStrategy,
 		  useClass: HashLocationStrategy
@@ -199,7 +203,8 @@ export class DefaultModule
     			AuthGuard,
 				AdminAuthGuard,
 				AuthService,
-				ThemeSwitcherComponent
+                ThemeSwitcherComponent,
+                TickerDataService
             ]
         };
     }
