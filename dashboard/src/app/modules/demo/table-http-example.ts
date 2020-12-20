@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ExampleHttpDatabase } from './table-http-service';
-import { FilterRecord } from '../common/filter-header.component';
+import { FilterRecord } from '../../common/filter-header.component';
 import { Router } from '@angular/router';
 
 export class CardTableBase<T> implements AfterViewInit
@@ -91,14 +91,16 @@ export class CardTableBase<T> implements AfterViewInit
 	}
 }	
 
-export class RecordLocksRecord
+export class TrackingRecord
 {
-    L_ID: number;
-    L_USER: string;
-    L_TABLE: string;
-    L_RECORD_ID: number;
-    L_START_DATE: Date;
-
+    T_ID: number;
+    T_USER: string;
+    T_TABLE: string;
+    T_ACTION: number;
+    T_RECORD_ID: number;
+    T_CHANGE_DATE_TIME: Date;
+    T_CONTENTS: string;
+    T_ACTION_LABEL: string;
 }
 
 /**
@@ -108,17 +110,17 @@ export class RecordLocksRecord
 	// tslint:disable-next-line:component-selector
 	selector: 'table-http-example',
 	styleUrls: [ 'table-http-example.css', 
-				 '../common/common-mat-card.scss' ],
+				 '../../common/common-mat-card.scss' ],
 	templateUrl: 'table-http-example.html'
 })
 // tslint:disable-next-line:component-class-suffix
-export class TableHttpExample extends CardTableBase<RecordLocksRecord>  
+export class TableHttpExample extends CardTableBase<TrackingRecord>  
 {
 	constructor( private _service: ExampleHttpDatabase,
 				 public router: Router ) 
 	{
 		super( _service,
-			   [ 'L_USER', 'L_START_DATE', 'L_TABLE', 'L_RECORD_ID' ] );
+			   [ 'T_USER', 'T_CHANGE_DATE_TIME', 'T_TABLE', 'T_ACTION_LABEL' ] );
 		return; 
 	}
 }

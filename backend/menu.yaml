@@ -1,3 +1,7 @@
+- caption: Dashboard
+  icon: dashboard
+  id: 19C9dffgg38E52455F0F23FF90FE74038
+  route: /
 - caption: Administration
   children:
   - caption: Users

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DefaultComponent } from './layouts/default.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { AuthGuard } from './layouts/auth-guard.service';
-import { TableHttpExample } from './demo/table-http-example';
+import { TableHttpExample } from './modules/demo/table-http-example';
 
 
 const routes: Routes = [
@@ -12,11 +12,19 @@ const routes: Routes = [
 		canActivate: [ AuthGuard ],
 		children: [
 			{
-				path: '',
+                path: '',
+                data: 
+                {
+                    breadcrumb: 'Dashboard',
+                },
 				component: DashboardComponent
 			},
 			{
-				path: 'demo',
+                path: 'demo',
+                data: 
+                {
+                    breadcrumb: 'Demo',
+                },
 				component: TableHttpExample
 			},
 		]
@@ -27,7 +35,7 @@ const routes: Routes = [
   	imports: [ 
 		RouterModule.forRoot( routes, {
 	  		useHash: true,
-	  		enableTracing: false
+	  		enableTracing: true
 	  	} ) 
 	],
   	exports: [ 

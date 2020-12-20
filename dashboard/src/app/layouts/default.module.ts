@@ -66,6 +66,7 @@ import { SignupDialogComponent } from './login/signup.dialog.component';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SignedOutComponent } from './signedout.component';
 
 
 const materialModules = [
@@ -111,7 +112,7 @@ const materialModules = [
 
 const defaultRoute: Route = { 	
 	path: '',
-	component: DefaultComponent,
+	component: SignedOutComponent,
 	children: [
 		{
 			path: 'login',
@@ -134,7 +135,8 @@ const defaultRoute: Route = {
 		SignupDialogComponent,
 		UserProfileComponent,
 		ThemeSwitcherComponent,
-		DefaultComponent,
+        DefaultComponent,
+        SignedOutComponent,
 		BreadcrumbComponent,
   	],
   	imports: [

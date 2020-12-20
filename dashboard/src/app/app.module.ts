@@ -13,8 +13,8 @@ import { RoleModule } from './backend/gn_role/module';
 import { UserModule } from './backend/gn_user/module';
 import { RecordLocksModule } from './backend/locking/module';
 import { TrackingModule } from './backend/tracking/module';
-import { ExampleHttpDatabase } from './demo/table-http-service';
-import { TableHttpExample } from './demo/table-http-example';
+import { ExampleHttpDatabase } from './modules/demo/table-http-service';
+import { TableHttpExample } from './modules/demo/table-http-example';
 
 
 @NgModule({

@@ -10,5 +10,11 @@ $light-app-theme:   mat-light-theme($light-app-primary, $light-app-accent, $ligh
 
 .light-theme
 {
-  	@include angular-material-theme($light-app-theme)
+    @include angular-material-theme($light-app-theme);
+      
+    .mat-toolbar.mat-primary 
+    {
+        background: white;
+        color: black;
+    }
 }

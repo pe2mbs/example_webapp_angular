@@ -1,0 +1,111 @@
+<mat-card id="tracking.table" class="standard-container">
+	<div>
+		<div fxFlex fxLayout="row">
+			<app-breadcrumb class="align-paginator" fxFlex="grow"></app-breadcrumb>
+			<mat-paginator #top_paginator fxFlex="40"
+							id="tracking.header.paginator"
+							(page)="pagingEvent( $event, 'top' )"
+							[length]="resultsLength"
+							[pageIndex]="pageIndex"
+							[pageSize]="pageSize"
+							[pageSizeOptions]="pageSizeOptions">
+			</mat-paginator>
+			<div class="align-paginator" fxFlex="none" fxLayoutAlign="end">
+				<app-help helpitem="tracking" fallback="table-overview" color="primary"></app-help>
+				<button mat-icon-button color="primary"
+							(click)="refresh()" id="tracking.header.refresh">
+					<mat-icon aria-label="Refresh the view">refresh</mat-icon>
+				</button>
+			</div>
+		</div>
+	</div>
+	<mat-card-content class="card-content">
+		<mat-table [dataSource]="records" #tableTracking
+					class="mat-cell" 
+					matSort matSortActive="T_USER" matSortDirection="desc" 
+                    matSortDisableClear>
+			<!-- T_USER Column -->
+			<ng-container matColumnDef="T_USER">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>
+					<filter-header title="User" field="T_USER" [filterRecord]="filterRecord">
+					</filter-header>
+				</mat-header-cell>
+				<mat-cell *matCellDef="let row; let i=index;" id="Tracking.T_USER" 
+							matTooltip="ID: {{ row.T_USER }}"
+                          (dblclick)="router.navigate( ['/tracking/edit'], { queryParams: { id: 'T_ID', mode: 'edit', value: row.T_ID } } )">
+					{{ row.T_USER }}
+				</mat-cell>
+			</ng-container>
+			<!-- T_CHANGE_DATE_TIME Column -->
+			<ng-container matColumnDef="T_CHANGE_DATE_TIME" >
+				<mat-header-cell *matHeaderCellDef mat-sort-header>
+					<filter-header title="Change date" field="T_CHANGE_DATE_TIME" [filterRecord]="filterRecord">
+					</filter-header>	
+				</mat-header-cell>
+				<mat-cell *matCellDef="let row; let i=index;" id="Tracking.T_CHANGE_DATE_TIME" 
+							matTooltip="ID: {{ row.T_CHANGE_DATE_TIME }}"
+                            (dblclick)="router.navigate( ['/tracking/edit'], { queryParams: { id: 'T_ID', mode: 'edit', value: row.T_ID } } )">
+					{{ row.T_CHANGE_DATE_TIME | date: 'yyyy-MM-dd HH:mm:ss ZZZZZ' }}
+				</mat-cell>
+			</ng-container>
+			<!-- T_TABLE Column -->
+			<ng-container matColumnDef="T_TABLE">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>
+					<filter-header title="Table" field="T_TABLE" [filterRecord]="filterRecord">
+					</filter-header>						
+				</mat-header-cell>
+				<mat-cell *matCellDef="let row; let i=index;" id="Tracking.T_TABLE" 
+							matTooltip="ID: {{ row.T_TABLE }}"
+                            (dblclick)="router.navigate( ['/tracking/edit'], { queryParams: { id: 'T_ID', mode: 'edit', value: row.T_ID } } )">
+					{{ row.T_TABLE }}
+				</mat-cell>
+			</ng-container>
+			<!-- T_ACTION_LABEL Column -->
+			<ng-container matColumnDef="T_ACTION_LABEL" >
+				<mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+					<filter-header title="Record Id." field="T_ACTION_LABEL" [filterRecord]="filterRecord">
+					</filter-header>
+				</mat-header-cell>
+				<mat-cell *matCellDef="let row; let i=index;" id="Tracking.T_ACTION_LABEL" 
+							matTooltip="ID: {{ row.T_ACTION_LABEL }}"
+                            (dblclick)="router.navigate( ['/tracking/edit'], { queryParams: { id: 'T_ID', mode: 'edit', value: row.T_ID } } )">
+					{{ row.T_ACTION_LABEL }}
+				</mat-cell>
+			</ng-container>
+			<mat-header-row *matHeaderRowDef="displayedColumns">
+			</mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;">
+			</mat-row>
+		</mat-table>
+	</mat-card-content>
+	<mat-card-footer style="margin-left: 5px; width: 100%;" >
+		<div fxFlex fxLayout="row">
+			<div fxFlex="grow">
+				<div id="tracking.spinner" *ngIf="isLoadingResults; else loading_done" class="loading-progress">
+					<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+				</div>
+				<ng-template #loading_done>
+					<div class="no-results" id="tracking.no-results"
+							[style.display]="resultsLength == 0 ? '' : 'none'">
+						No results
+					</div>
+				</ng-template>
+			</div>
+			<mat-paginator #bot_paginator fxFlex="40"
+							id="tracking.botton.paginator"
+							[length]="resultsLength"
+							(page)="pagingEvent( $event, 'bottom' )"
+							[pageIndex]="pageIndex"
+							[pageSize]="pageSize"
+							[pageSizeOptions]="pageSizeOptions">
+			</mat-paginator>
+			<div class="align-paginator" fxFlex fxLayoutAlign="end">
+				<button mat-icon-button color="primary"
+						id="tracking.botton.refresh"
+						(click)="refresh()">
+					<mat-icon aria-label="Refresh the view">refresh</mat-icon>
+				</button>
+			</div>
+		</div>
+	</mat-card-footer>
+</mat-card>

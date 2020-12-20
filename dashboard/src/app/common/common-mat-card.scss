@@ -7,7 +7,7 @@
 .standard-container-details
 {
 	width: 100%;
-	height: calc(100% - 50px);
+    height: 100%;
 }
 
 mat-tab-group
@@ -40,8 +40,6 @@ mat-tab-group
     padding: 14px;
     font-size: 14px;
 	font-style: italic;
-	background-color: yellow;
-	color: blue;
 }
 
 .card-content
@@ -52,8 +50,6 @@ mat-tab-group
 
 .mat-header-row
 {
-	color: rgba(0, 0, 0, 0.54);
-	background-color: #D5D5D5;
 	height: 36px;
 	min-height: 36px;
 	max-height: 36px;
@@ -62,4 +58,19 @@ mat-tab-group
 .align-paginator
 {
 	margin-top: 8px;
+}
+
+.mat-tab
+{
+    height: 100%!important;
+}
+
+.mat-tab-body-wrapper
+{
+    height: 100%!important;
+}
+
+form
+{
+    height: 100%!important;
 }

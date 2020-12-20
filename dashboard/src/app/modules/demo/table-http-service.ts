@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FilterRecord, FilterColumnReq } from '../common/filter-header.component';
+import { FilterRecord, FilterColumnReq } from '../../common/filter-header.component';
 import { MatSort } from '@angular/material/sort';
 
 export interface PagingData
@@ -55,7 +55,7 @@ export class ExampleHttpDatabase
 		{	
 			pagingRequest.filters = filterRecord.getFilters();
 		}
-		return this._httpClient.post<PagingData>( '/api/locking/pagedlist', 
+		return this._httpClient.post<PagingData>( '/api/tracking/pagedlist', 
 												  pagingRequest );
   	}
 }

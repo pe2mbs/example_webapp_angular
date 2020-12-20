@@ -9,5 +9,26 @@ $ewl-app-theme:	mat-light-theme($ewl-primary, $ewl-accent, $ewl-warn);
 
 .equensworldline-theme
 {
-  	@include angular-material-theme($ewl-app-theme)
+    @include angular-material-theme($ewl-app-theme);
+    
+    .mat-header-row
+    {
+        color: rgba(0, 0, 0, 0.54);
+        background-color: #D5D5D5;
+    }
+    .no-results
+    {
+        background-color: yellow;
+        color: blue;
+    }
+
+    .mat-row:nth-child( even )
+    {
+        background-color: #f5f5f5;
+    }
+
+    .mat-row:nth-child( odd )
+    {
+        background-color: white;
+    }
 }

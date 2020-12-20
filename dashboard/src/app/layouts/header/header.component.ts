@@ -16,7 +16,8 @@ export class HeaderComponent
 	@Output() onToggleSidebar: EventEmitter<any> = new EventEmitter(); 
 	headerTitle: string = 'Application';
 	headerLogo: string = 'logo.png';
-
+    themeColor: string = 'light-theme'
+    
 	constructor() 
 	{ 
 		if ( environment.headerTitle !== undefined && environment.headerTitle != null )
@@ -26,7 +27,15 @@ export class HeaderComponent
 		if ( environment.headerLogo !== undefined && environment.headerLogo != null )
 		{
 			this.headerLogo = environment.headerLogo;
+        }
+        if ( localStorage.getItem( 'pxTheme' ) )
+		{
+			this.themeColor = localStorage.getItem( 'pxTheme' );	
 		}
+		else
+		{
+			this.themeColor = 'light-theme'; 
+		}	
 		return;
 	}
 

@@ -32,6 +32,7 @@ import { ScreenBaseComponent } from 'src/app/common/crud-screen-component';
     // tslint:disable-next-line:component-selector
     selector: 'app-tracking-screen',
     templateUrl: './screen.component.html',
+    styles: [ '.editor-screen { height: calc( 100% - 300px )!important; }' ],
     styleUrls: [ '../../common/common-mat-card.scss' ]
 })
 export class ScreenTrackingComponent extends ScreenBaseComponent<TrackingRecord> implements OnInit, OnDestroy

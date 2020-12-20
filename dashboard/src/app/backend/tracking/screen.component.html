@@ -5,14 +5,16 @@
 			<app-help fxFlex="5" fxLayoutAlign="end" helpitem="gn_role"></app-help>
 		</div>
 	</mat_card-header>
-    <mat-card-content>
+    <mat-card-content class="card-content">
         <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="tracking.form">
             <pyt-text-input-box id="T_USER.T_USER" placeholder="User" error="true" readonly="true" formControlName="T_USER"></pyt-text-input-box>
             <pyt-text-input-box id="T_TABLE.T_TABLE" placeholder="Table" error="true" readonly="true" formControlName="T_TABLE"></pyt-text-input-box>
             <pyt-choice-input-box id="T_ACTION.T_ACTION" placeholder="Action" error="true" [items]="T_ACTIONList" readonly="true" formControlName="T_ACTION"></pyt-choice-input-box>
             <pyt-text-input-box id="T_RECORD_ID.T_RECORD_ID" placeholder="Record id" error="true" readonly="true" formControlName="T_RECORD_ID"></pyt-text-input-box>
             <pyt-text-input-box id="T_CHANGE_DATE_TIME.T_CHANGE_DATE_TIME" placeholder="Change timestamp" error="true" readonly="true" formControlName="T_CHANGE_DATE_TIME"></pyt-text-input-box>
-            <pyt-monaco-editor-box id="T_CONTENTS.T_CONTENTS" placeholder="Record contents" language="json" error="true" formControlName="T_CONTENTS"></pyt-monaco-editor-box>
+            <div class="editor-screen">
+                <pyt-monaco-editor-box id="T_CONTENTS.T_CONTENTS" placeholder="Record contents" language="json" error="true" formControlName="T_CONTENTS"></pyt-monaco-editor-box>
+            </div>
         </form>
     </mat-card-content>
     <mat-card-actions>

@@ -5,7 +5,7 @@
 			<app-help fxFlex="5" fxLayoutAlign="end" helpitem="gn_role"></app-help>
 		</div>
 	</mat_card-header>
-    <mat-card-content>
+    <mat-card-content class="card-content">
         <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="gn_user.form">
             <pyt-checkbox-input-box id="U_ACTIVE.U_ACTIVE" placeholder="Active user" error="true" labelPosition="after" formControlName="U_ACTIVE"></pyt-checkbox-input-box>
             <pyt-text-input-box id="U_NAME.U_NAME" placeholder="Username" error="true" formControlName="U_NAME"></pyt-text-input-box>

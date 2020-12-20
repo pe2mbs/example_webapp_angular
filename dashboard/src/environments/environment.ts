@@ -8,8 +8,8 @@ export const environment =
 	apiUrl: '/api',
 	defaultTheme: 'dark',
 	headerTitle: 'Wepapp2 core application',
-	headerLogo: 'logo.png',
-	footerText: 'DEVELOPMENT - Webapp2 Python-flask angular core, &copy; 2019-2020 All rights reserved by Marc Bertens-Nguyen'
+	headerLogo: 'logo-equensWorldline.png',
+	footerText: 'DEVELOPMENT - Webapp2 Python-flask angular core, \u00A9 Copyright 2017-2020 All rights reserved by Marc Bertens-Nguyen'
 };
 
 /*

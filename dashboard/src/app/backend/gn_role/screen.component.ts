@@ -31,6 +31,7 @@ import { ScreenBaseComponent } from 'src/app/common/crud-screen-component';
     // tslint:disable-next-line:component-selector
     selector: 'app-gn_role-screen',
     templateUrl: './screen.component.html',
+    styles: [ '.editor-screen { height: calc( 100% - 75px )!important; }' ],
     styleUrls: [ '../../common/common-mat-card.scss' ]
 })
 export class ScreenRoleComponent extends ScreenBaseComponent<RoleRecord> implements OnInit, OnDestroy

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class FooterComponent
 {
-	footerText: string = 'Webapp2 Python-flask angular core, &copy; 2019-2020 All rights reserved by Marc Bertens-Nguyen';
+	footerText: string = 'Webapp2 Python-flask angular core, \u00A9 Copyright 2017-2020 All rights reserved by Marc Bertens-Nguyen';
 
 	constructor() 
 	{ 
