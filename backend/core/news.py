@@ -1,12 +1,15 @@
+from flask import jsonify
 import webapp2.api as API
 from sqlalchemy import and_
 from webapp2.common.parameters import SerializationDictField
 from backend.locking import RecordLock
-from webapp2.common.crud import CrudInterface
+from webapp2.common.crud import CrudInterface, CrudModelMixin
+from sqlalchemy.ext.hybrid import hybrid_property
 
-
-class News( API.db.Model ):
+class News( API.db.Model, CrudModelMixin ):
     __tablename__   = 'news'
+    __field_list__   = [ 'N_ID', 'N_ACTIVE', 'N_ALERT', 'N_KEEP', 'N_MESSAGE', 'N_START_DATE', 'N_END_DATE' ]
+
     N_ID            = API.db.Column( "n_id", API.db.Integer, autoincrement = True, primary_key = True )
     N_ACTIVE        = API.db.Column( "n_active", API.db.Boolean, default = False )
     N_ALERT         = API.db.Column( "n_alert", API.db.Boolean, default = False )
@@ -52,13 +55,20 @@ class NewsCurdInterface( CrudInterface ):
 
     def getNews( self ):
         API.app.logger.debug( 'GET: {}/getnews by {}'.format( self._uri, self._lock_cls().user ) )
-        recordList = API.db.session.query( self._model_cls ).\
-                                filter( and_( self._model_cls.N_ACTIVE,
-                                              self._model_cls.N_START_DATE,
-                                              self._model_cls.N_END_DATE ) ).all()
-        result = self._schema_list_cls.jsonify( recordList )
+        recordList = []
+        for record in API.db.session.query( self._model_cls ).all():
+            obj = record.dictionary
+            if record.N_END_DATE is None:
+                obj[ 'N_PERIOD' ] = "({})".format( record.N_START_DATE )
+
+            else:
+                obj[ 'N_PERIOD' ] = "({} - {})".format( record.N_START_DATE, record.N_END_DATE )
+
+            recordList.append( obj )
+
         API.app.logger.debug( 'getNews => count: {}'.format( len( recordList ) ) )
-        return result
+        interval = API.app.config.get( 'TICKER_INTERVAL', 180 )
+        return jsonify( N_NEWS = recordList, N_TOTAL_ITEMS = len( recordList ), N_POLL_INTERVAL = interval )
 
 
 news = NewsCurdInterface()

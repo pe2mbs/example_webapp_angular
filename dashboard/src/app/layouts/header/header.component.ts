@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { getTreeControlFunctionsMissingError } from '@angular/cdk/tree';
 import { environment } from 'src/environments/environment';
+import { ProfileService } from '../profile.service';
 
 @Component({
   	selector: 'app-header',
@@ -10,15 +11,15 @@ import { environment } from 'src/environments/environment';
 			  'img { height: 30px; opacity: 1; padding: 5px 5px; }',
 			  '.logo { margin-top: 15px;' ]
 })
-export class HeaderComponent
+export class HeaderComponent implements OnInit
 {
 	// tslint:disable-next-line:no-output-on-prefix
 	@Output() onToggleSidebar: EventEmitter<any> = new EventEmitter(); 
 	headerTitle: string = 'Application';
 	headerLogo: string = 'logo.png';
-    themeColor: string = 'light-theme'
+    themeColor: string = 'light-theme';
     
-	constructor() 
+	constructor( protected profileService: ProfileService ) 
 	{ 
 		if ( environment.headerTitle !== undefined && environment.headerTitle != null )
 		{
@@ -27,15 +28,17 @@ export class HeaderComponent
 		if ( environment.headerLogo !== undefined && environment.headerLogo != null )
 		{
 			this.headerLogo = environment.headerLogo;
-        }
-        if ( localStorage.getItem( 'pxTheme' ) )
-		{
-			this.themeColor = localStorage.getItem( 'pxTheme' );	
 		}
-		else
-		{
-			this.themeColor = 'light-theme'; 
-		}	
+		this.profileService.changeEvent.subscribe( data => {
+			this.themeColor = data.theme;
+		} );
+		this.themeColor = this.profileService.theme;
+		return;
+	}
+
+	public ngOnInit(): void
+	{
+		this.themeColor = this.profileService.theme;
 		return;
 	}
 

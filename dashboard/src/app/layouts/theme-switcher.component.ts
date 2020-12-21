@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from './profile.service';
 
 @Component({
   	selector: 'app-theme-switcher',
@@ -20,8 +21,14 @@ export class ThemeSwitcherComponent implements OnInit
 	];
 	public themeColor = 'light-theme';
 
-	constructor() 
+	constructor( protected profileService: ProfileService ) 
 	{
+		this.profileService.changeEvent.subscribe( data => {
+			if ( this.themeColor !== data.theme )
+			{
+				this.selectTheme( data.theme );
+			}
+		} );
 		return;
 	}
 
@@ -33,14 +40,6 @@ export class ThemeSwitcherComponent implements OnInit
 
 	public setDefaultTheme(): void 
 	{
-		if ( localStorage.getItem( 'pxTheme' ) )
-		{
-			this.themeColor = localStorage.getItem( 'pxTheme' );	
-		}
-		else
-		{
-			this.themeColor = 'light-theme'; 
-		}	
 		const body = document.getElementsByTagName( 'body' )[ 0 ];
 		body.classList.add( this.themeColor );
 		return;
@@ -52,7 +51,7 @@ export class ThemeSwitcherComponent implements OnInit
 		body.classList.remove( this.themeColor );
 		this.themeColor = theme;
 		body.classList.add( this.themeColor );
-		localStorage.setItem( 'pxTheme', this.themeColor );
+		this.profileService.theme = theme;
 		return;
 	}
 }

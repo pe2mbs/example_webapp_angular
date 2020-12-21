@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, OnInit } from '@angular/core';
 import { FilterColumnReq } from '../common/filter-header.component';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 
-export interface BasePageInfo
+export interface ProfilePageInfo
 {
 	name: string;
-	pageSize: number;
-	pageIndex: number;
+	pageSize?: number;
+	pageIndex?: number;
+	tabIndex?: number;
 	filters?: FilterColumnReq[];
 	miscData?: any;
 }
@@ -15,91 +18,165 @@ export interface BasePageInfo
 export interface ProfileInterface
 {
 	user: string;
+	role: number;
+	locale: string;
+	pageSize: number;
 	fullname: string;
 	theme: string;
-	pages: BasePageInfo[];
+	pages: ProfilePageInfo[];
 }
 
 
-export const profile: ProfileInterface =
+export let profile: ProfileInterface =
 {
 	user: 'testing',
+	role: 1,
+	locale: 'nl_NL',
+	pageSize: 10,
 	fullname: 'Marc Bertens-Nguyen',
 	theme: 'light-theme',
 	pages:[
 		{
-			name: '',
+			name: 'RoleTable',
 			pageSize: 5,
 			pageIndex: 1
-		}
-	]
+		},
+		{
+			name: 'RoleScreen',
+			tabIndex: 1
+		},
+		{
+			name: 'UserTable',
+			pageSize: 10,
+			pageIndex: 1
+		},
+		{
+			name: 'UserScreen',
+			tabIndex: 2
+		},
+	]	
 };
 
 
 @Injectable()
-export class ProfileService 
+export class ProfileService
 {
-	private userProfile: ProfileInterface = profile;
+	// private userProfile: ProfileInterface = profile;
+	protected dirty: boolean = false;
+	public changeEvent: EventEmitter<ProfileService> = new EventEmitter<ProfileService>(); 
 
-	constructor()
+	constructor( private _httpClient: HttpClient, authService: AuthService )
 	{
+		this.getProfile( authService.currentUser.username );
 		return;
 	}
 
 	getProfile( name: string ): void 
 	{
 		// pull from server
-		this.userProfile.user = name;
-
+		profile.user = name;
+		this.restoreProfile();
+		setInterval( () => { 
+			if ( this.dirty )
+			{
+				this.storeProfile();
+			}
+		}, 30000 );
 		return;
 	}
 
 	public get user(): string
 	{
-		return ( this.userProfile.user );
+		return ( profile.user );
 	}
 
 	public get fullname(): string
 	{
-		return ( this.userProfile.fullname );
+		return ( profile.fullname );
+	}
+
+	public get role(): number
+	{
+		return ( profile.role );
+	}
+
+	public get pageSize(): number
+	{
+		return ( profile.pageSize );
+	}
+
+	public get locale(): string
+	{
+		return ( profile.locale );
 	}
 
 	public get theme(): string
 	{
-		return ( this.userProfile.theme );
+		return ( profile.theme );
 	}
 
 	public set theme( value: string )
 	{
-		this.userProfile.theme = value;	
+		if ( value !== profile.theme )
+		{
+			this.dirty = true;
+		}
+		profile.theme = value;	
 		return;
 	}
 
-	public getPageSettings( page_name: string ): BasePageInfo | null
+	public getPageSettings( page_name: string ): ProfilePageInfo | null
 	{
-		let page: BasePageInfo = null;
-		this.userProfile.pages.forEach( element => {
+		let page: ProfilePageInfo = null;
+		profile.pages.forEach( element => {
 			if ( element.name === page_name )
 			{
 				page = element;
 				return;
 			}
 		} );
+		if ( page == null )
+		{
+			page = { name: page_name };
+			profile.pages.push( page );
+			this.dirty = false;
+		}
 		return ( page );
 	}
 
-	public setPageSetting( page: BasePageInfo ): void 
+	public setPageSetting( page: ProfilePageInfo ): void 
 	{
-		for ( const idx in this.userProfile.pages )
+		for ( const idx in profile.pages )
 		{
-			if ( this.userProfile.pages[ idx ].name === page.name )
+			if ( profile.pages[ idx ].name === page.name )
 			{
 				// found
-				this.userProfile.pages[ idx ] = page;
-				// push to server
+				profile.pages[ idx ] = page;
+				this.dirty = true;
 				break;
 			}
 		}
+		return;
+	}
+
+	public restoreProfile(): void 
+	{
+		this._httpClient.get<any>( `/api/profile/${profile.user}` ).subscribe( data => {
+			profile = data;
+			this.dirty = false;
+			this.changeEvent.emit( this );
+		} );
+		return;
+	}
+
+	public storeProfile(): void
+	{
+		this.dirty = false;
+		this._httpClient.post<ProfileInterface>( '/api/profile', 
+									profile ).subscribe( data => {
+			console.log( "storeProfile() => ", profile, data );
+			
+		} );
 		return;
 	}
 }

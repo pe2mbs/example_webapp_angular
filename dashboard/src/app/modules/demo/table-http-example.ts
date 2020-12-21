@@ -7,6 +7,8 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ExampleHttpDatabase } from './table-http-service';
 import { FilterRecord } from '../../common/filter-header.component';
 import { Router } from '@angular/router';
+import { ProfileService, ProfilePageInfo } from 'src/app/layouts/profile.service';
+
 
 export class CardTableBase<T> implements AfterViewInit
 {
@@ -22,11 +24,16 @@ export class CardTableBase<T> implements AfterViewInit
 	public displayedColumns: string[];
 	public records: any[] = [];
 	public filterRecord: FilterRecord = null;
-	constructor( public dataService: ExampleHttpDatabase, displayedColumns: string[] )
+	protected objData: ProfilePageInfo = null;
+	constructor( private objectName: string,
+				 public dataService: ExampleHttpDatabase, 
+				 displayedColumns: string[],
+				 public profileService: ProfileService )
 	{
 		this.filterRecord = new FilterRecord( displayedColumns );
 		this.paginatorEvent = new EventEmitter<PageEvent>();
 		this.displayedColumns = displayedColumns;
+		this.objData = this.profileService.getPageSettings( objectName );
 		return;
 	}
 
@@ -46,6 +53,10 @@ export class CardTableBase<T> implements AfterViewInit
 		}
 		this.pageIndex = $event.pageIndex;
 		this.pageSize = $event.pageSize; 
+		this.objData.pageIndex = $event.pageIndex;
+		this.objData.pageSize = $event.pageSize; 
+		this.objData.filters = this.filterRecord.getFilters();
+		this.profileService.setPageSetting( this.objData );
 		this.paginatorEvent.emit( $event );
 		return;
 	}
@@ -54,6 +65,12 @@ export class CardTableBase<T> implements AfterViewInit
 	{
 		this.top_paginator.pageIndex = 0;
 		this.bot_paginator.pageIndex = 0;
+		const o = new PageEvent();
+		o.pageIndex = 0;
+		o.pageSize = this.top_paginator.pageSize;
+		o.length = this.top_paginator.length;
+		o.previousPageIndex = this.top_paginator.pageIndex;
+		this.paginatorEvent.emit( o );
 		return;
 	}
 
@@ -64,25 +81,27 @@ export class CardTableBase<T> implements AfterViewInit
     	this.sort.sortChange.subscribe( () => this.firstPage() );
     	merge(this.sort.sortChange, this.paginatorEvent )
       		.pipe( startWith( {} ),
-        		   switchMap( () => {
-          				this.isLoadingResults = true;
-						return this.dataService.getPage( this.pageIndex,
-														 this.pageSize,
-														 this.sort, 
-														 this.filterRecord );
-        			} ),
-        			map( data => {
-          				// Flip flag to show that loading has finished.
-          				this.isLoadingResults = false;
-          				this.resultsLength = data.recordCount;
-          				return ( data.records );
-        			} ),
-        			catchError( () => {
-          				this.isLoadingResults = false;
-          				return observableOf( [] );
-        			} )
-      	).subscribe( data => this.records = data );
-	  }
+				switchMap( () => {
+					this.isLoadingResults = true;
+					return this.dataService.getPage( this.pageIndex,
+														this.pageSize,
+														this.sort, 
+														this.filterRecord );
+				} ),
+				map( data => {
+					// Flip flag to show that loading has finished.
+					this.isLoadingResults = false;
+					this.resultsLength = data.recordCount;
+					return ( data.records );
+				} ),
+				catchError( () => {
+					this.isLoadingResults = false;
+					return observableOf( [] );
+				} 
+			)
+		).subscribe( data => this.records = data );
+		return;
+	}
 	  
 	public refresh(): void
 	{
@@ -117,10 +136,13 @@ export class TrackingRecord
 export class TableHttpExample extends CardTableBase<TrackingRecord>  
 {
 	constructor( private _service: ExampleHttpDatabase,
-				 public router: Router ) 
+				 public router: Router,
+				 profileService: ProfileService ) 
 	{
-		super( _service,
-			   [ 'T_USER', 'T_CHANGE_DATE_TIME', 'T_TABLE', 'T_ACTION_LABEL' ] );
+		super( 	'DemoTable',
+				_service,
+				[ 'T_USER', 'T_CHANGE_DATE_TIME', 'T_TABLE', 'T_ACTION_LABEL' ],
+				profileService );
 		return; 
 	}
 }
