@@ -165,7 +165,7 @@ export class FilterItemDirective
     // tslint:disable-next-line:component-selector
     selector: 'filter-header',
 	template: `<div class="header" click-stop-propagation>
-	{{ title }}
+	{{ title | translate }}
 	<button mat-icon-button class="btn-toggle" [matMenuTriggerFor]="menu">
 		<mat-icon>keyboard_arrow_down</mat-icon>
 	</button>
@@ -174,7 +174,7 @@ export class FilterItemDirective
 	<div mat-menu-item mat-filter-item [disableRipple]="true" class="menu-title">
 		<div fxLayout="row">
 			<div fxFlex>Field</div>
-			<div fxFlex fxLayoutAlign="end">{{ title }}</div>
+			<div fxFlex fxLayoutAlign="end">{{ title | translate  }}</div>
 		</div>
 	</div>
 	<div mat-menu-item mat-filter-item [disableRipple]="true">
@@ -184,25 +184,25 @@ export class FilterItemDirective
 						(selectionChange)="selectEvent( $event )"
 						[(value)]="conditionPosition">
 				<mat-option *ngFor="let condition of conditionsList" [value]="condition.value" class="cond_option">
-					{{ condition.label }}
+					{{ condition.label | translate  }}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
 	</div>
 	<div mat-menu-item mat-filter-item [disableRipple]="true" *ngIf="fields > 0">
 		<mat-form-field>
-			<input matInput [placeholder]="caption[0]" [(ngModel)]="value[0]">
+			<input matInput [placeholder]="caption[ 0 ] | translate" [(ngModel)]="value[0]">
 		</mat-form-field>
 	</div>
 	<div mat-menu-item mat-filter-item [disableRipple]="true" *ngIf="fields === 2">
 		<mat-form-field>
-			<input matInput [placeholder]="caption[0]" [(ngModel)]="value[1]">
+			<input matInput [placeholder]="caption[ 1 ] | translate " [(ngModel)]="value[1]">
 		</mat-form-field>
 	</div>
 	<div mat-menu-item [disableRipple]="true">
 		<div fxLayout="row">
-			<button mat-raised-button fxFlex class="action-button" (click)="clearColumnFilter()">Clear</button>
-			<button mat-raised-button color="primary" fxFlex class="action-button" (click)="applyColumnFilter()">Search</button>
+			<button mat-raised-button fxFlex class="action-button" (click)="clearColumnFilter()">{{ 'Clear' | translate }}</button>
+			<button mat-raised-button color="primary" fxFlex class="action-button" (click)="applyColumnFilter()">{{ 'Search' | translate }}</button>
 		</div>
 	</div>
 </mat-menu>`,

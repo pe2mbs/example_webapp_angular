@@ -67,7 +67,10 @@ export class ProfileService
 
 	constructor( private _httpClient: HttpClient, authService: AuthService )
 	{
-		this.getProfile( authService.currentUser.username );
+        if ( authService.currentUser != undefined && authService.currentUser != null )
+        {
+            this.getProfile( authService.currentUser.username );
+        }
 		return;
 	}
 
@@ -119,11 +122,23 @@ export class ProfileService
 	{
 		if ( value !== profile.theme )
 		{
-			this.dirty = true;
+            this.dirty = true;
+            profile.theme = value;	
+            this.changeEvent.emit( this );
 		}
-		profile.theme = value;	
 		return;
 	}
+
+    private addPageSettings( page: ProfilePageInfo )
+    {
+        if ( profile.pages == undefined || profile.pages == null )
+        {
+            profile.pages = new Array<ProfilePageInfo>()
+        }
+        profile.pages.push( page );
+        this.dirty = false;
+        return;
+    }
 
 	public getPageSettings( page_name: string ): ProfilePageInfo | null
 	{
@@ -140,20 +155,17 @@ export class ProfileService
         }
 		if ( page == null )
 		{
-			page = { name: page_name };
-			profile.pages.push( page );
-			this.dirty = false;
+            this.addPageSettings( { name: page_name, 
+                                    pageSize: this.pageSize,
+                                    pageIndex: 1,
+                                    tabIndex: 1 } );
 		}
 		return ( page );
 	}
 
 	public setPageSetting( page: ProfilePageInfo ): void 
 	{
-        if ( profile.pages == undefined || profile.pages == null )
-        {
-            profile.pages = new Array<ProfilePageInfo>()
-        }
-        else
+        if ( profile.pages != undefined && profile.pages != null )
         {
             for ( const idx in profile.pages )
             {
@@ -166,8 +178,7 @@ export class ProfileService
                 }
             }
         }
-        profile.pages.push( page );
-        this.dirty = true;
+        this.addPageSettings( page );
         return;
 	}
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { getTreeControlFunctionsMissingError } from '@angular/cdk/tree';
 import { environment } from 'src/environments/environment';
@@ -18,9 +18,11 @@ export class HeaderComponent implements OnInit
 	headerTitle: string = 'Application';
 	headerLogo: string = 'logo.png';
     themeColor: string = 'light-theme';
+    public timeStamp;
     
-	constructor( protected profileService: ProfileService ) 
+	constructor( protected profileService: ProfileService, private cdRef: ChangeDetectorRef ) 
 	{ 
+        this.timeStamp = (new Date()).getTime();
 		if ( environment.headerTitle !== undefined && environment.headerTitle != null )
 		{
 			this.headerTitle = environment.headerTitle;
@@ -29,12 +31,24 @@ export class HeaderComponent implements OnInit
 		{
 			this.headerLogo = environment.headerLogo;
 		}
-		this.profileService.changeEvent.subscribe( data => {
-			this.themeColor = data.theme;
-		} );
+		this.subscribeThemeChange();
 		this.themeColor = this.profileService.theme;
 		return;
-	}
+    }
+    
+    public subscribeThemeChange(): void
+    {
+        this.profileService.changeEvent.subscribe( data => {
+            console.log( 'Theme change' );
+            if ( this.themeColor != data.theme )
+            {           
+                this.timeStamp = (new Date()).getTime();
+                this.themeColor = data.theme;           
+                this.cdRef.detectChanges();
+            }
+        } );
+        return;
+    }
 
 	public ngOnInit(): void
 	{

@@ -78,7 +78,7 @@ export class TickerComponent implements OnInit, AfterViewInit
                 {
                     this.ticker.nativeElement.style.animationDuration = `${value}s`;
                 }       
-            }, 500 );
+            }, time * 1000 );
         }
         setTimeout( () => { 
             if ( this.subscribedEvent != null )

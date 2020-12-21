@@ -19,9 +19,11 @@
 			</mat-error>
 			<mat-error *ngIf="password.hasError('required')">
 				Password is mandatory
-			</mat-error>
-		</mat-form-field>
-
+            </mat-error>
+        </mat-form-field>
+        
+        <mat-password-strength #passwordComponent [password]="password.value"></mat-password-strength>
+        <mat-password-strength-info [passwordComponent]="passwordComponent"></mat-password-strength-info>
 		<mat-form-field class="form-field">
 			<input matInput placeholder="E-Mail" formControlName='email'>
 			<mat-error *ngIf="email.hasError('required')">

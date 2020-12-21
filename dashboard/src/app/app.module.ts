@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +15,10 @@ import { RecordLocksModule } from './backend/locking/module';
 import { TrackingModule } from './backend/tracking/module';
 import { ExampleHttpDatabase } from './modules/demo/table-http-service';
 import { TableHttpExample } from './modules/demo/table-http-example';
+import localeNl from '@angular/common/locales/nl';
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(localeNl);
 
 @NgModule({
   bootstrap: [
@@ -39,10 +42,14 @@ import { TableHttpExample } from './modules/demo/table-http-example';
     RoleModule,
     RecordLocksModule,
     TrackingModule,
-    UserModule
+    UserModule,
   ],
   providers: [
-    ExampleHttpDatabase
+    ExampleHttpDatabase,
+    { 
+        provide: LOCALE_ID, 
+        useValue: 'nl' 
+    }
   ]
 })
 export class AppModule { }

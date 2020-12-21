@@ -70,9 +70,12 @@ import { SignedOutComponent } from './signedout.component';
 import { TickerComponent } from './ticker/ticker.component';
 import { TickerDataService } from './ticker/service';
 import { ProfileService } from './profile.service';
-
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CustomLoader } from './language-loader';
 
 const materialModules = [
+    MatPasswordStrengthModule,
 	BreadcrumbModule,
 	CdkTreeModule,
 	MatAutocompleteModule,
@@ -110,7 +113,7 @@ const materialModules = [
 	MatSlideToggleModule,
 	MatSliderModule,
 	MatDialogModule,
-	FlexLayoutModule
+    FlexLayoutModule,
 ];
 
 const defaultRoute: Route = { 	
@@ -151,7 +154,14 @@ const defaultRoute: Route = {
 		RouterModule,
 		MarkdownModule.forChild(),
 		GridsterModule,
-		RouterModule.forChild( [ defaultRoute ] ),
+        RouterModule.forChild( [ defaultRoute ] ),
+        TranslateModule.forRoot( {
+            defaultLanguage: 'en',
+            loader: {
+                provide: TranslateLoader, 
+                useClass: CustomLoader
+            }
+        } ),
 		...materialModules
 	],
 	exports: [
@@ -166,7 +176,8 @@ const defaultRoute: Route = {
 		MenuListItemComponent,
 		LoginComponent,
 		UserProfileComponent,
-		ThemeSwitcherComponent,
+        ThemeSwitcherComponent,
+        TranslateModule,
 		...materialModules
 	],
 	entryComponents: [

@@ -51,7 +51,7 @@ export class LoginDialogComponent
 		const signupDialogRef = this.signupDialog.open( SignupDialogComponent, {  
 			autoFocus: true,
 			width: '400px',
-			height: '600px',
+			height: '700px',
 			data: null
 		} );
 		signupDialogRef.afterClosed().subscribe( (result: SignupData) => {
