@@ -127,14 +127,17 @@ export class ProfileService
 
 	public getPageSettings( page_name: string ): ProfilePageInfo | null
 	{
-		let page: ProfilePageInfo = null;
-		profile.pages.forEach( element => {
-			if ( element.name === page_name )
-			{
-				page = element;
-				return;
-			}
-		} );
+        let page: ProfilePageInfo = null;
+        if ( profile.pages != undefined && profile.pages != null )
+        {
+            profile.pages.forEach( element => {
+                if ( element.name === page_name )
+                {
+                    page = element;
+                    return;
+                }
+            } );
+        }
 		if ( page == null )
 		{
 			page = { name: page_name };
@@ -146,17 +149,26 @@ export class ProfileService
 
 	public setPageSetting( page: ProfilePageInfo ): void 
 	{
-		for ( const idx in profile.pages )
-		{
-			if ( profile.pages[ idx ].name === page.name )
-			{
-				// found
-				profile.pages[ idx ] = page;
-				this.dirty = true;
-				break;
-			}
-		}
-		return;
+        if ( profile.pages == undefined || profile.pages == null )
+        {
+            profile.pages = new Array<ProfilePageInfo>()
+        }
+        else
+        {
+            for ( const idx in profile.pages )
+            {
+                if ( profile.pages[ idx ].name === page.name )
+                {
+                    // found
+                    profile.pages[ idx ] = page;
+                    this.dirty = true;
+                    return;
+                }
+            }
+        }
+        profile.pages.push( page );
+        this.dirty = true;
+        return;
 	}
 
 	public restoreProfile(): void 
