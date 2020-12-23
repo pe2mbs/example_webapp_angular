@@ -53,9 +53,9 @@ export class CardTableBase<T> implements AfterViewInit
 		}
 		this.pageIndex = $event.pageIndex;
 		this.pageSize = $event.pageSize; 
-		this.objData.pageIndex = $event.pageIndex;
-		this.objData.pageSize = $event.pageSize; 
-		this.objData.filters = this.filterRecord.getFilters();
+		this.objData.setNumber( 'pageIndex', $event.pageIndex );
+		this.objData.setNumber( 'pageSize', $event.pageSize );  
+		this.objData.setParam( 'filters', this.filterRecord.getFilters() );
 		this.profileService.setPageSetting( this.objData );
 		this.paginatorEvent.emit( $event );
 		return;

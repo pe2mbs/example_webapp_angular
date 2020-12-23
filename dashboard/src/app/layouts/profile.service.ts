@@ -1,42 +1,250 @@
-import { Injectable, EventEmitter, OnInit } from '@angular/core';
+import { Injectable, EventEmitter, OnInit, Type } from '@angular/core';
 import { FilterColumnReq } from '../common/filter-header.component';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-
-
-// export interface ProfilePageInfo
-// {
-// 	name: string;
-// 	pageSize?: number;
-// 	pageIndex?: number;
-// 	tabIndex?: number;
-// 	filters?: FilterColumnReq[];
-// 	miscData?: any;
-// }
+import { isArray, isNullOrUndefined, isObject, isString, isUndefined } from 'util';
+import { objectEach } from 'highcharts';
 
 export class ProfilePageInfo
 {
-	name: string;
-	pageSize: number;
-	pageIndex: number;
-	tabIndex: number;
-	filters: FilterColumnReq[];
-	miscData: any;
-	constructor( name: string )
+    public readonly _type: string = "ProfilePageInfo";
+    protected _name: string;
+    protected _data: object = {};
+    protected _dirty: boolean;
+    constructor( name: string, data: string = null )
 	{
-		this.name = name;
-		this.pageSize = 0;
-		this.pageIndex = 1;
-		this.tabIndex = 1;
+        this._dirty = false;
+        if ( data == null )
+        {
+            if ( name.startsWith( '{' ) && name.endsWith( '}' ) )
+            {
+                this._data = JSON.parse( data );
+                this._name = this._data[ 'name' ];
+            }
+            else
+            {
+                this._name = name;    
+            }
+        }
+        else
+        {
+            this._name = name;    
+            this._data = JSON.parse( data );
+        }
 		return;
 	}
 
-	public jsonify(): string 
-	{
-		return ( JSON.stringify( this ) );
-	}
-}
+    public get dirty(): boolean
+    {
+        return ( this._dirty );
+    }
 
+    private _set( key: string, data: any )
+    {
+        if ( isObject( data ) )
+        {
+            // Special handling
+            if ( isNullOrUndefined( data._type ) )
+            {
+                // Regular JSON object
+                this.setParam( key, data )     
+            }
+            else
+            {
+                // Special object
+                if ( data[ 0 ]._type === 'ProfilePageInfo' )
+                {
+                    this.setParam( key, new ProfilePageInfo( data ) );
+                }
+            }
+        }
+        else if ( isArray( data ) )
+        {
+            if ( data.length > 0 )
+            {
+                let newArray = null;
+                if ( isObject( data[ 0 ] ) )
+                {
+                    if ( isNullOrUndefined( data[ 0 ]._type ) )
+                    {
+                        // Simple array
+                        newArray = data;
+                    }
+                    else 
+                    {
+                        if ( data[ 0 ]._type === 'ProfilePageInfo' )
+                        {
+                            newArray = new Array<ProfilePageInfo>();
+                            data.forEach(element => {
+                                newArray.push( new ProfilePageInfo( element ) );
+                            });
+                        }                       
+                    }
+                }
+                else
+                {
+                    newArray = data;
+                }
+                this.setParam( key, newArray );
+            }
+        }
+        else
+        {
+            this.setParam( key, data )
+        }
+        return;
+    }
+
+    public set( data: any )
+    {
+        if ( isString( data ) )
+        {
+            data = JSON.parse( data );
+        }
+        if ( data instanceof ProfilePageInfo )
+        {
+            // Already unpacked format
+            this._data = data._data;
+        }
+        else if ( isObject( data ) )
+        {
+            // Need to unpack (JSON) object into ProfilePageInfo object
+            for ( var key in data ) 
+            {
+                this._set( key, data[ key ] )
+            }
+        }
+        return;
+    }
+
+    private _get( key: string, data: any ): any
+    {
+        if ( isObject( data ) )
+        {
+            if ( data instanceof ProfilePageInfo )
+            {
+                // Already unpacked format
+                let tmp = data._data;
+                tmp[ '_type' ] = 'ProfilePageInfo';
+                return ( tmp );
+            }
+        }
+        else if ( isArray( data ) )
+        {
+            const tmp = Array<any>();
+            data.forEach( element => {
+                if ( element instanceof ProfilePageInfo )
+                {
+                    let elem = element._data;
+                    elem[ '_type' ] = 'ProfilePageInfo';
+                    tmp.push( elem );
+                }
+                else
+                {
+                    tmp.push( element );
+                }
+            } );
+            return ( tmp );
+        }
+        return ( data );
+    }
+
+    public get(): string
+    {
+        let result: any = {};
+        for ( var key in this._data ) 
+        {
+            result[ key ] = this._get( key, this._data[ key ] );
+        }
+        return ( JSON.stringify( result ) );
+    }
+
+
+    public get name(): string
+    {
+        return ( this._name )
+    }
+
+    public setParam( name: string, value: any ): void
+    {
+        this._data[ name ] = value;
+        this._dirty = true;
+        return;
+    }
+
+    public getParam( name: string, default_value: any ): any
+    {
+        if ( !isNullOrUndefined( this._data[ name ] ) )
+        {
+            return ( this._data[ name ] )
+        }
+        this._data[ name ] = default_value; 
+        return ( this._data[ name ] );
+    }
+
+    public getString( name: string, default_value: string = "" ): string
+    {
+        return ( this.getParam( name, default_value ) )
+    }
+
+    public setString( name: string, value: string ): void
+    {
+        this.setParam( name, value );
+        return;
+    }
+
+    public getNumber( name: string, default_value: number = 0 ): number
+    {
+        return ( this.getParam( name, default_value ) )
+    }
+
+    public setNumber( name: string, value: number ): void
+    {
+        this.setParam( name, value );
+        return;
+    }
+
+    public getElement( name: string, element_name: string ): ProfilePageInfo
+    {
+        const params = this.getParam( name, new Array<ProfilePageInfo>() );
+        let result: ProfilePageInfo = null
+        console.log( 'getElement.params', params );
+        if ( !isNullOrUndefined( params ) )
+        {
+            params.array.forEach( element => {
+                if ( !isNullOrUndefined( element ) && element instanceof ProfilePageInfo )
+                {
+                    if ( element.name == element_name )
+                    {
+                        result = element; 
+                    }
+                }
+            } );
+        }
+        if ( isNullOrUndefined( result ) )
+        {
+            result = new ProfilePageInfo( element_name );
+            params.push( result );
+            this.setParam( name, params );
+        }
+        return ( result );
+    }
+
+    public updateElement( name: string, page: ProfilePageInfo )
+    {
+        const params = this.getParam( name, new Array<ProfilePageInfo>() );
+        params.array.forEach( element => {
+            if ( !isNullOrUndefined( element ) && element instanceof ProfilePageInfo )
+            {
+                if ( element.name == page.name )
+                {
+                    element.set( page._data );
+                }
+            }
+        } );
+        return;
+    }
+}
 
 
 export interface ProfileInterface
@@ -64,25 +272,23 @@ export let profile: ProfileInterface =
 
 
 @Injectable()
-export class ProfileService
+export class ProfileService extends ProfilePageInfo
 {
-	// private userProfile: ProfileInterface = profile;
-	protected dirty: boolean = false;
 	public changeEvent: EventEmitter<ProfileService> = new EventEmitter<ProfileService>(); 
 
-	constructor( private _httpClient: HttpClient, authService: AuthService )
+	constructor( private _httpClient: HttpClient, protected authService: AuthService )
 	{
-        if ( authService.currentUser !== undefined && authService.currentUser != null )
+        super( authService.userName );
+        if ( !isNullOrUndefined( authService.userName ) )
         {
-            this.getProfile( authService.currentUser.username );
+            this.getProfile();
         }
 		return;
 	}
 
-	getProfile( name: string ): void 
+	getProfile(): void 
 	{
 		// pull from server
-		profile.user = name;
 		this.restoreProfile();
 		setInterval( () => { 
 			if ( this.dirty )
@@ -95,102 +301,54 @@ export class ProfileService
 
 	public get user(): string
 	{
-		return ( profile.user );
+		return ( this.name );
 	}
 
 	public get fullname(): string
 	{
-		return ( profile.fullname );
+		return ( this.getString( 'fullname', this.name ) );
 	}
 
 	public get role(): number
 	{
-		return ( profile.role );
-	}
-
-	public get pageSize(): number
-	{
-		return ( profile.pageSize );
+        return ( this.getNumber( 'role', 1 ) );
 	}
 
 	public get locale(): string
 	{
-		return ( profile.locale );
+		return ( this.getString( 'locale', 'en_EN' ) );
 	}
 
 	public get theme(): string
 	{
-		return ( profile.theme );
+		return ( this.getString( 'theme', 'equensworldline-theme' ) );
 	}
 
 	public set theme( value: string )
-	{
-		if ( value !== profile.theme )
+	{       
+        if ( value !== profile.theme )
 		{
-            this.dirty = true;
-            profile.theme = value;	
+            this.setString( 'theme', value );
             this.changeEvent.emit( this );
 		}
 		return;
-	}
-
-    private addPageSettings( page: ProfilePageInfo )
-    {
-        if ( profile.pages === undefined || profile.pages == null )
-        {
-            profile.pages = new Array<ProfilePageInfo>();
-        }
-        profile.pages.push( page );
-        this.dirty = false;
-        return;
     }
-
+    
 	public getPageSettings( page_name: string ): ProfilePageInfo | null
-	{
-        let page: ProfilePageInfo = null;
-        if ( profile.pages !== undefined && profile.pages != null )
-        {
-            profile.pages.forEach( element => {
-                if ( element.name === page_name )
-                {
-                    page = element;
-                    return;
-                }
-            } );
-        }
-		if ( page == null )
-		{
-			page = new ProfilePageInfo( page_name );
-			page.pageSize = this.pageSize;
-            this.addPageSettings( page );
-		}
-		return ( page );
+	{        
+        return ( this.getElement( 'pages', page_name ) );
 	}
 
 	public setPageSetting( page: ProfilePageInfo ): void 
 	{
-        if ( profile.pages !== undefined && profile.pages != null )
-        {
-            for ( const idx in profile.pages )
-            {
-                if ( profile.pages[ idx ].name === page.name )
-                {
-                    // found
-                    profile.pages[ idx ] = page;
-                    this.dirty = true;
-                    return;
-                }
-            }
-        }
-        this.addPageSettings( page );
+        this.updateElement( 'pages', page )
         return;
 	}
 
 	public restoreProfile(): void 
 	{
-		this._httpClient.get<any>( `/api/profile/${profile.user}` ).subscribe( data => {
-			profile = data;
-			this.dirty = false;
+		this._httpClient.get<any>( `/api/profile/${this.name}` ).subscribe( data => {
+            this.set( data );		
 			this.changeEvent.emit( this );
 		} );
 		return;
@@ -198,11 +356,8 @@ export class ProfileService
 
 	public storeProfile(): void
 	{
-		this.dirty = false;
-		this._httpClient.post<ProfileInterface>( '/api/profile', 
-									profile ).subscribe( data => {
-			console.log( "storeProfile() => ", profile, data );
-			
+		this._httpClient.post<ProfileInterface>( '/api/profile', this.get() ).subscribe( data => {
+            console.log( "storeProfile() => ", profile, data );
 		} );
 		return;
 	}
