@@ -19,7 +19,7 @@ import { NavService } from './sidebar/nav.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 import { AdminAuthGuard } from './admin-auth-gaurd.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -71,8 +71,10 @@ import { TickerComponent } from './ticker/ticker.component';
 import { TickerDataService } from './ticker/service';
 import { ProfileService } from './profile.service';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CustomLoader } from './language-loader';
+import { TranslateLoader, TranslateModule, MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageSwitcherComponent, LanguageSwitchComponent, CustomMissingTranslationHandler } from './language-switcher.component';
+import { MyMatPaginatorIntl } from './material-i18n';
 
 const materialModules = [
     MatPasswordStrengthModule,
@@ -127,6 +129,11 @@ const defaultRoute: Route = {
 	]
 };
 
+export function createTranslateLoader( http: HttpClient ) 
+{
+    return new TranslateHttpLoader( http, './assets/i18n/', '.json' );
+}
+
 @NgModule({
 	declarations: [
 		DashboardComponent,
@@ -144,7 +151,9 @@ const defaultRoute: Route = {
         DefaultComponent,
         SignedOutComponent,
         BreadcrumbComponent,
-        TickerComponent
+		TickerComponent,
+		LanguageSwitchComponent,
+		LanguageSwitcherComponent,
   	],
   	imports: [
 		CommonModule,
@@ -158,9 +167,14 @@ const defaultRoute: Route = {
         TranslateModule.forRoot( {
             defaultLanguage: 'en',
             loader: {
-                provide: TranslateLoader, 
-                useClass: CustomLoader
-            }
+                provide: TranslateLoader,
+                useFactory: ( createTranslateLoader ),
+                deps: [ HttpClient ]
+			},
+			missingTranslationHandler: {
+				provide: MissingTranslationHandler, 
+				useClass: CustomMissingTranslationHandler
+			},
         } ),
 		...materialModules
 	],
@@ -202,6 +216,11 @@ const defaultRoute: Route = {
 		  provide: HTTP_INTERCEPTORS,
 		  useClass: TokenInterceptorService,
 		  multi: true
+		},
+		{ 
+			provide: MatPaginatorIntl, 
+			useClass: MyMatPaginatorIntl,
+			deps: [ TranslateService ]
 		}
 	]
 } )

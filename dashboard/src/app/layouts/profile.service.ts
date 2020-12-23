@@ -4,15 +4,39 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
 
-export interface ProfilePageInfo
+// export interface ProfilePageInfo
+// {
+// 	name: string;
+// 	pageSize?: number;
+// 	pageIndex?: number;
+// 	tabIndex?: number;
+// 	filters?: FilterColumnReq[];
+// 	miscData?: any;
+// }
+
+export class ProfilePageInfo
 {
 	name: string;
-	pageSize?: number;
-	pageIndex?: number;
-	tabIndex?: number;
-	filters?: FilterColumnReq[];
-	miscData?: any;
+	pageSize: number;
+	pageIndex: number;
+	tabIndex: number;
+	filters: FilterColumnReq[];
+	miscData: any;
+	constructor( name: string )
+	{
+		this.name = name;
+		this.pageSize = 0;
+		this.pageIndex = 1;
+		this.tabIndex = 1;
+		return;
+	}
+
+	public jsonify(): string 
+	{
+		return ( JSON.stringify( this ) );
+	}
 }
+
 
 
 export interface ProfileInterface
@@ -35,26 +59,7 @@ export let profile: ProfileInterface =
 	pageSize: 10,
 	fullname: 'Marc Bertens-Nguyen',
 	theme: 'light-theme',
-	pages:[
-		{
-			name: 'RoleTable',
-			pageSize: 5,
-			pageIndex: 1
-		},
-		{
-			name: 'RoleScreen',
-			tabIndex: 1
-		},
-		{
-			name: 'UserTable',
-			pageSize: 10,
-			pageIndex: 1
-		},
-		{
-			name: 'UserScreen',
-			tabIndex: 2
-		},
-	]	
+	pages:[]	
 };
 
 
@@ -67,7 +72,7 @@ export class ProfileService
 
 	constructor( private _httpClient: HttpClient, authService: AuthService )
 	{
-        if ( authService.currentUser != undefined && authService.currentUser != null )
+        if ( authService.currentUser !== undefined && authService.currentUser != null )
         {
             this.getProfile( authService.currentUser.username );
         }
@@ -131,9 +136,9 @@ export class ProfileService
 
     private addPageSettings( page: ProfilePageInfo )
     {
-        if ( profile.pages == undefined || profile.pages == null )
+        if ( profile.pages === undefined || profile.pages == null )
         {
-            profile.pages = new Array<ProfilePageInfo>()
+            profile.pages = new Array<ProfilePageInfo>();
         }
         profile.pages.push( page );
         this.dirty = false;
@@ -143,7 +148,7 @@ export class ProfileService
 	public getPageSettings( page_name: string ): ProfilePageInfo | null
 	{
         let page: ProfilePageInfo = null;
-        if ( profile.pages != undefined && profile.pages != null )
+        if ( profile.pages !== undefined && profile.pages != null )
         {
             profile.pages.forEach( element => {
                 if ( element.name === page_name )
@@ -155,17 +160,16 @@ export class ProfileService
         }
 		if ( page == null )
 		{
-            this.addPageSettings( { name: page_name, 
-                                    pageSize: this.pageSize,
-                                    pageIndex: 1,
-                                    tabIndex: 1 } );
+			page = new ProfilePageInfo( page_name );
+			page.pageSize = this.pageSize;
+            this.addPageSettings( page );
 		}
 		return ( page );
 	}
 
 	public setPageSetting( page: ProfilePageInfo ): void 
 	{
-        if ( profile.pages != undefined && profile.pages != null )
+        if ( profile.pages !== undefined && profile.pages != null )
         {
             for ( const idx in profile.pages )
             {

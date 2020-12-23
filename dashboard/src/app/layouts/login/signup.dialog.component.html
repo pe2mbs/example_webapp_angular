@@ -1,60 +1,63 @@
 <mat-dialog-content>
-	<h2 mat-card-title>Sign up</h2>
-		<form [formGroup]="signupForm" novalidate class="signup-form">
+	<div>
+		<div fxFlex="column">
+			<h2 fxFlex="92" mat-card-title>{{ 'Sign up' | translate }}</h2>
+			<app-lang-switcher fxFlex="8"></app-lang-switcher>
+		</div>
+	</div>
+	<form [formGroup]="signupForm" novalidate class="signup-form">
 		<mat-form-field class="form-field">
-			<input matInput placeholder="Username" formControlName="userid">
+			<input matInput [placeholder]="'Username' | translate" formControlName="userid">
 			<mat-error *ngIf="userid.hasError('minlength') || userid.hasError('maxlength')">
-				Username must be 7 characters
+				{{ 'Username must be 7 characters' | translate }}
 			</mat-error>
 			<mat-error *ngIf="userid.hasError('required')">
-				Username is mandatory
+				{{ 'Username is mandatory' | translate }}
 			</mat-error>
 		</mat-form-field>
-
 		<mat-form-field class="form-field">
-			<input matInput [type]="showPw ? 'text' : 'password'" placeholder="Password" formControlName='password'>
+			<input matInput [type]="showPw ? 'text' : 'password'" 
+					[placeholder]="'Password' | translate" formControlName='password'>
 			<mat-icon matSuffix (click)="showPw = !showPw">{{showPw ? 'visibility_off' : 'visibility'}}</mat-icon>
-			<mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">
-				Password must be atleast {{ password.errors.minlength.requiredLength }} characters
-			</mat-error>
 			<mat-error *ngIf="password.hasError('required')">
-				Password is mandatory
+				{{ 'Password is mandatory' | translate }}
             </mat-error>
-        </mat-form-field>
-        
+        </mat-form-field>      
         <mat-password-strength #passwordComponent [password]="password.value"></mat-password-strength>
-        <mat-password-strength-info [passwordComponent]="passwordComponent"></mat-password-strength-info>
+		<mat-password-strength-info [passwordComponent]="passwordComponent"
+				[lowerCaseCriteriaMsg]="'LOWER_CASE_CRITERIA_MSG' | translate"
+              	[upperCaseCriteriaMsg]="'UPPER_CASE_CRITERIA_MSG' | translate"
+              	[digitsCriteriaMsg]="'DIGITS_CRITERIA_MSG'| translate"
+              	[specialCharsCriteriaMsg]="'SPECIAL_CHARS_CRITERIA_MSG' | translate"
+              	[minCharsCriteriaMsg]="'MIN_CHARS_CRITERIA_MSG' | translate"
+		
+		></mat-password-strength-info>
 		<mat-form-field class="form-field">
-			<input matInput placeholder="E-Mail" formControlName='email'>
+			<input matInput [placeholder]="'E-Mail' | translate" formControlName='email'>
 			<mat-error *ngIf="email.hasError('required')">
-				E-Mail is mandatory
+				{{ 'E-Mail is mandatory' | translate }}
 			</mat-error>
 		</mat-form-field>
-	
 		<mat-form-field class="form-field">
-			<input matInput placeholder="First name" formControlName='firstname'>
+			<input matInput [placeholder]="'First name' | translate" formControlName='firstname'>
 			<mat-error *ngIf="firstname.hasError('required')">
-				First name is mandatory
+				{{ 'First name is mandatory' | translate }}
 			</mat-error>
 		</mat-form-field>
-	
 		<mat-form-field class="form-field">
-			<input matInput placeholder="Middle name(s)" formControlName='middlename'>
-		</mat-form-field>
-	
+			<input matInput [placeholder]="'Middle name(s)' | translate" formControlName='middlename'>
+		</mat-form-field>	
 		<mat-form-field class="form-field">
-			<input matInput placeholder="Surname" formControlName='lastname'>
+			<input matInput [placeholder]="'Surname' | translate" formControlName='lastname'>
 			<mat-error *ngIf="lastname.hasError('required')">
-				Surname is mandatory
+				{{ 'Surname is mandatory' | translate }}
 			</mat-error>
 		</mat-form-field>
-	
-
-	</form>	
+	</form>		
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 	<button mat-raised-button (click)="onSignupClick()" 
 			[color]="signupForm.valid ? 'warn' : 'primary'"
-			[disabled]="signupForm.valid ? false : true">Signup</button>
-	<button mat-raised-button (click)="onCancelClick()">Cancel</button>
+			[disabled]="signupForm.valid ? false : true">{{ 'Signup' | translate }}</button>
+	<button mat-raised-button (click)="onCancelClick()">{{ 'Cancel' | translate }}</button>
 </mat-dialog-actions>

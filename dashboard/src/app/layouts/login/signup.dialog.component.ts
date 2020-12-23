@@ -8,7 +8,8 @@ import { SignupData } from '../auth.service';
 	selector: 'app-signup',
 	templateUrl: 'signup.dialog.component.html',
   styles: [ '.form-field { width: 100%; }',
-			'.login-form { height: 570px; }' ]
+			'.login-form { height: 570px; }',
+		'.mat-dialog-content{ height: 610px!important; min-height: 610px!important;}' ]
 })
 export class SignupDialogComponent
 {

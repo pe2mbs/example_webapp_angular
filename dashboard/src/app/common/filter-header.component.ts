@@ -7,7 +7,7 @@ import { Directive, HostListener } from "@angular/core";
 
 
 export const CONDITIONS_LIST = [
-	{ value: "EQ", 		label: "Is equal == ", param: 1 },
+	{ value: "EQ", 		label: "Is equal ==", param: 1 },
 	{ value: "!EQ", 	label: "Is not equal !=", param: 1 },
 	{ value: "GT", 		label: "Greater than >", param: 1 },
 	{ value: "GT|EQ",	label: "Greater or equal than >=", param: 1 },
@@ -173,30 +173,30 @@ export class FilterItemDirective
 <mat-menu #menu>
 	<div mat-menu-item mat-filter-item [disableRipple]="true" class="menu-title">
 		<div fxLayout="row">
-			<div fxFlex>Field</div>
-			<div fxFlex fxLayoutAlign="end">{{ title | translate  }}</div>
+			<div fxFlex>{{ 'Field' | translate }}</div>
+			<div fxFlex fxLayoutAlign="end">{{ title | translate }}</div>
 		</div>
 	</div>
 	<div mat-menu-item mat-filter-item [disableRipple]="true">
 		<mat-form-field>
 			<mat-select [panelClass]="'mat-elevation-z10'" 
-						placeholder='Conditions' 
+						[placeholder]="'Conditions' | translate"
 						(selectionChange)="selectEvent( $event )"
 						[(value)]="conditionPosition">
 				<mat-option *ngFor="let condition of conditionsList" [value]="condition.value" class="cond_option">
-					{{ condition.label | translate  }}
+					{{ condition.label | translate }}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
 	</div>
 	<div mat-menu-item mat-filter-item [disableRipple]="true" *ngIf="fields > 0">
 		<mat-form-field>
-			<input matInput [placeholder]="caption[ 0 ] | translate" [(ngModel)]="value[0]">
+			<input matInput [placeholder]="caption[ 0 ] | translate" [(ngModel)]="value[ 0 ]">
 		</mat-form-field>
 	</div>
 	<div mat-menu-item mat-filter-item [disableRipple]="true" *ngIf="fields === 2">
 		<mat-form-field>
-			<input matInput [placeholder]="caption[ 1 ] | translate " [(ngModel)]="value[1]">
+			<input matInput [placeholder]="caption[ 1 ] | translate " [(ngModel)]="value[ 1 ]">
 		</mat-form-field>
 	</div>
 	<div mat-menu-item [disableRipple]="true">

@@ -9,7 +9,7 @@ import { ProfileService } from '../profile.service';
   	templateUrl: './header.component.html',
 	styles: [ 'ul li { list-style: none; }',
 			  'img { height: 30px; opacity: 1; padding: 5px 5px; }',
-			  '.logo { margin-top: 15px;' ]
+			  '.logo { margin-top: 15px; }' ]
 })
 export class HeaderComponent implements OnInit
 {
@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit
     {
         this.profileService.changeEvent.subscribe( data => {
             console.log( 'Theme change' );
-            if ( this.themeColor != data.theme )
+            if ( this.themeColor !== data.theme )
             {           
                 this.timeStamp = (new Date()).getTime();
                 this.themeColor = data.theme;           

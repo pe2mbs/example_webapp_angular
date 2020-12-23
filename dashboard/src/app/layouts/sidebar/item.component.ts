@@ -8,7 +8,7 @@ const HTML_TEMPLATE = `
 				 (click)="onItemSelected( item )"
 				 [ngClass]="{ 'active': active, 'expanded': expanded }" 
 				 id="{{ item.id }}">
-	<mat-icon class="title-icon">{{ item.icon }}</mat-icon> {{ item.caption }}
+	<mat-icon class="title-icon">{{ item.icon }}</mat-icon> {{ item.caption | translate }}
 	<span fxFlex *ngIf="item.children && item.children.length">
 		<span fxFlex></span>
 		<mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">expand_more</mat-icon>
