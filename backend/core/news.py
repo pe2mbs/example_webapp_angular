@@ -2,7 +2,7 @@ from flask import jsonify
 import webapp2.api as API
 from sqlalchemy import and_
 from webapp2.common.parameters import SerializationDictField
-from backend.locking import RecordLock
+from backend.core.locking import RecordLock
 from webapp2.common.crud import CrudInterface, CrudModelMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 

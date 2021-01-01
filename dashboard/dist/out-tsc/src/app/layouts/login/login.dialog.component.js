@@ -2,8 +2,8 @@ import * as tslib_1 from "tslib";
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-import { SignupDialogComponent } from './signup.dialog.component';
-let LoginDialogComponent = class LoginDialogComponent {
+import { GcSignupDialogComponent } from './signup.dialog.component';
+let GcLoginDialogComponent = class GcLoginDialogComponent {
     constructor(dialogRef, data, fb, authService, signupDialog) {
         this.dialogRef = dialogRef;
         this.data = data;
@@ -20,10 +20,10 @@ let LoginDialogComponent = class LoginDialogComponent {
         return;
     }
     onSignupClick() {
-        const signupDialogRef = this.signupDialog.open(SignupDialogComponent, {
+        const signupDialogRef = this.signupDialog.open(GcSignupDialogComponent, {
             autoFocus: true,
             width: '400px',
-            height: '600px',
+            height: 'auto',
             data: null
         });
         signupDialogRef.afterClosed().subscribe((result) => {
@@ -55,14 +55,15 @@ let LoginDialogComponent = class LoginDialogComponent {
         return this.loginForm.get('password');
     }
 };
-LoginDialogComponent = tslib_1.__decorate([
+GcLoginDialogComponent = tslib_1.__decorate([
     Component({
-        selector: 'app-login-dialog',
+        // tslint:disable-next-line:component-selector
+        selector: 'gc-login-dialog',
         templateUrl: 'login.dialog.component.html',
         styles: ['.form-field { width: 100%; }',
             '.login-form { height: 170px; }']
     }),
     tslib_1.__param(1, Inject(MAT_DIALOG_DATA))
-], LoginDialogComponent);
-export { LoginDialogComponent };
+], GcLoginDialogComponent);
+export { GcLoginDialogComponent };
 //# sourceMappingURL=login.dialog.component.js.map

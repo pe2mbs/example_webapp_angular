@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { isNullOrUndefined } from 'util';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 
 @Component({
-  	selector: 'app-breadcrumb',
-	template: '<p-breadcrumb [home]="home" [model]="menuItems"></p-breadcrumb>',
+  	// tslint:disable-next-line:component-selector
+  	selector: 'gc-breadcrumb',
+	template: '<p-breadcrumb class="color-primary" [home]="home" [model]="menuItems"></p-breadcrumb>',
 	styles: [ ':host ::ng-deep .ui-breadcrumb { border: 0ch solid white!important; }' ]
 } )
-export class BreadcrumbComponent
+export class GcBreadcrumbComponent
 {
     static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
     readonly home = {icon: 'pi pi-home', url: '/#/'};
@@ -41,7 +41,7 @@ export class BreadcrumbComponent
             {
                 url += `/${routeURL}`;
             }
-            const label = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_BREADCRUMB];
+            const label = child.snapshot.data[ GcBreadcrumbComponent.ROUTE_DATA_BREADCRUMB ];
             if ( !isNullOrUndefined( label ) )
             {
                 breadcrumbs.push( { label, url } );

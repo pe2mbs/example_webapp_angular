@@ -1,7 +1,7 @@
 import * as tslib_1 from "tslib";
 import { Component, Input } from '@angular/core';
-import { HelpDialogComponent } from './dialog.component';
-let HelpComponent = class HelpComponent {
+import { GcHelpDialogComponent } from './dialog.component';
+let GcHelpComponent = class GcHelpComponent {
     constructor(dialog, service) {
         this.dialog = dialog;
         this.service = service;
@@ -13,7 +13,7 @@ let HelpComponent = class HelpComponent {
             text: this.service.getHelp(this.helpitem, this.fallback),
         };
         console.log('helpButton');
-        const dialogRef = this.dialog.open(HelpDialogComponent, {
+        const dialogRef = this.dialog.open(GcHelpDialogComponent, {
             autoFocus: false,
             // maxHeight: '80vh',
             width: '80%',
@@ -28,18 +28,19 @@ let HelpComponent = class HelpComponent {
 };
 tslib_1.__decorate([
     Input()
-], HelpComponent.prototype, "helpitem", void 0);
+], GcHelpComponent.prototype, "helpitem", void 0);
 tslib_1.__decorate([
     Input()
-], HelpComponent.prototype, "fallback", void 0);
+], GcHelpComponent.prototype, "fallback", void 0);
 tslib_1.__decorate([
     Input()
-], HelpComponent.prototype, "color", void 0);
-HelpComponent = tslib_1.__decorate([
+], GcHelpComponent.prototype, "color", void 0);
+GcHelpComponent = tslib_1.__decorate([
     Component({
-        selector: 'app-help',
+        // tslint:disable-next-line:component-selector
+        selector: 'gc-help',
         template: `<button mat-icon-button [color]="color" (click)="helpButton()"><mat-icon>help_outline</mat-icon></button>`,
     })
-], HelpComponent);
-export { HelpComponent };
+], GcHelpComponent);
+export { GcHelpComponent };
 //# sourceMappingURL=help.component.js.map

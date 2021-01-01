@@ -2,7 +2,7 @@ import * as tslib_1 from "tslib";
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-let SignupDialogComponent = class SignupDialogComponent {
+let GcSignupDialogComponent = class GcSignupDialogComponent {
     constructor(dialogRef, data, fb) {
         this.dialogRef = dialogRef;
         this.data = data;
@@ -59,14 +59,16 @@ let SignupDialogComponent = class SignupDialogComponent {
         return;
     }
 };
-SignupDialogComponent = tslib_1.__decorate([
+GcSignupDialogComponent = tslib_1.__decorate([
     Component({
-        selector: 'app-signup',
+        // tslint:disable-next-line:component-selector
+        selector: 'gc-signup',
         templateUrl: 'signup.dialog.component.html',
         styles: ['.form-field { width: 100%; }',
-            '.login-form { height: 570px; }']
+            '.login-form { height: 570px; }',
+            '.mat-dialog-content{ height: 610px!important; min-height: 610px!important;}']
     }),
     tslib_1.__param(1, Inject(MAT_DIALOG_DATA))
-], SignupDialogComponent);
-export { SignupDialogComponent };
+], GcSignupDialogComponent);
+export { GcSignupDialogComponent };
 //# sourceMappingURL=signup.dialog.component.js.map

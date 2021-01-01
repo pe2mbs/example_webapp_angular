@@ -5,4 +5,6 @@ import backend.core.news
 import backend.core.feedback
 import backend.core.version
 import backend.core.tracking
-import backend.core.profile
+import backend.core.user
+import backend.core.role
+import backend.core.locking

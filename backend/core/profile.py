@@ -15,11 +15,15 @@ def restoreProfile( username ):
         # Needs default profile
         result = {
             'user': username,
+            'fullname': 'Administrator',
             'role': 1,
+            'roleString': 'Administrator',
+            'theme': 'light-theme',
             'locale': 'nl_NL',
             'pageSize': 10,
-            'fullname': 'Administrator',
-            'theme': 'light-theme'
+            'profilePage': None,
+            'profileParamaters': None,
+            'objects': {}
         }
 
     API.logger.info( "RESTORE.PROFILE: {}".format( result ) )

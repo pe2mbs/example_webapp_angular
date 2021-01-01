@@ -76,6 +76,7 @@ ScreenRoleComponent = tslib_1.__decorate([
         // tslint:disable-next-line:component-selector
         selector: 'app-gn_role-screen',
         templateUrl: './screen.component.html',
+        styles: ['.editor-screen { height: calc( 100% - 75px )!important; }'],
         styleUrls: ['../../common/common-mat-card.scss']
     })
 ], ScreenRoleComponent);

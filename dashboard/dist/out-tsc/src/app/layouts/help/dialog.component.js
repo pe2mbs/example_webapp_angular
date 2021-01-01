@@ -1,7 +1,7 @@
 import * as tslib_1 from "tslib";
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-let HelpDialogComponent = class HelpDialogComponent {
+let GcHelpDialogComponent = class GcHelpDialogComponent {
     constructor(dialogRef, data) {
         this.dialogRef = dialogRef;
         this.data = data;
@@ -12,7 +12,7 @@ let HelpDialogComponent = class HelpDialogComponent {
         this.dialogRef.close();
     }
 };
-HelpDialogComponent = tslib_1.__decorate([
+GcHelpDialogComponent = tslib_1.__decorate([
     Component({
         selector: 'app-dialog',
         template: `<div class="help-contents">
@@ -29,6 +29,6 @@ HelpDialogComponent = tslib_1.__decorate([
         ]
     }),
     tslib_1.__param(1, Inject(MAT_DIALOG_DATA))
-], HelpDialogComponent);
-export { HelpDialogComponent };
+], GcHelpDialogComponent);
+export { GcHelpDialogComponent };
 //# sourceMappingURL=dialog.component.js.map

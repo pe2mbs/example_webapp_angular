@@ -7,11 +7,11 @@
   - caption: Users
     icon: accessibility
     id: F19874EA16DB0675ABBE9EC7DB1F341A
-    route: /gn_user
+    route: /user
   - caption: Roles
     icon: group_work
     id: BBD58F23590A9F3AAED4D61B35C4BA9E
-    route: /gn_role
+    route: /role
   - caption: DataBase
     children:
     - caption: Record locks

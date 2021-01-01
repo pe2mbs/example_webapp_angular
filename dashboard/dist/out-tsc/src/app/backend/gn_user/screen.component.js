@@ -181,6 +181,7 @@ ScreenUserComponent = tslib_1.__decorate([
         // tslint:disable-next-line:component-selector
         selector: 'app-gn_user-screen',
         templateUrl: './screen.component.html',
+        styles: ['.mat-tab-group-screen { height: calc( 100% - 100px )!important; }'],
         styleUrls: ['../../common/common-mat-card.scss']
     })
 ], ScreenUserComponent);

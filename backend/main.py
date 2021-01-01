@@ -124,7 +124,6 @@ def registerSubMenu( menu, *args, before = None, after = None ):
 
 def registerApi( app, cors ):
     logger = app.logger
-    # mapDrive( "E:", "\\\\sfp09021\\testrun", None, None, True )
     with open( os.path.join( os.path.dirname( __file__ ),'menu.yaml' ),'r' ) as stream:
         API.menuItems = yaml.load( stream,Loader = yaml.Loader )
 

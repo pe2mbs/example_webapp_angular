@@ -25,7 +25,7 @@ import { Observable } from 'rxjs';
 
 
 @Injectable()
-export class TickerDataService
+export class GcTickerDataService
 {
     private uri = '/api/news/getnews';
 

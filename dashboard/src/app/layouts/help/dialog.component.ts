@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
-export interface HelpDialogData {
+export interface GcHelpDialogData {
 	name: string;
 	text: Observable<string>;
 }
@@ -22,10 +22,10 @@ export interface HelpDialogData {
 			'mat-card { height: calc(100hv - 100px); }' 
 		]
 })
-export class HelpDialogComponent
+export class GcHelpDialogComponent
 {
-	constructor( public dialogRef: MatDialogRef<HelpDialogComponent>
-			   , @Inject( MAT_DIALOG_DATA ) public data: HelpDialogData ) 
+	constructor( public dialogRef: MatDialogRef<GcHelpDialogComponent>
+			   , @Inject( MAT_DIALOG_DATA ) public data: GcHelpDialogData ) 
 	{ 
 		dialogRef.disableClose = true;
 		return;

@@ -1,16 +1,15 @@
 import * as tslib_1 from "tslib";
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { isNullOrUndefined } from 'util';
 let AuthService = class AuthService {
     constructor(http) {
         this.http = http;
+        this.changeEvent = new EventEmitter();
         this.jwtHelper = new JwtHelperService();
         if (this.isLoggedIn()) {
             this.currentUser = this.jwtHelper.decodeToken(this.token);
-            this._userName = this.currentUser.username;
-            this._userProfile = this.currentUser.profile;
-            this._userRole = this.currentUser.userrole;
         }
         return;
     }
@@ -19,10 +18,7 @@ let AuthService = class AuthService {
             if (response && response.result) {
                 localStorage.setItem('token', response.token);
                 this.currentUser = this.jwtHelper.decodeToken(response.token);
-                this._userName = this.currentUser.username;
-                this._userProfile = this.currentUser.profile;
-                this._userParameters = this.currentUser.parameters;
-                this._userRole = this.currentUser.userrole;
+                this.changeEvent.emit(this);
                 return (true);
             }
             else {
@@ -38,6 +34,7 @@ let AuthService = class AuthService {
     logout() {
         localStorage.removeItem('token');
         this.currentUser = null;
+        this.changeEvent.emit(this);
         return;
     }
     isLoggedIn() {
@@ -49,23 +46,16 @@ let AuthService = class AuthService {
         return (!result);
     }
     get userName() {
-        return this._userName;
-    }
-    get userProfile() {
-        return this._userProfile;
-    }
-    get userProfileParmeters() {
-        return (this._userParameters);
-    }
-    get userRole() {
-        return this._userRole;
+        if (isNullOrUndefined(this.currentUser)) {
+            return ('');
+        }
+        return (this.currentUser.username);
     }
     get fullName() {
-        if (!this.token) {
-            return (false);
+        if (isNullOrUndefined(this.currentUser)) {
+            return ('');
         }
-        const jsonToken = this.jwtHelper.decodeToken(this.token);
-        return (jsonToken.fullname);
+        return (this.currentUser.fullname);
     }
     get token() {
         return (localStorage.getItem('token'));

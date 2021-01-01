@@ -1,34 +1,29 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService, SignupData } from '../auth.service';
-import { SignupDialogComponent } from './signup.dialog.component';
+import { GcAuthService } from '../auth/auth.service';
+import { GcSignupDialogComponent } from './signup.dialog.component';
+import { GcSignupData, GcCredentials } from '../auth/model';
 
-
-export interface Credentials 
-{
-    userid: string;
-    password: string;
-    keepsignedin: boolean;
-}
 
 @Component({
-  	selector: 'app-login-dialog',
+  	// tslint:disable-next-line:component-selector
+  	selector: 'gc-login-dialog',
   	templateUrl: 'login.dialog.component.html',
 	styles: [ '.form-field { width: 100%; }',
 			  '.login-form { height: 170px; }' ]
 })
-export class LoginDialogComponent
+export class GcLoginDialogComponent
 {
 	public showPw: boolean = false;
     public keepSignedIn: boolean;
     public invalidLogin: boolean;
 	public loginForm: FormGroup;
 	
-	constructor( public dialogRef: MatDialogRef<LoginDialogComponent>
+	constructor( public dialogRef: MatDialogRef<GcLoginDialogComponent>
 			   , @Inject( MAT_DIALOG_DATA ) public data: any
 			   , private fb: FormBuilder
-			   , private authService: AuthService
+			   , private authService: GcAuthService
 			   , private signupDialog: MatDialog ) 
 	{ 
 		dialogRef.disableClose = true;
@@ -48,20 +43,20 @@ export class LoginDialogComponent
 
 	public onSignupClick(): void
 	{
-		const signupDialogRef = this.signupDialog.open( SignupDialogComponent, {  
+		const signupDialogRef = this.signupDialog.open( GcSignupDialogComponent, {  
 			autoFocus: true,
 			width: '400px',
 			height: 'auto',
 			data: null
 		} );
-		signupDialogRef.afterClosed().subscribe( (result: SignupData) => {
+		signupDialogRef.afterClosed().subscribe( (result: GcSignupData) => {
 			this.authService.signup( result	).subscribe();
 		} );
 	}
 
 	public onLogonClick(): void 
 	{
-		const credentials: Credentials = { 
+		const credentials: GcCredentials = { 
 			userid: this.loginForm.value.userid, 
 			password: this.loginForm.value.password,
 			keepsignedin: this.loginForm.value.keepSignedIn

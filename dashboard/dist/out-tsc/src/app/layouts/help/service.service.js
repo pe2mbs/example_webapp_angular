@@ -1,6 +1,6 @@
 import * as tslib_1 from "tslib";
 import { Injectable } from '@angular/core';
-let HelpService = class HelpService {
+let GcHelpService = class GcHelpService {
     constructor(httpSession) {
         this.httpSession = httpSession;
         return;
@@ -9,10 +9,10 @@ let HelpService = class HelpService {
         return (this.httpSession.get('/api/help/' + name));
     }
 };
-HelpService = tslib_1.__decorate([
+GcHelpService = tslib_1.__decorate([
     Injectable({
         providedIn: 'root'
     })
-], HelpService);
-export { HelpService };
+], GcHelpService);
+export { GcHelpService };
 //# sourceMappingURL=service.service.js.map

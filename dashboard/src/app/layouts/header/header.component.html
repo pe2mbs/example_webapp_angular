@@ -15,20 +15,20 @@
 			<div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
 				<ul fxLayout="row" fxLayoutGap="20px">
 					<li>
-						<app-theme-switcher></app-theme-switcher>
+						<gc-theme-switcher></gc-theme-switcher>
 					</li>
 					<li>
-						<app-lang-switcher></app-lang-switcher>
+						<gc-lang-switcher></gc-lang-switcher>
 					</li>
 					<li>
-						<app-help helpitem="main"></app-help>
+						<gc-help helpitem="main"></gc-help>
 					</li>
 					<li>
 						<button mat-button [matMenuTriggerFor]="menu">
 							<mat-icon>person_outline</mat-icon>
 						</button>
 						<mat-menu #menu="matMenu">
-							<app-user-profile></app-user-profile>
+							<gc-user-profile></gc-user-profile>
 						</mat-menu>
 					</li>
 				</ul>

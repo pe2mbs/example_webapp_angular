@@ -19,7 +19,7 @@ import { NavService } from './sidebar/nav.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 import { AdminAuthGuard } from './admin-auth-gaurd.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +43,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -66,7 +66,17 @@ import { SignupDialogComponent } from './login/signup.dialog.component';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SignedOutComponent } from './signedout.component';
+import { TickerComponent } from './ticker/ticker.component';
+import { TickerDataService } from './ticker/service';
+import { ProfileService } from './profile.service';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { TranslateLoader, TranslateModule, MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageSwitcherComponent, LanguageSwitchComponent, CustomMissingTranslationHandler } from './language-switcher.component';
+import { MyMatPaginatorIntl } from './material-i18n';
 const materialModules = [
+    MatPasswordStrengthModule,
     BreadcrumbModule,
     CdkTreeModule,
     MatAutocompleteModule,
@@ -104,11 +114,11 @@ const materialModules = [
     MatSlideToggleModule,
     MatSliderModule,
     MatDialogModule,
-    FlexLayoutModule
+    FlexLayoutModule,
 ];
 const defaultRoute = {
     path: '',
-    component: DefaultComponent,
+    component: SignedOutComponent,
     children: [
         {
             path: 'login',
@@ -116,6 +126,9 @@ const defaultRoute = {
         }
     ]
 };
+export function createTranslateLoader(http) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 let DefaultModule = DefaultModule_1 = class DefaultModule {
     static forRoot() {
         return {
@@ -126,7 +139,8 @@ let DefaultModule = DefaultModule_1 = class DefaultModule {
                 AuthGuard,
                 AdminAuthGuard,
                 AuthService,
-                ThemeSwitcherComponent
+                ThemeSwitcherComponent,
+                TickerDataService
             ]
         };
     }
@@ -150,7 +164,11 @@ DefaultModule = DefaultModule_1 = tslib_1.__decorate([
             UserProfileComponent,
             ThemeSwitcherComponent,
             DefaultComponent,
+            SignedOutComponent,
             BreadcrumbComponent,
+            TickerComponent,
+            LanguageSwitchComponent,
+            LanguageSwitcherComponent,
         ],
         imports: [
             CommonModule,
@@ -161,6 +179,18 @@ DefaultModule = DefaultModule_1 = tslib_1.__decorate([
             MarkdownModule.forChild(),
             GridsterModule,
             RouterModule.forChild([defaultRoute]),
+            TranslateModule.forRoot({
+                defaultLanguage: 'en',
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: (createTranslateLoader),
+                    deps: [HttpClient]
+                },
+                missingTranslationHandler: {
+                    provide: MissingTranslationHandler,
+                    useClass: CustomMissingTranslationHandler
+                },
+            }),
             ...materialModules
         ],
         exports: [
@@ -176,6 +206,7 @@ DefaultModule = DefaultModule_1 = tslib_1.__decorate([
             LoginComponent,
             UserProfileComponent,
             ThemeSwitcherComponent,
+            TranslateModule,
             ...materialModules
         ],
         entryComponents: [
@@ -190,6 +221,8 @@ DefaultModule = DefaultModule_1 = tslib_1.__decorate([
             AdminAuthGuard,
             AuthService,
             ThemeSwitcherComponent,
+            ProfileService,
+            TickerDataService,
             {
                 provide: LocationStrategy,
                 useClass: HashLocationStrategy
@@ -198,6 +231,11 @@ DefaultModule = DefaultModule_1 = tslib_1.__decorate([
                 provide: HTTP_INTERCEPTORS,
                 useClass: TokenInterceptorService,
                 multi: true
+            },
+            {
+                provide: MatPaginatorIntl,
+                useClass: MyMatPaginatorIntl,
+                deps: [TranslateService]
             }
         ]
     })

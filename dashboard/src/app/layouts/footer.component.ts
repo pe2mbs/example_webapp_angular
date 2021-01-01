@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
-  	selector: 'app-footer',
+  	// tslint:disable-next-line:component-selector
+  	selector: 'gc-footer',
   	template: `<footer>{{footerText}}</footer>`,
   	styles: ['footer { padding: 10px; }']
 })
-export class FooterComponent
+export class GcFooterComponent
 {
 	footerText: string = 'Webapp2 Python-flask angular core, \u00A9 Copyright 2017-2020 All rights reserved by Marc Bertens-Nguyen';
 

@@ -1,7 +1,7 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
-import { LoginDialogComponent } from './login.dialog.component';
-let LoginComponent = class LoginComponent {
+import { GcLoginDialogComponent } from './login.dialog.component';
+let GcLoginComponent = class GcLoginComponent {
     constructor(dialog, route, router) {
         this.dialog = dialog;
         this.route = route;
@@ -9,7 +9,7 @@ let LoginComponent = class LoginComponent {
         return;
     }
     ngOnInit() {
-        const dialogRef = this.dialog.open(LoginDialogComponent, {
+        const dialogRef = this.dialog.open(GcLoginDialogComponent, {
             autoFocus: true,
             width: '500px',
             height: '360px',
@@ -27,11 +27,12 @@ let LoginComponent = class LoginComponent {
         return;
     }
 };
-LoginComponent = tslib_1.__decorate([
+GcLoginComponent = tslib_1.__decorate([
     Component({
-        selector: 'app-signin-dialog',
+        // tslint:disable-next-line:component-selector
+        selector: 'gc-signin-dialog',
         template: '<div></div>'
     })
-], LoginComponent);
-export { LoginComponent };
+], GcLoginComponent);
+export { GcLoginComponent };
 //# sourceMappingURL=login.component.js.map

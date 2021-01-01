@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeSwitcherComponent } from './layouts/theme-switcher.component';
+import { GcThemeSwitcherComponent } from './layouts/theme-switcher.component';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import { ThemeSwitcherComponent } from './layouts/theme-switcher.component';
 })
 export class AppComponent implements OnInit 
 {
-	constructor( public themeSwitch: ThemeSwitcherComponent )
+	constructor( public themeSwitch: GcThemeSwitcherComponent )
 	{
 		return;
 	}

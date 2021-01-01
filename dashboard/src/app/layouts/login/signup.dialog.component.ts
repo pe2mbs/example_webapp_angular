@@ -1,22 +1,23 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { SignupData } from '../auth.service';
+import { GcSignupData } from '../auth/model';
 
 
 @Component({
-	selector: 'app-signup',
+	// tslint:disable-next-line:component-selector
+	selector: 'gc-signup',
 	templateUrl: 'signup.dialog.component.html',
   styles: [ '.form-field { width: 100%; }',
 			'.login-form { height: 570px; }',
 		'.mat-dialog-content{ height: 610px!important; min-height: 610px!important;}' ]
 })
-export class SignupDialogComponent
+export class GcSignupDialogComponent
 {
 	public signupForm: FormGroup;
 	public showPw: boolean = false;
 	
-	constructor( public dialogRef: MatDialogRef<SignupDialogComponent>
+	constructor( public dialogRef: MatDialogRef<GcSignupDialogComponent>
 			   , @Inject( MAT_DIALOG_DATA ) public data: any
 			   , private fb: FormBuilder )
 	{
@@ -86,7 +87,7 @@ export class SignupDialogComponent
 		// The server application sends a e-mail to the user 
 		// with a new password, which he/she must change on first 
 		// login.
-		const signupData: SignupData = {
+		const signupData: GcSignupData = {
 			username: this.userid.value,
 			password: this.password.value,
 			email: this.email.value,

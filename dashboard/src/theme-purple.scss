@@ -11,6 +11,7 @@ $purple-app-theme:	mat-dark-theme($purple-primary, $purple-accent, $purple-warn)
 .purple-theme
 {
     @include angular-material-theme($purple-app-theme);
+	$background: map-get($purple-app-theme, background);
 
     .mat-header-row
     {
@@ -42,5 +43,21 @@ $purple-app-theme:	mat-dark-theme($purple-primary, $purple-accent, $purple-warn)
         color: white;
     }
 
+	.color-primary
+	{
+		background-color: #424242;
+        color: white !important;
+	}
 
+	.color-accent
+	{
+		background-color: #424242;
+        color: mat-color( $dark-app-accent ) !important;
+	}
+
+	.color-warn
+	{
+		background-color:mat-color($background, background);
+        color: mat-color( $dark-app-warn ) !important;
+	}
 }

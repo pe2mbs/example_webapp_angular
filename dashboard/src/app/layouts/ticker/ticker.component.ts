@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { TickerDataService } from './service';
+import { GcTickerDataService } from './service';
 import { Subscription } from 'rxjs';
 
 interface NewsItem
@@ -23,7 +23,7 @@ interface NewsMessages
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'news-ticker',
+    selector: 'gc-news-ticker',
     template: `<div class="news-ticker" *ngIf="newsAvailable">
     <div class="news-bar">
         <div class="ticker-wrap">
@@ -40,13 +40,13 @@ interface NewsMessages
 </div>`,
     styleUrls: [ './ticker.component.scss' ],
 })
-export class TickerComponent implements OnInit, AfterViewInit 
+export class GcTickerComponent implements AfterViewInit 
 {
     @ViewChild( "newsbar", { static: false } ) ticker: ElementRef;
     newsAvailable: boolean = false;
     news: NewsMessages; 
     subscribedEvent: Subscription = null;
-    constructor( public dataService: TickerDataService ) 
+    constructor( public dataService: GcTickerDataService ) 
     { 
         return;
     }
@@ -55,9 +55,7 @@ export class TickerComponent implements OnInit, AfterViewInit
     {
         const value = 60;
 		this.news = msgs;
-		console.log( 'NewsMessages', msgs );
         this.newsAvailable = this.news.N_TOTAL_ITEMS > 0;
-		console.log( msgs );
 		let time: number;
 		if ( msgs.N_POLL_INTERVAL > 0 )
 		{
@@ -90,12 +88,6 @@ export class TickerComponent implements OnInit, AfterViewInit
                 this.setMessage( result );
             } );
         }, time * 1000 );
-    }
-
-    ngOnInit() 
-    {       
-        console.log( this.ticker );
-        return;
     }
 
     ngAfterViewInit() 

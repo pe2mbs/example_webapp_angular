@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginDialogComponent } from './login.dialog.component';
+import { GcLoginDialogComponent } from './login.dialog.component';
 
 @Component({
-	selector: 'app-signin-dialog',
+	// tslint:disable-next-line:component-selector
+	selector: 'gc-signin-dialog',
 	template: '<div></div>'
 })
-export class LoginComponent implements OnInit
+export class GcLoginComponent implements OnInit
 {
 	constructor( public dialog: MatDialog 
 			   , private route: ActivatedRoute
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		const dialogRef = this.dialog.open( LoginDialogComponent, {  
+		const dialogRef = this.dialog.open( GcLoginDialogComponent, {  
 			autoFocus: true,
 			width: '500px',
 			height: '360px',

@@ -110,6 +110,7 @@ ScreenTrackingComponent = tslib_1.__decorate([
         // tslint:disable-next-line:component-selector
         selector: 'app-tracking-screen',
         templateUrl: './screen.component.html',
+        styles: ['.editor-screen { height: calc( 100% - 300px )!important; }'],
         styleUrls: ['../../common/common-mat-card.scss']
     })
 ], ScreenTrackingComponent);

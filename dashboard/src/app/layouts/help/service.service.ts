@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   	providedIn: 'root'
 })
-export class HelpService 
+export class GcHelpService 
 {
 	constructor( private httpSession: HttpClient ) 
 	{ 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from './profile.service';
+import { GcProfileService } from './profile/profile.service';
 
 @Component({
-  	selector: 'app-theme-switcher',
+  	// tslint:disable-next-line:component-selector
+  	selector: 'gc-theme-switcher',
   	template: `<button mat-button [matMenuTriggerFor]="menu"><mat-icon>format_color_fill</mat-icon></button>
 <mat-menu #menu="matMenu">
 	<button mat-menu-item class="{theme.value}" type="button" *ngFor="let theme of themes" 
@@ -11,7 +12,7 @@ import { ProfileService } from './profile.service';
 	</button>
 </mat-menu>`
 })
-export class ThemeSwitcherComponent implements OnInit 
+export class GcThemeSwitcherComponent implements OnInit 
 {
 	public themes = [
 		{ label: 'equensWorldline', value: 'equensworldline-theme' },
@@ -21,7 +22,7 @@ export class ThemeSwitcherComponent implements OnInit
 	];
 	public themeColor = 'light-theme';
 
-	constructor( protected profileService: ProfileService ) 
+	constructor( protected profileService: GcProfileService ) 
 	{
 		this.profileService.changeEvent.subscribe( data => {
 			if ( this.themeColor !== data.theme )
