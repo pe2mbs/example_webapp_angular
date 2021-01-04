@@ -1,0 +1,99 @@
+linux:
+    source:
+        base:                       /home/mbertens/src/python/example_webapp_angular
+        python:                     .
+        angular:                    dashboard/src/app
+    template:
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        python:                     python
+        angular:                    angular
+        common:
+            python:                 python
+            angular:                angular
+application:                        backend
+options:
+    ignore-case-db-ids:             true
+    overwrite:                      true
+    use-module:                     true
+    copy-support-files:             false
+    use-local-template:             true
+references:
+    app-module:
+        filename:                   app.module.ts
+        class:                      AppModule
+        module:                     app.module.ts
+    app-routing:
+        filename:                   app.routingmodule.ts
+        class:                      AppRoutingModule
+        module:                     app.routingmodule.ts
+objects:
+-   name:                           languages
+    title:                          Languages
+    class:                          Languages
+    uri:                            /api/languages
+    mixin:
+        python:
+            view:
+                class:              LanguagesViewMixin
+                filename:           backend/languages/view_mixin.py
+    menu:
+        caption:                    Administration
+        icon:                       settings
+        index:                      -2
+        menu:
+            caption:                Languages
+            icon:                   languages
+            index:                  0
+            route:                  /languages
+    actions:
+    -   name:                       new
+        type:                       dialog
+        position:                   header
+        function:                   self.addRecord()
+    -   name:                       edit
+        type:                       dialog
+        position:                   row
+        function:                   self.editRecord( idx, row )
+    -   name:                       delete
+        label:                      Delete
+        type:                       dialog
+        icon:                       delete
+        position:                   cell
+        function:                   core.deleteRecord( idx, row, 'LA_ID', 'Label', 'LA_LABEL' )
+    table:
+        name:                       LANGUAGE
+
+        columns:
+        -   field:                  LA_ID                     INT               AUTO NUMBER  PRIMARY KEY
+        -   field:                  LA_LABEL                  CHAR( 30 )        NOT NULL
+            label:                  Label
+            unique:                 true
+            ui:
+                type:               textbox
+            listview:
+                index:              0
+                width:              65%
+        -   field:                  LA_CODE2                  CHAR( 2 )         NOT NULL
+            label:                  Code-2
+            unique:                 true
+            ui:
+                type:               textbox
+            listview:
+                index:              1
+                width:              10%
+        -   field:                  LA_CODE3                  CHAR( 3 )         NOT NULL
+            label:                  Code-3
+            unique:                 true
+            ui:
+                type:               textbox
+            listview:
+                index:              2
+                width:              10%
+        -   field:                  LA_LOCALE                 CHAR( 5 )         NOT NULL
+            label:                  Locale
+            unique:                 true
+            ui:
+                type:               textbox
+            listview:
+                index:              3
+                width:              15%

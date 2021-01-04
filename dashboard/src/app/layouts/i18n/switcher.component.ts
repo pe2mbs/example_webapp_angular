@@ -12,7 +12,7 @@ import { Languages } from './model';
 <mat-menu #language="matMenu">
 	<gc-lang-switch *ngFor="let lang of languages;" 
 					image="/assets/{{lang.image}}" 
-					label="{{ lang.code2 | uppercase }}: {{ lang.label }}"
+					label="{{ lang.label }}"
 					(click)="selectLanguage( lang )">
 	</gc-lang-switch>
 </mat-menu>` ,

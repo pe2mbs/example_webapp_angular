@@ -2,3 +2,10 @@ from backend.gn_role import Role, RoleMemory
 from backend.gn_user import User, UserMemory
 from backend.locking import RecordLocks, RecordLocksMemory
 from backend.tracking import Tracking, TrackingMemory
+from backend.language import Language, LanguageMemory
+from backend.trans_lang import TranslatedLanguage, TranslatedLanguageMemory
+from backend.languages import Languages, LanguagesMemory
+from backend.language_reference import LanguageReference, LanguageReferenceMemory
+from backend.language_translate import LanguageTranslate, LanguageTranslateMemory
+from backend.transalations import Transalations, TransalationsMemory
+from backend.language_translates import LanguageTransalates, LanguageTransalatesMemory

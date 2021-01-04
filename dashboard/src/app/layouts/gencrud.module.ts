@@ -122,6 +122,8 @@ import { GcLanguageSwitcherComponent } from './i18n/switcher.component';
 import { GcLanguageSwitchComponent } from './i18n/switch.component';
 import { GcMissingTranslationHandler } from './i18n/missing.translation';
 import { GcDeleteDialog } from './dialog/delete.dialog';
+import { CustDataTableComponent } from './crud/cust.data.table.component';
+import { GcI18nLoader } from './i18n/custom.i18n.loader';
 
 
 const importExportModules = [
@@ -169,6 +171,51 @@ const importExportModules = [
     NgxMaterialTimepickerModule,
 ];
 
+const declareExportComponents = [
+	GcTextInputComponent,
+	GcChoiceInputComponent,
+	GcChoiceAutoInputComponent,
+	GcComboInputComponent,
+	GcDateInputComponent,
+	GcDatePickerInputComponent,
+	GcDateTimeInputComponent,
+	GcDateTimePickerInputComponent,
+	GcNumberInputComponent,
+	GcPasswordInputComponent,
+	GcTextareaInputComponent,
+	GcMonacoEditorComponent,
+	GcTimeInputComponent,
+	GcTimePickerInputComponent,
+	GcEmailInputComponent,
+	GcLabelComponent,
+	GcCheckboxInputComponent,
+	GcSliderToggleInputComponent,
+	GcSliderInputComponent,
+	GcFilterHeaderComponent,
+	GcClickStopPropagation,
+	GcFilterItemDirective,
+	GcHeaderComponent,
+	GcFooterComponent,
+	GcNavSidebarComponent,
+	GcHelpComponent,
+	GcHelpDialogComponent,
+	GcMenuListItemComponent,
+	GcLoginComponent,
+	GcLoginDialogComponent,
+	GcSignupDialogComponent,
+	GcSignedOutComponent,
+	GcUserProfileComponent,
+	GcThemeSwitcherComponent,
+	GcDefaultComponent,
+	GcBreadcrumbComponent,
+	GcTickerComponent,
+	GcLanguageSwitchComponent,
+	GcLanguageSwitcherComponent,
+	GcDeleteDialog,
+	CustDataTableComponent
+];
+
+
 const defaultRoute: Route = { 	
 	path: '',
 	component: GcSignedOutComponent,
@@ -180,53 +227,9 @@ const defaultRoute: Route = {
 	]
 };
 
-export function createTranslateLoader( http: HttpClient ) 
-{
-    return new TranslateHttpLoader( http, './assets/i18n/', '.json' );
-}
-
 @NgModule({
     declarations: [
-        GcTextInputComponent,
-        GcChoiceInputComponent,
-        GcChoiceAutoInputComponent,
-        GcComboInputComponent,
-        GcDateInputComponent,
-        GcDatePickerInputComponent,
-        GcDateTimeInputComponent,
-        GcDateTimePickerInputComponent,
-        GcNumberInputComponent,
-        GcPasswordInputComponent,
-        GcTextareaInputComponent,
-        GcMonacoEditorComponent,
-        GcTimeInputComponent,
-        GcTimePickerInputComponent,
-        GcEmailInputComponent,
-        GcLabelComponent,
-        GcCheckboxInputComponent,
-        GcSliderToggleInputComponent,
-        GcSliderInputComponent,
-        GcFilterHeaderComponent,
-        GcClickStopPropagation,
-		GcFilterItemDirective,
-		GcHeaderComponent,
-		GcFooterComponent,
-		GcNavSidebarComponent,
-		GcHelpComponent,
-		GcHelpDialogComponent,
-		GcMenuListItemComponent,
-		GcLoginComponent,
-		GcLoginDialogComponent,
-		GcSignupDialogComponent,
-		GcSignedOutComponent,
-		GcUserProfileComponent,
-		GcThemeSwitcherComponent,
-        GcDefaultComponent,
-        GcBreadcrumbComponent,
-		GcTickerComponent,
-		GcLanguageSwitchComponent,
-		GcLanguageSwitcherComponent,
-		GcDeleteDialog
+        ...declareExportComponents
     ],
     entryComponents: [
 		GcHelpDialogComponent,
@@ -272,7 +275,7 @@ export function createTranslateLoader( http: HttpClient )
             defaultLanguage: 'en',
             loader: {
                 provide: TranslateLoader,
-                useFactory: ( createTranslateLoader ),
+				useClass: GcI18nLoader,
                 deps: [ HttpClient ]
 			},
 			missingTranslationHandler: {
@@ -284,40 +287,7 @@ export function createTranslateLoader( http: HttpClient )
 		...importExportModules
     ],
     exports: [
-        GcTextInputComponent,
-        GcChoiceInputComponent,
-        GcChoiceAutoInputComponent,
-        GcComboInputComponent,
-        GcDateInputComponent,
-        GcDatePickerInputComponent,
-        GcDateTimeInputComponent,
-        GcDateTimePickerInputComponent,
-        GcEmailInputComponent,
-        GcNumberInputComponent,
-        GcPasswordInputComponent,
-        GcTextareaInputComponent,
-        GcMonacoEditorComponent,
-        GcTimeInputComponent,
-        GcTimePickerInputComponent,
-        GcLabelComponent,
-        GcCheckboxInputComponent,
-        GcSliderToggleInputComponent,
-        GcSliderInputComponent,
-		GcFilterHeaderComponent,
-		GcClickStopPropagation,
-		GcFilterItemDirective,
-		GcDefaultComponent,
-		GcBreadcrumbComponent,
-		GcHeaderComponent,
-		GcFooterComponent,
-		GcNavSidebarComponent,
-		GcHelpComponent,
-		GcHelpDialogComponent,
-		GcMenuListItemComponent,
-		GcLoginComponent,
-		GcUserProfileComponent,
-        GcThemeSwitcherComponent,
-        GcDeleteDialog,
+		...declareExportComponents,
 		...importExportModules
     ]
 })

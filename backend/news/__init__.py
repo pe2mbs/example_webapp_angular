@@ -1,0 +1,1 @@
+from backend.news.news import *

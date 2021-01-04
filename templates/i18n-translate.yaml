@@ -1,0 +1,84 @@
+linux:
+    source:
+        base:                       /home/mbertens/src/python/example_webapp_angular
+        python:                     .
+        angular:                    dashboard/src/app
+    template:
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        python:                     python
+        angular:                    angular
+        common:
+            python:                 python
+            angular:                angular
+application:                        backend
+options:
+    ignore-case-db-ids:             true
+    overwrite:                      true
+    use-module:                     true
+    copy-support-files:             false
+    use-local-template:             true
+references:
+    app-module:
+        filename:                   app.module.ts
+        class:                      AppModule
+        module:                     app.module.ts
+    app-routing:
+        filename:                   app.routingmodule.ts
+        class:                      AppRoutingModule
+        module:                     app.routingmodule.ts
+objects:
+-   name:                           language_translates
+    title:                          Language Transalations
+    class:                          LanguageTransalates
+    uri:                            /api/language_reference
+    menu:
+        caption:                    Administration
+        icon:                       settings
+        index:                      -2
+        menu:
+            caption:                Language Transalations
+            icon:                   transalations
+            index:                  0
+            route:                  /language_translates
+    actions:
+    -   name:                       new
+        type:                       screen
+        position:                   header
+        function:                   self.addRecord()
+    -   name:                       edit
+        type:                       screen
+        position:                   row
+        function:                   self.editRecord( idx, row )
+    -   name:                       delete
+        label:                      Delete
+        type:                       dialog
+        icon:                       delete
+        position:                   cell
+        function:                   core.deleteRecord( idx, row, 'LR_ID', 'Label', 'LR_LABEL' )
+    table:
+        name:                       LANGUAGE_TRANSLATES
+        tabs:
+            labels:
+            -   Info
+            -   Translates
+            tab:
+            -   label:              Translates
+                component:          app-language_refernce-table
+                class:              LanguageReference
+                module:             language_reference
+                params:
+                    id:             LR_LT_ID
+                    value:          LT_ID
+                    mode:           filter
+        columns:
+        -   field:                  LT_ID                     INT             AUTO NUMBER  PRIMARY KEY
+        -   field:                  LT_LABEL                  CHAR( 256 )     NOT NULL
+            label:                  Label
+            unique:                 true
+            ui:
+                type:               textbox
+            listview:
+                index:              0
+                width:              100%
+            tab:
+                label:              Info

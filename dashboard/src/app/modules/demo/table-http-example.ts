@@ -7,6 +7,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { TableColumn2, TableButton } from 'src/app/layouts/crud/crud.table.base.auto';
 import { GcCrudServiceBase } from 'src/app/layouts/crud/crud.service.base';
 
+export interface GcTableFilter
+{
+	id: string;
+	value: any;
+}
+
 export interface TableDefintion<T>
 {
 	name: string;
@@ -15,7 +21,9 @@ export interface TableDefintion<T>
 	defaultSortDirection: string;
 	sortDisableClear: boolean;
 	dataService?: GcCrudServiceBase<T>;
+	resolveList?: any;
 	profileService?: GcProfileService;
+	toggleUpdate?: boolean;
 	self?: any;
 	core?: any;
 	rowDoubleClick: any;
@@ -141,12 +149,6 @@ export class TableHttpExample
 	public addRecord(): void
 	{
 		console.log( 'addRecord()' );
-		return;
-	}
-
-	public deleteRecord( idx: number, row: TrackingRecord ): void
-	{
-		console.log( 'deleteRecord( idx = ', idx, ", row = ", row, " )" );
 		return;
 	}
 

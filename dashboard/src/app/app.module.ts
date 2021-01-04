@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MarkdownModule } from 'ngx-markdown';
 import { GridsterModule } from 'angular-gridster2';
 import { GenCrudModule } from './layouts/gencrud.module';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleModule } from './layouts/core/role/module';
 import { UserModule } from './layouts/core/user/module';
@@ -17,41 +16,47 @@ import { TableHttpExample } from './modules/demo/table-http-example';
 import localeNl from '@angular/common/locales/nl';
 import { registerLocaleData } from '@angular/common';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { CustDataTableComponent } from './modules/demo2/cust.data.table.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LanguagesModule } from './backend/languages/module';
+import { LanguageReferenceModule } from './backend/language_reference/module';
+import { LanguageTransalatesModule } from './backend/language_translates/module';
+
 
 registerLocaleData(localeNl);
 
 @NgModule({
-  	bootstrap: [
-    	AppComponent
-  	],
-  	declarations: [
-    	AppComponent,
-    	TableHttpExample,
-		DashboardComponent,
-		CustDataTableComponent
-	],
-  	imports: [
-    	BrowserModule,
-    	AppRoutingModule,
-    	BrowserAnimationsModule,
-    	HttpClientModule,
-    	GridsterModule,
-    	GenCrudModule,
-    	FormsModule,
-    	ReactiveFormsModule,
-    	MarkdownModule.forRoot(),
-    	RoleModule,
-    	RecordLocksModule,
-    	TrackingModule,
-    	UserModule,
-  	],
-  	providers: [
-    	ExampleHttpDatabase,
-    	{ 
-        	provide: LOCALE_ID, 
-        	useValue: 'nl' 
-    	}
-  	]
+  bootstrap: [
+    AppComponent
+  ],
+  declarations: [
+    AppComponent,
+    TableHttpExample,
+    DashboardComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    GridsterModule,
+    GenCrudModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MarkdownModule.forRoot(),
+    RoleModule,
+    RecordLocksModule,
+    TrackingModule,
+    LanguagesModule,
+    LanguageReferenceModule,
+    LanguageTransalatesModule,
+    UserModule
+  ],
+  providers: [
+    ExampleHttpDatabase,
+    {
+      provide: LOCALE_ID,
+      useValue: 'nl'
+    }
+  ]
 })
 export class AppModule { }

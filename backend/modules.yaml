@@ -10,3 +10,24 @@
 - model: Tracking
   module: backend.tracking
   table: tracking
+- model: Language
+  module: backend.language
+  table: language_reference
+- model: TranslatedLanguage
+  module: backend.trans_lang
+  table: translated_language
+- model: Languages
+  module: backend.languages
+  table: language
+- model: LanguageReference
+  module: backend.language_reference
+  table: language_reference
+- model: LanguageTranslate
+  module: backend.language_translate
+  table: language_translate
+- model: Transalations
+  module: backend.transalations
+  table: language_reference
+- model: LanguageTransalates
+  module: backend.language_translates
+  table: language_translates

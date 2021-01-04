@@ -23,18 +23,18 @@ export class GcMatPaginatorIntl extends MatPaginatorIntl
 
 	public getTranslations(): void 
 	{
-		this.translateService.get( [ 'PAGINATOR.ITEMS_PER_PAGE',
-		  							 'PAGINATOR.NEXT_PAGE',
-									 'PAGINATOR.PREVIOUS_PAGE',
-									 'PAGINATOR.FIRST_PAGE',
-		  							 'PAGINATOR.LAST_PAGE',
-		  							 'PAGINATOR.RANGE' ] ).subscribe( translation => {
-			this.itemsPerPageLabel 	= translation[ 'PAGINATOR.ITEMS_PER_PAGE' ];
-			this.nextPageLabel 		= translation[ 'PAGINATOR.NEXT_PAGE' ];
-			this.previousPageLabel 	= translation[ 'PAGINATOR.PREVIOUS_PAGE' ];
-			this.rangeLabelIntl		= translation[ 'PAGINATOR.RANGE' ];
-			this.firstPageLabel 	= translation[ 'PAGINATOR.FIRST_PAGE' ];
-			this.lastPageLabel 		= translation[ 'PAGINATOR.LAST_PAGE' ];
+		this.translateService.get( [ 'Items per page',
+									 'Next page',
+									 'Previous page',
+									 "First page",
+									 "Last page",
+		  							 'Page range' ] ).subscribe( translation => {
+			this.itemsPerPageLabel 	= translation[ 'Items per page' ];
+			this.nextPageLabel 		= translation[ 'Next page' ];
+			this.previousPageLabel 	= translation[ 'Previous page' ];
+			this.rangeLabelIntl		= translation[ 'Page range' ];
+			this.firstPageLabel 	= translation[ "First page" ];
+			this.lastPageLabel 		= translation[ "Last page" ];
 			this.changes.next();
 			console.log( 'MyMatPaginatorIntl.getTranslations' );
 		} );

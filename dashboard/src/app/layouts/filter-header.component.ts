@@ -5,7 +5,7 @@ import { Component,
 		 Output, 
 		 OnInit } from '@angular/core';
 import { Directive, HostListener } from "@angular/core";
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined, isNull } from 'util';
 
 export interface GcConditionItem
 {
@@ -104,19 +104,21 @@ export class GcFilterRecord
 	filterColumns: GcFilterColumn[] = new Array<GcFilterColumn>();
 	constructor( columns: string[] )
 	{
-		// tslint:disable-next-line:forin
-		for ( const field in columns )
-		{
+		console.log( 'constructor( columns = ', columns, ' )' );
+		columns.forEach( field => {
+			console.log( 'constructor => ', field );
 			this.filterColumns.push( new GcFilterColumn( columns[ field ] ) );
-		}
+		} );
 		return;
 	}
 
 	private findItem( column: string ): GcFilterColumn | null
 	{
 		let result = null;
+		console.log( `findItem( column = "${column}" )` );
 		this.filterColumns.forEach( field =>
 		{
+			console.log( 'findItem => ', field );
 			if ( field.column === column )
 			{
 				result = field;
@@ -133,6 +135,19 @@ export class GcFilterRecord
 		{
 			col.clear();
 		}
+		return;
+	}
+
+	public set( column: string, value: any ): void
+	{
+		let col: GcFilterColumn = this.findItem( column );
+		if ( isNull( col ) )
+		{
+			console.log( `Adding filter to ${column} with value ${value}` );
+			this.filterColumns.push( new GcFilterColumn( column ) );
+			col = this.findItem( column );
+		}
+		col.apply( [ value, null ], 'EQ' );
 		return;
 	}
 

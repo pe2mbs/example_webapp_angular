@@ -59,5 +59,6 @@
 	"PAGINATOR.PREVIOUS_PAGE": "Previous page",
 	"PAGINATOR.RANGE": "of", 
 	"PAGINATOR.FIRST_PAGE": "First page", 
-	"PAGINATOR.LAST_PAGE": "Last page" 
+	"PAGINATOR.LAST_PAGE": "Last page",
+    "Languages": "Languages"
 }
