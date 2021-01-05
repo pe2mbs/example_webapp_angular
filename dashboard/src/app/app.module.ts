@@ -16,7 +16,7 @@ import { TableHttpExample } from './modules/demo/table-http-example';
 import localeNl from '@angular/common/locales/nl';
 import { registerLocaleData } from '@angular/common';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LanguagesModule } from './backend/languages/module';
 import { LanguageReferenceModule } from './backend/language_reference/module';
 import { LanguageTransalatesModule } from './backend/language_translates/module';

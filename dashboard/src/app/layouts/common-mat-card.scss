@@ -1,7 +1,8 @@
 :host, .standard-container
 {
-	width: 100%;
+	width: calc( 100% - 5px );
 	height: 100%;
+	padding: 0px;
 }
 
 .standard-container-details
@@ -9,6 +10,19 @@
 	width: 100%;
     height: 100%;
 }
+
+.mat-card-content
+{
+	width: 100%;
+	height: calc( 100% - 150px ) !important;
+	overflow-x: hidden;
+}
+
+// .card-content
+// {
+// 	height: calc( 100% - 115px );
+// 	overflow-x: hidden;
+// }
 
 mat-tab-group
 {
@@ -40,12 +54,6 @@ mat-tab-group
     padding: 14px;
     font-size: 14px;
 	font-style: italic;
-}
-
-.card-content
-{
-	height: calc( 100% - 115px );
-	overflow-x: hidden;
 }
 
 .mat-header-row
@@ -110,9 +118,4 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 mat-icon.row-button
 {
 	margin-top: -7px;
-}
-
-.mat-card-content
-{
-	height: calc( 100% - 50px ) !important;
 }

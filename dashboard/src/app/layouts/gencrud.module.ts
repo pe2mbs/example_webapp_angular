@@ -31,11 +31,9 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { MarkdownModule } from 'ngx-markdown';
 import { GridsterModule } from 'angular-gridster2';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TranslateLoader, TranslateModule, MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Material cmodules
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -114,7 +112,7 @@ import { GcThemeSwitcherComponent } from './theme-switcher.component';
 import { GcLoginDialogComponent } from './login/login.dialog.component';
 import { GcSignupDialogComponent } from './login/signup.dialog.component';
 import { GcSignedOutComponent } from './login/signedout.component';
-import { GcBreadcrumbComponent } from './breadcrumb.component';
+import { GcBreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { GcTickerComponent } from './ticker/ticker.component';
 import { GcTickerDataService } from './ticker/service';
 import { GcProfileService } from './profile/profile.service';
@@ -164,7 +162,6 @@ const importExportModules = [
 	MatSliderModule,
 	MatDialogModule,
     MatPasswordStrengthModule,
-	BreadcrumbModule,
 	FlexLayoutModule,
 	TranslateModule,
 	NgSelectModule,
