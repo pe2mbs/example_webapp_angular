@@ -11,11 +11,10 @@ export class GcMissingTranslationHandler implements MissingTranslationHandler
 
 	handle( params: MissingTranslationHandlerParams ) 
 	{
-		console.log( params );
 		this.backendService.post<any>( '/api/languages/i18n/missing', {
 			text: params.key,
 			language: params.translateService.store.currentLang || params.translateService.store.defaultLang
 		} ).subscribe( result => {} );
-        return params.key;
+        return ( params.key );
     }
 }

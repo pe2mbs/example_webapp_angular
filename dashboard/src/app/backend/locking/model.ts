@@ -1,7 +1,7 @@
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -17,29 +17,15 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
-export class UserRecord
+export class RecordLocksRecord
 {
-    U_ID: number;
-    U_ACTIVE: boolean;
-    U_NAME: string;
-    U_ROLE: number;
-    U_HASH_PASSWORD: string;
-    U_MUST_CHANGE: boolean;
-    U_FIRST_NAME: string;
-    U_MIDDLE_NAME: string;
-    U_LAST_NAME: string;
-    U_EMAIL: string;
-    U_ACCESS_TOKEN: string;
-    U_REFRESH_TOKEN: string;
-    U_TOKEN_DT: Date;
-    U_CREATE_DT: Date;
-    U_REMARK: string;
-    U_LOCALE: number;
-    U_LISTITEMS: number;
-    U_ACTIVE_LABEL: string;
-    U_ROLE_FK: any;
-    U_LOCALE_LABEL: string;
-    U_LISTITEMS_LABEL: string;
+    L_ID: number;
+    L_USER: string;
+    L_TABLE: string;
+    L_RECORD_ID: number;
+    L_START_DATE: Date;
+
 }
+

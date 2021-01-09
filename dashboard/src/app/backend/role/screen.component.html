@@ -1,0 +1,18 @@
+<mat-card id="role.details" fxLayout="column" class="max-box">
+	<mat_card-header fxFlex="50px" class="header-breadcrumb">
+		<div fxFlex fxLayout="row">
+			<app-breadcrumb fxFlex="95"></app-breadcrumb>
+			<app-help fxFlex="5" fxLayoutAlign="end" helpitem="role"></app-help>
+		</div>
+	</mat_card-header>
+    <mat-card-content fxFlex="100">
+        <form fxLayout="column" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="role.form">
+            <gc-text-input id="gn_role.R_ROLE" placeholder="Description" fxFlex="60px" error="true" formControlName="R_ROLE"></gc-text-input>
+            <gc-monaco-editor id="gn_role.R_REMARK" placeholder="Remark" fxFlex="98" language="markdown" height="auto" [minimap]="true" [heightAdjust]="-120" error="true" formControlName="R_REMARK"></gc-monaco-editor>
+        </form>
+    </mat-card-content>
+    <mat-card-actions fxFlex="50px">
+        <button mat-button id="role.submit" (click)="onSaveClick()" [disabled]="!formGroup.valid" >Save</button>
+        <button mat-button id="role.cancel" (click)="onCancelClick()" tabindex="-1">Cancel</button>
+    </mat-card-actions>
+</mat-card>

@@ -17,58 +17,40 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GenCrudModule } from '../..//gencrud.module';
-import { GcHttpInterceptor } from '../..//http-interceptor';
-import { ScreenRoleComponent } from './screen.component';
-import { RoleTableComponent } from './table.component';
-import { RoleDataService } from './service';
-import { GcDefaultComponent } from '../..//default.component';
+import { GenCrudModule } from 'src/app/layouts/gencrud.module';
+import { GcHttpInterceptor } from 'src/app/layouts/http-interceptor';
+
+import { RecordLocksTableComponent } from './table.component';
+import { RecordLocksDataService } from './service';
+import { GcDefaultComponent } from 'src/app/layouts/default.component';
 
 
-export const roleRoute: Route = {
+export const lockingRoute: Route = {
     path: '',
     component: GcDefaultComponent,
     children: [
         {
-            path:           'role',
+            path:           'locking',
             data:
             {
-                breadcrumb: 'Roles',
-                title:      'Roles'
+                breadcrumb: 'Locks',
+                title:      'Locks'
             },
             children: [
                 {
                     path: '',
-                    component: RoleTableComponent,
+                    component: RecordLocksTableComponent,
                     data:
                     {
                         breadcrumb: 'Overview',
                         title:      ''
-                    }
-                },
-                {
-                    path: 'new',
-                    component: ScreenRoleComponent,
-                    data:
-                    {
-                        breadcrumb: 'New',
-                        title:      'New'
-                    }
-                },
-                {
-                    path: 'edit',
-                    component: ScreenRoleComponent,
-                    data:
-                    {
-                        breadcrumb: 'Edit',
-                        title:      'Edit'
                     }
                 },
             ]
@@ -78,20 +60,19 @@ export const roleRoute: Route = {
 
 /*
 *   This NgModule is injected in the app-module.ts. This deals with declaring, importing,
-*   creating entry point and providing the services for the gn_role screens and dialogs.
+*   creating entry point and providing the services for the locking screens and dialogs.
 *
 *   This don't clutter the app-module.ts, instead of at least 4 components that are added to the app-module.ts
 *   it only adds this module and includes it in the import section.
 */
 @NgModule( {
     declarations: [
-        ScreenRoleComponent,
-		RoleTableComponent,
+        RecordLocksTableComponent
     ],
     entryComponents: [
     ],
     providers: [
-        RoleDataService,
+        RecordLocksDataService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: GcHttpInterceptor,
@@ -103,27 +84,26 @@ export const roleRoute: Route = {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        GenCrudModule,
-        RouterModule.forChild( [ roleRoute ] )
+        RouterModule.forChild( [ lockingRoute ] ),
+        GenCrudModule
     ],
     exports: [
-        ScreenRoleComponent,
-        RoleTableComponent,
+        RecordLocksTableComponent,
     ]
 } )
-export class RoleModule
+export class RecordLocksModule
 {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: RoleModule,
+            ngModule: RecordLocksModule,
             providers: [
-                RoleDataService,
+                RecordLocksDataService,
             ]
         };
     }
     static forChild(): ModuleWithProviders
     {
-        return { ngModule: RoleModule };
+        return { ngModule: RecordLocksModule };
     }
 }
 

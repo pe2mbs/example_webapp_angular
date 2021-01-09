@@ -4,8 +4,8 @@
     margin: 0;
 	padding: 0;
 	padding-top: 12px;
-	background-color: #fafafa;
 	height: 50px;
+	background-color: inherit;
 }
 
 .gc-breadcrumb ul 
@@ -44,7 +44,7 @@ a:visited
     vertical-align: middle;
 }
 
-.ui-widget
+.gc-widget
 {
     box-sizing: border-box;
 }

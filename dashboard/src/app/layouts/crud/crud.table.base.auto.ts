@@ -31,6 +31,7 @@ export interface TableColumn2
 	sort?: boolean;
 	buttons?: TableButton[];
 	dataService?: any;
+	resolveList?: any;
 }
 
 export class GcTableBaseAuto<T> extends GcSubscribers implements AfterViewInit

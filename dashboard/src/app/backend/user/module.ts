@@ -17,22 +17,24 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GenCrudModule } from '../../gencrud.module';
-import { GcHttpInterceptor } from '../../http-interceptor';
+import { GenCrudModule } from 'src/app/layouts/gencrud.module';
+import { GcHttpInterceptor } from 'src/app/layouts/http-interceptor';
+
 import { ScreenUserComponent } from './screen.component';
+
 import { UserTableComponent } from './table.component';
 import { UserDataService } from './service';
-import { GcDefaultComponent } from '../../default.component';
+import { GcDefaultComponent } from 'src/app/layouts/default.component';
 
 
-export const gn_userRoute: Route = {
+export const userRoute: Route = {
     path: '',
     component: GcDefaultComponent,
     children: [
@@ -78,7 +80,7 @@ export const gn_userRoute: Route = {
 
 /*
 *   This NgModule is injected in the app-module.ts. This deals with declaring, importing,
-*   creating entry point and providing the services for the gn_user screens and dialogs.
+*   creating entry point and providing the services for the user screens and dialogs.
 *
 *   This don't clutter the app-module.ts, instead of at least 4 components that are added to the app-module.ts
 *   it only adds this module and includes it in the import section.
@@ -86,7 +88,7 @@ export const gn_userRoute: Route = {
 @NgModule( {
     declarations: [
         ScreenUserComponent,
-		UserTableComponent,
+        UserTableComponent
     ],
     entryComponents: [
     ],
@@ -103,8 +105,8 @@ export const gn_userRoute: Route = {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-         GenCrudModule,
-        RouterModule.forChild( [ gn_userRoute ] )
+        RouterModule.forChild( [ userRoute ] ),
+        GenCrudModule
     ],
     exports: [
         ScreenUserComponent,
@@ -126,3 +128,4 @@ export class UserModule
         return { ngModule: UserModule };
     }
 }
+

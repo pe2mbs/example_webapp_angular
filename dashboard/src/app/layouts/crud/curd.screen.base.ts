@@ -55,7 +55,7 @@ export class GcScreenBase<T> extends GcSubscribers implements OnInit, OnDestroy
 	
 	public ngOnDestroy()
     {
-        this.dataService.unlockRecord( this.row );
+		this.dataService.unlockRecord( this.row );
         super.ngOnDestroy();
         return;
     }
@@ -95,6 +95,7 @@ export class GcScreenBase<T> extends GcSubscribers implements OnInit, OnDestroy
 
 	public onCancelClick(): void 
 	{
+		this.dataService.unlockRecord( this.row );
         window.history.back();
         return;		
 	}
@@ -124,7 +125,8 @@ export class GcScreenBase<T> extends GcSubscribers implements OnInit, OnDestroy
         else
         {
             this.dataService.updateRecord( this.formGroup.value );
-        }
+		}
+		this.dataService.unlockRecord( this.row );
         window.history.back();
 		return;
 	}

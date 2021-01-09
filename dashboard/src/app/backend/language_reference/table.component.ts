@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-04 07:23:14 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
@@ -54,7 +54,7 @@ export class LanguageReferenceTableComponent
 				label: 'New',
 				icon: 'add',
 				action: (core: any, self: any) => {
-					self.self.addRecord();
+					self.addRecord();
 				}
 			},
 		],
@@ -71,8 +71,11 @@ export class LanguageReferenceTableComponent
 				width: "15%",
 				filter: false,
 				sort: false,
-				cell: (row: LanguageReferenceRecord) => row.LR_LA_ID
-              , dataService: ( self: any ) => self.languagesService
+                cell: (row: LanguageReferenceRecord) => {
+                    // TODO: This needs some extra work
+                    return ( row.LR_LA_ID );
+                    // self.languagesService
+                }
             },
             {
                 columnDef: 'TR_TEXT',
@@ -81,7 +84,7 @@ export class LanguageReferenceTableComponent
 				width: "40%",
 				filter: false,
 				sort: false,
-				cell: (row: LanguageReferenceRecord) => row.TR_TEXT
+                cell: (row: LanguageReferenceRecord) => row.TR_TEXT
             },
             {
                 columnDef: 'LR_LT_ID',
@@ -90,8 +93,11 @@ export class LanguageReferenceTableComponent
 				width: "30%",
 				filter: false,
 				sort: false,
-				cell: (row: LanguageReferenceRecord) => row.LR_LT_ID
-              , dataService: ( self: any ) => self.language_translatesService
+                cell: (row: LanguageReferenceRecord) => {
+                    // TODO: This needs some extra work
+                    return ( row.LR_LT_ID );
+                    // self.language_translatesService
+                }
             },
             {
                 columnDef: null,
@@ -131,9 +137,8 @@ export class LanguageReferenceTableComponent
 	    console.log( 'addRecord()' );
         const newRecord = new LanguageReferenceRecord();
         const options: MatDialogConfig = {
-            data: { record: newRecord,
-                    mode: 'add' },
-            height: "562px",
+            data: { record: newRecord, mode: 'add' },
+            width: "80%",
         };
         const dialogRef = this.dialog.open( DialogLanguageReferenceComponent, options );
         dialogRef.afterClosed().subscribe( result =>
@@ -148,9 +153,9 @@ export class LanguageReferenceTableComponent
 	{
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
-            data: { record: row,
-                    mode: 'add' },
-            height: "622px",
+            data: { record: row, mode: 'add' },
+            width: "80%",
+
         };
         const dialogRef = this.dialog.open( DialogLanguageReferenceComponent, options );
         dialogRef.afterClosed().subscribe( result =>

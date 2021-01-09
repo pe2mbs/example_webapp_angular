@@ -17,39 +17,39 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:44 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/layouts/profile/profile.service';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
-import { LanguageTransalatesRecord } from './model';
-import { LanguageTransalatesDataService } from './service';
+import { RoleRecord } from './model';
+import { RoleDataService } from './service';
 
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'app-language_translates-table',
+    selector: 'app-role-table',
     template: `<app-cust-data-table
 				class="card-content"
 				[definition]="definition">
 </app-cust-data-table>`,
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class LanguageTransalatesTableComponent
+export class RoleTableComponent
 {
-    public definition: TableDefintion<LanguageTransalatesRecord> = {
+    public definition: TableDefintion<RoleRecord> = {
         toggleUpdate: false,
-        name: 'LanguageTransalatesTable',
-		helpTopic: 'language_translates-table',
-		defaultSortField: 'LT_ID',
+        name: 'RoleTable',
+		helpTopic: 'role-table',
+		defaultSortField: 'R_ID',
 		defaultSortDirection: 'desc',
 		sortDisableClear: true,
         headerButtons: [
 			{
 				label: 'New',
-				icon: '',
+				icon: 'add',
 				action: (core: any, self: any) => {
 					self.addRecord();
 				}
@@ -57,31 +57,31 @@ export class LanguageTransalatesTableComponent
 		],
 		footerButtons: [
 		],
-        rowDoubleClick: (core: any, self: any, idx: number, row: LanguageTransalatesRecord) => {
+        rowDoubleClick: (core: any, self: any, idx: number, row: RoleRecord) => {
 			self.editRecord( idx, row );
 		},
 		columns: [
             {
-                columnDef: 'LT_LABEL',
-				header: "Label",
+                columnDef: 'R_ROLE',
+				header: "Description",
 				display: true,
 				width: "100%",
 				filter: false,
 				sort: false,
-                cell: (row: LanguageTransalatesRecord) => row.LT_LABEL
+                cell: (row: RoleRecord) => row.R_ROLE
             },
             {
                 columnDef: null,
 				display: true,
 				header: 'Options',
 				width: '70px',
-				cell: (row: LanguageTransalatesRecord) => {},
+				cell: (row: RoleRecord) => {},
                 buttons: [
                     {
 						label: 'Delete',
 						icon: 'delete',
-						action: (core: any, self: any, idx: number, row: LanguageTransalatesRecord) => {
-							core.deleteRecord( idx, row, 'LR_ID', 'Label', 'LR_LABEL' );
+						action: (core: any, self: any, idx: number, row: RoleRecord) => {
+							core.deleteRecord( idx, row, 'R_ID', 'Role', 'R_ROLE'  );
 						}
 					},
                 ]
@@ -89,7 +89,7 @@ export class LanguageTransalatesTableComponent
         ]
     };
 
-    constructor( dataService: LanguageTransalatesDataService
+    constructor( dataService: RoleDataService
                , profileService: GcProfileService
                , protected dialog: MatDialog
                , public router: Router
@@ -105,16 +105,16 @@ export class LanguageTransalatesTableComponent
     public addRecord(): void
 	{
 	    console.log( 'addRecord()' );
-        this.router.navigate( ['/language_translates/edit'], {
+        this.router.navigate( ['/role/edit'], {
 			queryParams: { mode: 'new' }
 		} );
 		return;
 	}
 
-    public editRecord( idx: number, row: LanguageTransalatesRecord ): void
+    public editRecord( idx: number, row: RoleRecord ): void
 	{
-        this.router.navigate( ['/language_translates/edit'], {
-			queryParams: { 	id: 'LT_ID', mode: 'edit', value: row.LT_ID }
+        this.router.navigate( ['/role/edit'], {
+			queryParams: { 	id: 'R_ID', mode: 'edit', value: row.R_ID }
 		} );
         return;
 	}

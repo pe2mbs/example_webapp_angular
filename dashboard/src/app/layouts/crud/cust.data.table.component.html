@@ -1,11 +1,11 @@
-<mat-card id="crud.table" class="standard-container">
-	<div>
+<mat-card id="crud.table" class="max-box" fxLayout="column">
+	<div fxFlex="60px">
 		<div fxFlex fxLayout="row">
 			<div fxFlex="grow">
 				<gc-breadcrumb *ngIf="filterField === ''" class="align-paginator"></gc-breadcrumb>
 			</div>
 			<mat-paginator #top_paginator fxFlex="500px"
-							class="color-accent"
+							class="color-primary"
 							id="crud.header.paginator"
 							(page)="pagingEvent( $event, 'top' )"
 							[length]="resultsLength"
@@ -16,20 +16,20 @@
 			</mat-paginator>
 			<div class="align-paginator" fxFlex="none" fxLayoutAlign="end">
 				<button *ngFor="let but of definition.headerButtons;" mat-icon-button 
-						color="accent" (click)="but.action( self, definition.self )" [id]="'crud.header.' + but.label">
+						color="primary" (click)="but.action( self, definition.self )" [id]="'crud.header.' + but.label">
 					<mat-icon aria-label="[but.label]">{{ but.icon }}</mat-icon>
 				</button>
 				<gc-help *ngIf="definition.helpTopic" [helpitem]="definition.helpTopic" 
 													fallback="table-overview" 
-													color="accent"></gc-help>
-				<button mat-icon-button color="accent"
+													color="primary"></gc-help>
+				<button mat-icon-button color="primary"
 							(click)="refresh()" id="crud.header.refresh">
 					<mat-icon aria-label="Refresh the view">refresh</mat-icon>
 				</button>
 			</div>
 		</div>
 	</div>
-	<mat-card-content class="card-content">
+	<mat-card-content fxFlex="90" class="max-box">
 		<mat-table #table class="mat-cell" 
 					[dataSource]="dataSource" 
 					matSort 
@@ -61,7 +61,7 @@
 					</div>
 					<ng-template #buttons_active >
 						<button fxFlex class="row-button" *ngFor="let but of column.buttons;" mat-icon-button 
-								color="accent" (click)="but.action( self, definition.self, idx, row )" [id]="'crud.row.' + but.label">
+								color="primary" (click)="but.action( self, definition.self, idx, row )" [id]="'crud.row.' + but.label">
 							<mat-icon class="row-button">{{ but.icon }}</mat-icon>
 						</button>
 					</ng-template>
@@ -71,7 +71,7 @@
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</mat-table>
 	</mat-card-content>
-	<mat-card-footer style="margin-left: 5px; width: 100%;" >
+	<mat-card-footer fxFlex="60px" style="margin-left: 5px; width: 100%;" >
 		<div fxFlex fxLayout="row">
 			<div fxFlex="grow">
 				<div id="crud.spinner" *ngIf="isLoadingResults; else loading_done" class="loading-progress">
@@ -84,7 +84,7 @@
 				</ng-template>
 			</div>
 			<mat-paginator #bot_paginator fxFlex="500px"
-							class="color-accent"
+							class="color-primary"
 							id="crud.botton.paginator"
 							[length]="resultsLength"
 							[showFirstLastButtons]="true"
@@ -94,11 +94,11 @@
 							[pageSizeOptions]="pageData.pageSizeOptions">
 			</mat-paginator>
 			<button *ngFor="let but of definition.footerButtons;" mat-icon-button 
-						color="accent" (click)="but.action( self, definition.self )" [id]="'crud.header.' + but.label">
+						color="primary" (click)="but.action( self, definition.self )" [id]="'crud.header.' + but.label">
 					<mat-icon aria-label="[but.label]">{{ but.icon }}</mat-icon>
 				</button>
 			<div class="align-paginator" fxFlex fxLayoutAlign="end">
-				<button mat-icon-button color="accent"
+				<button mat-icon-button color="primary"
 						id="crud.botton.refresh"
 						(click)="refresh()">
 					<mat-icon aria-label="Refresh the view">refresh</mat-icon>

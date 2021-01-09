@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { GcTickerDataService } from './service';
 import { Subscription } from 'rxjs';
 
@@ -45,7 +45,8 @@ export class GcTickerComponent implements AfterViewInit
     @ViewChild( "newsbar", { static: false } ) ticker: ElementRef;
     newsAvailable: boolean = false;
     news: NewsMessages; 
-    subscribedEvent: Subscription = null;
+	subscribedEvent: Subscription = null;
+	triggerEvent = new EventEmitter<any>();
     constructor( public dataService: GcTickerDataService ) 
     { 
         return;
@@ -53,48 +54,37 @@ export class GcTickerComponent implements AfterViewInit
 
     setMessage( msgs: NewsMessages )
     {
-        const value = 60;
 		this.news = msgs;
         this.newsAvailable = this.news.N_TOTAL_ITEMS > 0;
-		let time: number;
+		let time: number = 300;
 		if ( msgs.N_POLL_INTERVAL > 0 )
 		{
 			time = msgs.N_POLL_INTERVAL;
 		}
-		else
-		{
-			time = 30;
-		}
-        if ( this.ticker )
-        {
-            this.ticker.nativeElement.style.animationDuration = `${value}s`;
-        }
-        else
-        {
-            setTimeout( () => { 
-                if ( this.ticker )
-                {
-                    this.ticker.nativeElement.style.animationDuration = `${value}s`;
-                }       
-            }, time * 1000 );
-        }
         setTimeout( () => { 
-            if ( this.subscribedEvent != null )
-            {
-                this.subscribedEvent.unsubscribe();
-                this.subscribedEvent = null;
-            }
-            this.subscribedEvent = this.dataService.getNews().subscribe( result => { 
-                this.setMessage( result );
-            } );
+            this.triggerEvent.emit();
         }, time * 1000 );
     }
 
     ngAfterViewInit() 
     {
-        this.subscribedEvent = this.dataService.getNews().subscribe( result => { 
-            this.setMessage( result );
-        } );       
+		this.triggerEvent.subscribe( () => {
+			if ( this.subscribedEvent != null )
+            {
+				this.subscribedEvent.unsubscribe();
+			}
+			this.subscribedEvent = this.dataService.getNews().subscribe( result => { 
+				this.setMessage( result );
+				if ( this.ticker )
+                {
+					const value = 60;
+                    this.ticker.nativeElement.style.animationDuration = `${value}s`;
+                } 
+			} );       
+		} );
+		setTimeout( () => { 
+            this.triggerEvent.emit();
+        }, 5 * 1000 );
         return;
     }
 }

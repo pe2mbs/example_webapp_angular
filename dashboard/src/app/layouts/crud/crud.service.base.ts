@@ -11,7 +11,8 @@ export class GcCrudServiceBase<T>
 {
 	protected api: string;
 	protected debug: boolean = false;
-    protected _backend_filter: string = null;
+	protected _backend_filter: string = null;
+	protected _locked: boolean = false;
     public _pageIndex: number;
     public _pageSize: number;
     public _recordCount: number;
@@ -57,7 +58,6 @@ export class GcCrudServiceBase<T>
             {
                 console.log ( result );
             }
-            this.getAll( this._backend_filter );
         },
         (error: HttpErrorResponse) => {
             throw new GcBackendError( error.message, error.error );
@@ -197,7 +197,8 @@ export class GcCrudServiceBase<T>
             if ( this.debug )
             {
                 console.log( result );
-            }
+			}
+			this._locked = true;
         },
         (error: HttpErrorResponse) => {
             throw new GcBackendError( error.message, error.error );
@@ -207,12 +208,17 @@ export class GcCrudServiceBase<T>
 
     public unlockRecord( record: T ): void
     {
+		if ( !this._locked )
+		{
+			return;
+		}
         this.dialogData = null;
         this.httpClient.post<T>( this.api + '/unlock', record ).subscribe(result => {
             if ( this.debug )
             {
                 console.log( result );
-            }
+			}
+			this._locked = false;
         },
         (error: HttpErrorResponse) => {
             throw new GcBackendError( error.message, error.error );
@@ -232,7 +238,6 @@ export class GcCrudServiceBase<T>
             {
                 console.log( result );
             }
-            this.getAll( this._backend_filter );
         },
         (error: HttpErrorResponse) => {
             throw new GcBackendError( error.message, error.error );
@@ -288,7 +293,6 @@ export class GcCrudServiceBase<T>
             {
                 console.log ( result );
             }
-            this.getAll( this._backend_filter );
         },
         (error: HttpErrorResponse) => {
             throw new GcBackendError( error.message, error.error );

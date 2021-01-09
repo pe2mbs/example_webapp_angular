@@ -17,71 +17,81 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:44 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/layouts/profile/profile.service';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
-import { LanguageTransalatesRecord } from './model';
-import { LanguageTransalatesDataService } from './service';
+import { RecordLocksRecord } from './model';
+import { RecordLocksDataService } from './service';
 
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'app-language_translates-table',
+    selector: 'app-locking-table',
     template: `<app-cust-data-table
 				class="card-content"
 				[definition]="definition">
 </app-cust-data-table>`,
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class LanguageTransalatesTableComponent
+export class RecordLocksTableComponent
 {
-    public definition: TableDefintion<LanguageTransalatesRecord> = {
+    public definition: TableDefintion<RecordLocksRecord> = {
         toggleUpdate: false,
-        name: 'LanguageTransalatesTable',
-		helpTopic: 'language_translates-table',
-		defaultSortField: 'LT_ID',
+        name: 'RecordLocksTable',
+		helpTopic: 'locking-table',
+		defaultSortField: 'L_ID',
 		defaultSortDirection: 'desc',
 		sortDisableClear: true,
         headerButtons: [
-			{
-				label: 'New',
-				icon: '',
-				action: (core: any, self: any) => {
-					self.addRecord();
-				}
-			},
 		],
 		footerButtons: [
 		],
-        rowDoubleClick: (core: any, self: any, idx: number, row: LanguageTransalatesRecord) => {
-			self.editRecord( idx, row );
+        rowDoubleClick: (core: any, self: any, idx: number, row: RecordLocksRecord) => {
 		},
 		columns: [
             {
-                columnDef: 'LT_LABEL',
-				header: "Label",
+                columnDef: 'L_USER',
+				header: "Username",
 				display: true,
-				width: "100%",
+				width: "50%",
 				filter: false,
 				sort: false,
-                cell: (row: LanguageTransalatesRecord) => row.LT_LABEL
+                cell: (row: RecordLocksRecord) => row.L_USER
+            },
+            {
+                columnDef: 'L_TABLE',
+				header: "Table",
+				display: true,
+				width: "50%",
+				filter: false,
+				sort: false,
+                cell: (row: RecordLocksRecord) => row.L_TABLE
+            },
+            {
+                columnDef: 'L_START_DATE',
+				header: "Start lock",
+				display: true,
+				width: "300px",
+				filter: false,
+				sort: false,
+                cell: (row: RecordLocksRecord) => row.L_START_DATE
             },
             {
                 columnDef: null,
 				display: true,
 				header: 'Options',
 				width: '70px',
-				cell: (row: LanguageTransalatesRecord) => {},
+				cell: (row: RecordLocksRecord) => {},
                 buttons: [
                     {
 						label: 'Delete',
 						icon: 'delete',
-						action: (core: any, self: any, idx: number, row: LanguageTransalatesRecord) => {
-							core.deleteRecord( idx, row, 'LR_ID', 'Label', 'LR_LABEL' );
+						action: (core: any, self: any, idx: number, row: RecordLocksRecord) => {
+							core.deleteRecord( idx, row, 'L_ID', 'User', 'L_USER'  );
 						}
 					},
                 ]
@@ -89,7 +99,7 @@ export class LanguageTransalatesTableComponent
         ]
     };
 
-    constructor( dataService: LanguageTransalatesDataService
+    constructor( dataService: RecordLocksDataService
                , profileService: GcProfileService
                , protected dialog: MatDialog
                , public router: Router
@@ -105,16 +115,16 @@ export class LanguageTransalatesTableComponent
     public addRecord(): void
 	{
 	    console.log( 'addRecord()' );
-        this.router.navigate( ['/language_translates/edit'], {
+        this.router.navigate( ['/locking/edit'], {
 			queryParams: { mode: 'new' }
 		} );
 		return;
 	}
 
-    public editRecord( idx: number, row: LanguageTransalatesRecord ): void
+    public editRecord( idx: number, row: RecordLocksRecord ): void
 	{
-        this.router.navigate( ['/language_translates/edit'], {
-			queryParams: { 	id: 'LT_ID', mode: 'edit', value: row.LT_ID }
+        this.router.navigate( ['/locking/edit'], {
+			queryParams: { 	id: 'L_ID', mode: 'edit', value: row.L_ID }
 		} );
         return;
 	}

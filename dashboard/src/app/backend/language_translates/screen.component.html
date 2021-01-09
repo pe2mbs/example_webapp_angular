@@ -1,28 +1,28 @@
-<mat-card id="language_translates.details" class="standard-container-details">
-	<mat_card-header class="header-breadcrumb">
+<mat-card id="language_translates.details" fxLayout="column" class="max-box">
+	<mat_card-header fxFlex="50px" class="header-breadcrumb">
 		<div fxFlex fxLayout="row">
 			<app-breadcrumb fxFlex="95"></app-breadcrumb>
 			<app-help fxFlex="5" fxLayoutAlign="end" helpitem="language_translates"></app-help>
 		</div>
 	</mat_card-header>
-    <mat-card-content>
-        <form class="edit" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="language_translates.form">
-            <mat-tab-group class="mat-tab-group-screen">
-                <mat-tab label="Info" id="language_translates.tab.info">
-
-                    <mat-card class="mat-tab">
-                        <gc-text-input id="LT_LABEL.LT_LABEL" placeholder="Label" error="true" formControlName="LT_LABEL"></gc-text-input>
+    <mat-card-content fxFlex="100">
+        <form fxLayout="column" (ngSubmit)="onSaveClick" [formGroup]="formGroup" id="language_translates.form">
+            <mat-tab-group fxFlex="100">
+                <mat-tab label="Info" id="language_translates.tab.info" fxFlex="100">
+                    <mat-card fxLayout="column" class="max-box">
+                        <gc-text-input id="language_translates.LT_LABEL" placeholder="Label" fxFlex="60px" error="true" formControlName="LT_LABEL"></gc-text-input>
                     </mat-card>
                 </mat-tab>
-                <mat-tab label="Translates" id="language_translates.tab.translates">
-
-                    <app-language_refernce-table id="LR_LT_ID" [value]="LT_ID" *ngIf="LT_ID" mode="filter" >
-                    </app-language_refernce-table>
+                <mat-tab label="Translates" id="language_translates.tab.translates" fxFlex="100">
+                    <mat-card fxLayout="column" class="max-box">
+                        <app-language_refernce-table fxFlex="98" id="LR_LT_ID" [value]="LT_ID" *ngIf="LT_ID" mode="filter" >
+                        </app-language_refernce-table>
+                    </mat-card>
                 </mat-tab>
             </mat-tab-group>
         </form>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions fxFlex="50px">
         <button mat-button id="language_translates.submit" (click)="onSaveClick()" [disabled]="!formGroup.valid" >Save</button>
         <button mat-button id="language_translates.cancel" (click)="onCancelClick()" tabindex="-1">Cancel</button>
     </mat-card-actions>

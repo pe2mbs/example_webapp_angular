@@ -17,39 +17,51 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RecordLocksTableComponent } from './table.component';
-import { RecordLocksDataService } from './service';
-import { GcDefaultComponent } from '../../default.component';
-import { GcHttpInterceptor } from '../../http-interceptor';
-import { GenCrudModule } from '../../gencrud.module';
+import { GenCrudModule } from 'src/app/layouts/gencrud.module';
+import { GcHttpInterceptor } from 'src/app/layouts/http-interceptor';
+
+import { ScreenTrackingComponent } from './screen.component';
+
+import { TrackingTableComponent } from './table.component';
+import { TrackingDataService } from './service';
+import { GcDefaultComponent } from 'src/app/layouts/default.component';
 
 
-export const lockingRoute: Route = {
+export const trackingRoute: Route = {
     path: '',
     component: GcDefaultComponent,
     children: [
         {
-            path:           'locking',
+            path:           'tracking',
             data:
             {
-                breadcrumb: 'Locks',
-                title:      'Locks'
+                breadcrumb: 'Tracking',
+                title:      'Tracking'
             },
             children: [
                 {
                     path: '',
-                    component: RecordLocksTableComponent,
+                    component: TrackingTableComponent,
                     data:
                     {
                         breadcrumb: 'Overview',
                         title:      ''
+                    }
+                },
+                {
+                    path: 'edit',
+                    component: ScreenTrackingComponent,
+                    data:
+                    {
+                        breadcrumb: 'Edit',
+                        title:      'Edit'
                     }
                 },
             ]
@@ -59,19 +71,20 @@ export const lockingRoute: Route = {
 
 /*
 *   This NgModule is injected in the app-module.ts. This deals with declaring, importing,
-*   creating entry point and providing the services for the locking screens and dialogs.
+*   creating entry point and providing the services for the tracking screens and dialogs.
 *
 *   This don't clutter the app-module.ts, instead of at least 4 components that are added to the app-module.ts
 *   it only adds this module and includes it in the import section.
 */
 @NgModule( {
     declarations: [
-        RecordLocksTableComponent,
+        ScreenTrackingComponent,
+        TrackingTableComponent
     ],
     entryComponents: [
     ],
     providers: [
-        RecordLocksDataService,
+        TrackingDataService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: GcHttpInterceptor,
@@ -83,26 +96,26 @@ export const lockingRoute: Route = {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        GenCrudModule,
-        RouterModule.forChild( [ lockingRoute ] )
+        RouterModule.forChild( [ trackingRoute ] ),
+        GenCrudModule
     ],
     exports: [
-        RecordLocksTableComponent,
+        TrackingTableComponent,
     ]
 } )
-export class RecordLocksModule
+export class TrackingModule
 {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: RecordLocksModule,
+            ngModule: TrackingModule,
             providers: [
-                RecordLocksDataService,
+                TrackingDataService,
             ]
         };
     }
     static forChild(): ModuleWithProviders
     {
-        return { ngModule: RecordLocksModule };
+        return { ngModule: TrackingModule };
     }
 }
 

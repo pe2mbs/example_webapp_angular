@@ -1,7 +1,7 @@
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -17,40 +17,39 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
 import { TrackingDataService } from './service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { TrackingRecord } from './model';
-import { GcScreenBase } from '../../crud/curd.screen.base';
-import { GcSelectList } from '../../crud/model';
 
+import { GcSelectList } from 'src/app/layouts/crud/model';
 
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-tracking-screen',
     templateUrl: './screen.component.html',
-    styles: [ '.editor-screen { height: calc( 100% - 300px )!important; }' ],
-    styleUrls: [ '../../common-mat-card.scss' ]
+    styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord>
+export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord> 
 {
-    public T_ACTIONList: GcSelectList[] = [
-            {
-                        "label": "Insert",
-                        "value": 1
-            },
-            {
-                        "label": "Update",
-                        "value": 2
-            },
-            {
-                        "label": "Delete",
-                        "value": 3
-            }
-];
+    public T_ACTIONList = [
+        {
+            "label": "Insert",
+            "value": 1
+        },
+        {
+            "label": "Update",
+            "value": 2
+        },
+        {
+            "label": "Delete",
+            "value": 3
+        }
+    ];
 
     constructor( route: ActivatedRoute
                , dataService: TrackingDataService
@@ -75,17 +74,17 @@ export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord>
         return;
     }
 
-	protected updateFormGroup( record: TrackingRecord ): void
+    protected updateFormGroup( record: TrackingRecord ): void
 	{
 		this.formGroup.patchValue( {
-			T_ID: record.T_ID,
-			T_USER: record.T_USER,
-			T_TABLE: record.T_TABLE,
-			T_ACTION: record.T_ACTION,
-			T_RECORD_ID: record.T_RECORD_ID,
-			T_CHANGE_DATE_TIME: record.T_CHANGE_DATE_TIME,
-			T_CONTENTS: record.T_CONTENTS,
+            T_USER: this.row.T_USER,
+            T_TABLE: this.row.T_TABLE,
+            T_ACTION: this.row.T_ACTION,
+            T_RECORD_ID: this.row.T_RECORD_ID,
+            T_CHANGE_DATE_TIME: this.row.T_CHANGE_DATE_TIME,
+            T_CONTENTS: this.row.T_CONTENTS,
 		} );
+		return;
 	}
 
     public get T_ID()
@@ -122,4 +121,6 @@ export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord>
     {
         return ( this.formGroup.get( 'T_CONTENTS' ) );
     }
+
 }
+

@@ -1,7 +1,7 @@
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -17,67 +17,66 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
 import { UserDataService } from './service';
-import { ActivatedRoute } from '@angular/router';
 import { UserRecord } from './model';
-import { GcSelectList } from '../../crud/model';
-import { RoleDataService } from '../role/service';
-import { GcScreenBase } from '../../crud/curd.screen.base';
 
+import { GcSelectList } from 'src/app/layouts/crud/model';
+import { RoleDataService } from '../role/service';
 
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-user-screen',
     templateUrl: './screen.component.html',
-    styles: [ '.mat-tab-group-screen { height: calc( 100% - 100px )!important; }' ],
-    styleUrls: [ '../../common-mat-card.scss' ]
+    styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnInit, OnDestroy
+export class ScreenUserComponent extends GcScreenBase<UserRecord>
 {
     public U_ACTIVEList = [
-		{
-			"label": "Yes",
-			"value": true
-		},
-		{
-			"label": "No",
-			"value": false
-		}
-	];
+        {
+            "label": "Yes",
+            "value": true
+        },
+        {
+            "label": "No",
+            "value": false
+        }
+    ];
     public roleList: GcSelectList[];
     public hide_U_HASH_PASSWORD: boolean  = true;
     public U_LOCALEList = [
-		{
-			"label": "nl_NL",
-			"value": 1
-		}
-	];
+        {
+            "label": "nl_NL",
+            "value": 1
+        }
+    ];
     public U_LISTITEMSList = [
-		{
-			"label": "5 Records",
-			"value": 5
-		},
-		{
-			"label": "10 Records",
-			"value": 10
-		},
-		{
-			"label": "25 Records",
-			"value": 25
-		},
-		{
-			"label": "100 Records",
-			"value": 100
-		}
-	];
+        {
+            "label": "5 Records",
+            "value": 5
+        },
+        {
+            "label": "10 Records",
+            "value": 10
+        },
+        {
+            "label": "25 Records",
+            "value": 25
+        },
+        {
+            "label": "100 Records",
+            "value": 100
+        }
+    ];
 
-	constructor( route: ActivatedRoute
+    constructor( route: ActivatedRoute
                , dataService: UserDataService
-               , public roleService: RoleDataService  )
+                 , public roleService: RoleDataService  )
     {
         super( route, dataService );
         this.row = new UserRecord();
@@ -108,42 +107,26 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
                                               [  ]  ),
         } );
         return;
-	}
-	
-	protected updateFormGroup( record: UserRecord ): void
+    }
+
+    protected updateFormGroup( record: UserRecord ): void
 	{
 		this.formGroup.patchValue( {
-			U_ID: this.row.U_ID,
-			U_ACTIVE: this.row.U_ACTIVE,
-			U_NAME: this.row.U_NAME,
-			U_ROLE: this.row.U_ROLE,
-			U_HASH_PASSWORD: this.row.U_HASH_PASSWORD,
-			U_MUST_CHANGE: this.row.U_MUST_CHANGE,
-			U_FIRST_NAME: this.row.U_FIRST_NAME,
-			U_MIDDLE_NAME: this.row.U_MIDDLE_NAME,
-			U_LAST_NAME: this.row.U_LAST_NAME,
-			U_EMAIL: this.row.U_EMAIL,
-			U_ACCESS_TOKEN: this.row.U_ACCESS_TOKEN,
-			U_REFRESH_TOKEN: this.row.U_REFRESH_TOKEN,
-			U_TOKEN_DT: this.row.U_TOKEN_DT,
-			U_CREATE_DT: this.row.U_CREATE_DT,
-			U_REMARK: this.row.U_REMARK,
-			U_LOCALE: this.row.U_LOCALE,
-			U_LISTITEMS: this.row.U_LISTITEMS,
+            U_ACTIVE: this.row.U_ACTIVE,
+            U_NAME: this.row.U_NAME,
+            U_ROLE: this.row.U_ROLE,
+            U_HASH_PASSWORD: this.row.U_HASH_PASSWORD,
+            U_MUST_CHANGE: this.row.U_MUST_CHANGE,
+            U_FIRST_NAME: this.row.U_FIRST_NAME,
+            U_MIDDLE_NAME: this.row.U_MIDDLE_NAME,
+            U_LAST_NAME: this.row.U_LAST_NAME,
+            U_EMAIL: this.row.U_EMAIL,
+            U_REMARK: this.row.U_REMARK,
+            U_LOCALE: this.row.U_LOCALE,
+            U_LISTITEMS: this.row.U_LISTITEMS,
 		} );
 		return;
 	}
-    
-    public ngOnInit(): void 
-    {
-        super.ngOnInit();
-        this.registerSubscription( this.roleService.getSelectList( 'R_ID'
-                                    , 'R_ROLE'
-                                     ).subscribe( dataList => {
-            this.roleList = dataList;
-        } ) );
-        return;
-    }
 
     public get U_ID()
     {
@@ -229,4 +212,6 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
     {
         return ( this.formGroup.get( 'U_LISTITEMS' ) );
     }
+
 }
+

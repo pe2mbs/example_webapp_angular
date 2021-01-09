@@ -1,7 +1,7 @@
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -17,13 +17,21 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
-export class RecordLocksRecord
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { GcCrudServiceBase } from 'src/app/layouts/crud/crud.service.base';
+import { RecordLocksRecord } from './model';
+
+
+@Injectable()
+export class RecordLocksDataService extends GcCrudServiceBase<RecordLocksRecord>
 {
-    L_ID: number;
-    L_USER: string;
-    L_TABLE: string;
-    L_RECORD_ID: number;
-    L_START_DATE: Date;
+    constructor( httpClient: HttpClient )
+    {
+        super( httpClient, 'locking' );
+        return;
+    }
 }
+

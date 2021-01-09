@@ -7,19 +7,19 @@ import { MarkdownModule } from 'ngx-markdown';
 import { GridsterModule } from 'angular-gridster2';
 import { GenCrudModule } from './layouts/gencrud.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RoleModule } from './layouts/core/role/module';
-import { UserModule } from './layouts/core/user/module';
-import { RecordLocksModule } from './layouts/core/locking/module';
-import { TrackingModule } from './layouts/core/tracking/module';
 import { ExampleHttpDatabase } from './modules/demo/table-http-service';
 import { TableHttpExample } from './modules/demo/table-http-example';
 import localeNl from '@angular/common/locales/nl';
 import { registerLocaleData } from '@angular/common';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { HttpClientModule } from '@angular/common/http';
 import { LanguagesModule } from './backend/languages/module';
 import { LanguageReferenceModule } from './backend/language_reference/module';
 import { LanguageTransalatesModule } from './backend/language_translates/module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TrackingModule } from './backend/tracking/module';
+import { RecordLocksModule } from './backend/locking/module';
+import { UserModule } from './backend/user/module';
+import { RoleModule } from './backend/role/module';
 
 
 registerLocaleData(localeNl);

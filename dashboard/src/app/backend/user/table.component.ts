@@ -17,40 +17,40 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:42 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/layouts/profile/profile.service';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
-import { LanguagesRecord } from './model';
-import { DialogLanguagesComponent } from './dialog.component';
-import { LanguagesDataService } from './service';
+import { UserRecord } from './model';
+import { UserDataService } from './service';
+import { RoleDataService } from '../role/service';
 
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'app-languages-table',
+    selector: 'app-user-table',
     template: `<app-cust-data-table
 				class="card-content"
 				[definition]="definition">
 </app-cust-data-table>`,
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class LanguagesTableComponent
+export class UserTableComponent
 {
-    public definition: TableDefintion<LanguagesRecord> = {
+    public definition: TableDefintion<UserRecord> = {
         toggleUpdate: false,
-        name: 'LanguagesTable',
-		helpTopic: 'languages-table',
-		defaultSortField: 'LA_ID',
+        name: 'UserTable',
+		helpTopic: 'user-table',
+		defaultSortField: 'U_ID',
 		defaultSortDirection: 'desc',
 		sortDisableClear: true,
         headerButtons: [
 			{
 				label: 'New',
-				icon: '',
+				icon: 'add',
 				action: (core: any, self: any) => {
 					self.addRecord();
 				}
@@ -58,58 +58,58 @@ export class LanguagesTableComponent
 		],
 		footerButtons: [
 		],
-        rowDoubleClick: (core: any, self: any, idx: number, row: LanguagesRecord) => {
+        rowDoubleClick: (core: any, self: any, idx: number, row: UserRecord) => {
 			self.editRecord( idx, row );
 		},
 		columns: [
             {
-                columnDef: 'LA_LABEL',
-				header: "Label",
+                columnDef: 'U_NAME',
+				header: "Username",
 				display: true,
-				width: "65%",
+				width: "150px",
 				filter: false,
 				sort: false,
-                cell: (row: LanguagesRecord) => row.LA_LABEL
+                cell: (row: UserRecord) => row.U_NAME
             },
             {
-                columnDef: 'LA_CODE2',
-				header: "Code-2",
+                columnDef: 'U_FIRST_NAME',
+				header: "First name",
 				display: true,
-				width: "10%",
+				width: "30%",
 				filter: false,
 				sort: false,
-                cell: (row: LanguagesRecord) => row.LA_CODE2
+                cell: (row: UserRecord) => row.U_FIRST_NAME
             },
             {
-                columnDef: 'LA_CODE3',
-				header: "Code-3",
+                columnDef: 'U_LAST_NAME',
+				header: "Last name",
 				display: true,
-				width: "10%",
+				width: "30%",
 				filter: false,
 				sort: false,
-                cell: (row: LanguagesRecord) => row.LA_CODE3
+                cell: (row: UserRecord) => row.U_LAST_NAME
             },
             {
-                columnDef: 'LA_LOCALE',
-				header: "Locale",
+                columnDef: 'U_EMAIL',
+				header: "E-Mail address",
 				display: true,
-				width: "15%",
+				width: "30%",
 				filter: false,
 				sort: false,
-                cell: (row: LanguagesRecord) => row.LA_LOCALE
+                cell: (row: UserRecord) => row.U_EMAIL
             },
             {
                 columnDef: null,
 				display: true,
 				header: 'Options',
 				width: '70px',
-				cell: (row: LanguagesRecord) => {},
+				cell: (row: UserRecord) => {},
                 buttons: [
                     {
 						label: 'Delete',
 						icon: 'delete',
-						action: (core: any, self: any, idx: number, row: LanguagesRecord) => {
-							core.deleteRecord( idx, row, 'LA_ID', 'Label', 'LA_LABEL' );
+						action: (core: any, self: any, idx: number, row: UserRecord) => {
+							core.deleteRecord( idx, row, 'U_ID', 'User', 'U_NAME'  );
 						}
 					},
                 ]
@@ -117,11 +117,11 @@ export class LanguagesTableComponent
         ]
     };
 
-    constructor( dataService: LanguagesDataService
+    constructor( dataService: UserDataService
                , profileService: GcProfileService
                , protected dialog: MatDialog
                , public router: Router
- )
+                 , public roleService: RoleDataService )
     {
         this.definition.dataService = dataService;
 		this.definition.profileService = profileService;
@@ -133,35 +133,17 @@ export class LanguagesTableComponent
     public addRecord(): void
 	{
 	    console.log( 'addRecord()' );
-        const newRecord = new LanguagesRecord();
-        const options: MatDialogConfig = {
-            data: { record: newRecord, mode: 'add' },
-            width: "60%",
-        };
-        const dialogRef = this.dialog.open( DialogLanguagesComponent, options );
-        dialogRef.afterClosed().subscribe( result =>
-        {
-            console.log( 'addNew() dialog result ', result );
-            this.definition.profileService.changeEvent.emit();
-        } );
+        this.router.navigate( ['/user/edit'], {
+			queryParams: { mode: 'new' }
+		} );
 		return;
 	}
 
-    public editRecord( idx: number, row: LanguagesRecord ): void
+    public editRecord( idx: number, row: UserRecord ): void
 	{
-        this.definition.dataService.lockRecord( row );
-        const options: MatDialogConfig = {
-            data: { record: row, mode: 'add' },
-            width: "60%",
-
-        };
-        const dialogRef = this.dialog.open( DialogLanguagesComponent, options );
-        dialogRef.afterClosed().subscribe( result =>
-        {
-            console.log( 'editRecord() dialog result ', result );
-            this.definition.dataService.unlockRecord( row );
-            this.definition.profileService.changeEvent.emit();
-        } );
+        this.router.navigate( ['/user/edit'], {
+			queryParams: { 	id: 'U_ID', mode: 'edit', value: row.U_ID }
+		} );
         return;
 	}
 }

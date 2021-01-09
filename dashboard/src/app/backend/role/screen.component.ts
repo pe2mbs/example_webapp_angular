@@ -1,7 +1,7 @@
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -17,27 +17,28 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
 import { RoleDataService } from './service';
-import { ActivatedRoute } from '@angular/router';
 import { RoleRecord } from './model';
-import { GcScreenBase } from '../../crud/curd.screen.base';
 
 
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-role-screen',
     templateUrl: './screen.component.html',
-    styles: [ '.editor-screen { height: calc( 100% - 75px )!important; }' ],
-    styleUrls: [ '../../common-mat-card.scss' ]
+    styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
 export class ScreenRoleComponent extends GcScreenBase<RoleRecord>
 {
+
     constructor( route: ActivatedRoute
-               , dataService: RoleDataService )
+               , dataService: RoleDataService
+  )
     {
         super( route, dataService );
         this.row = new RoleRecord();
@@ -49,17 +50,16 @@ export class ScreenRoleComponent extends GcScreenBase<RoleRecord>
         } );
         return;
     }
-	
-	protected updateFormGroup( record: RoleRecord ): void
+
+    protected updateFormGroup( record: RoleRecord ): void
 	{
 		this.formGroup.patchValue( {
-            R_ID: this.row.R_ID,
             R_ROLE: this.row.R_ROLE,
             R_REMARK: this.row.R_REMARK,
 		} );
 		return;
 	}
-    
+
     public get R_ID()
     {
         return ( this.formGroup.get( 'R_ID' ) );
@@ -73,6 +73,7 @@ export class ScreenRoleComponent extends GcScreenBase<RoleRecord>
     public get R_REMARK()
     {
         return ( this.formGroup.get( 'R_REMARK' ) );
-	}
-	
+    }
+
 }
+

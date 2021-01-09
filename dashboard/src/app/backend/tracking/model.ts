@@ -1,7 +1,7 @@
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -17,34 +17,18 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 */
-.mat-cell:nth-child( 1 ), .mat-header-cell:nth-child( 1 )
+export class TrackingRecord
 {
-    // Field U_NAME
-    // using fixed width
-    flex: 0 0 150px;
+    T_ID: number;
+    T_USER: string;
+    T_TABLE: string;
+    T_ACTION: number;
+    T_RECORD_ID: number;
+    T_CHANGE_DATE_TIME: Date;
+    T_CONTENTS: string;
+    T_ACTION_LABEL: string;
+
 }
-.mat-cell:nth-child( 2 ), .mat-header-cell:nth-child( 2 )
-{
-    // Field U_FIRST_NAME
-    // using variable width
-    flex: 1 1 30%;
-}
-.mat-cell:nth-child( 3 ), .mat-header-cell:nth-child( 3 )
-{
-    // Field U_LAST_NAME
-    // using variable width
-    flex: 1 1 30%;
-}
-.mat-cell:nth-child( 4 ), .mat-header-cell:nth-child( 4 )
-{
-    // Field U_EMAIL
-    // using variable width
-    flex: 1 1 30%;
-}
-.mat-cell:nth-child( 5 ), .mat-header-cell:nth-child( 5 )
-{
-    // Options, using fixed with
-    flex: 0 0 50px;
-}
+
