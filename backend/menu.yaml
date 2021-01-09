@@ -4,18 +4,14 @@
   route: /
 - caption: Administration
   children:
-  - caption: Language Transalations
-    icon: transalations
-    id: 784BEB6CD125B425B5BFB01C20255E7C
-    route: /language_translates
-  - caption: Translations
-    icon: transalations
-    id: 63365BF761E78C0E7FC3ACEA312D7710
-    route: /transalations
   - caption: Languages
     icon: languages
     id: 127709D66303C0BEAE01573E304384E7
     route: /languages
+  - caption: Language Transalations
+    icon: transalations
+    id: 784BEB6CD125B425B5BFB01C20255E7C
+    route: /language_translates
   - caption: Users
     icon: accessibility
     id: F19874EA16DB0675ABBE9EC7DB1F341A

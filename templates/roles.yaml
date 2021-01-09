@@ -3,11 +3,20 @@ linux:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
         angular:                    dashboard/src/app
+    template:
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        python:                     python
+        angular:                    angular
+        common:
+            python:                 python
+            angular:                angular
 application:                        backend
 options:
     ignore-case-db-ids:             true
     overwrite:                      true
     use-module:                     true
+    copy-support-files:             false
+    use-local-template:             true
 references:
     app-module:
         filename:                   app.module.ts
@@ -18,11 +27,11 @@ references:
         class:                      AppRoutingModule
         module:                     app.routingmodule.ts
 objects:
--   name:                           gn_role
+-   name:                           role
     title:                          Roles
     remark:                         This is the user roles maintenance screen
     class:                          Role
-    uri:                            /api/gn_role
+    uri:                            /api/role
     menu:
         caption:                    Administration
         icon:                       settings
@@ -30,7 +39,7 @@ objects:
         menu:
             caption:                Roles
             icon:                   group_work
-            route:                  /gn_role
+            route:                  /role
             index:                  1
     actions:
     -   name:                       new
@@ -38,28 +47,19 @@ objects:
         type:                       screen
         icon:                       add
         position:                   header
-        route:
-            class:                  ScreenRoleComponent
-            params:
-                id:                 0
-                mode:               "'add'"
+        function:                   self.addRecord()
     -   name:                       edit
         label:                      Edit
         type:                       screen
         icon:                       edit
         position:                   row
-        route:
-            class:                  ScreenRoleComponent
-            params:
-                id:                 "'R_ID'"
-                mode:               "'edit'"
-                value:              row.R_ID
+        function:                   self.editRecord( idx, row )
     -   name:                       delete
         label:                      Delete
         type:                       dialog
         icon:                       delete
         position:                   cell
-        function:                   deleteRecord( i, row, 'R_ROLE' )
+        function:                   core.deleteRecord( idx, row, 'R_ID', 'Role', 'R_ROLE'  )
     table:
         name:                       GN_ROLE
         columns:
@@ -70,7 +70,7 @@ objects:
                 type:               textbox
             listview:
                 index:              0
-                width:              90%
+                width:              100%
         -   field:                  R_REMARK                    CLOB            NULL
             label:                  Remark
             hint:                   Miscellaneous information not related.

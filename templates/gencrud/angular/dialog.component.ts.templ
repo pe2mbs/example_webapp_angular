@@ -29,7 +29,7 @@ import { GcBaseDialog } from 'src/app/layouts/dialog/dialog';
 % endif
 import { ${ obj.cls }DataService } from './service';
 % for field in obj.table.columns:
- % if field.ui is not None and ( field.ui.isChoice() or field.ui.isCombobox() ):
+ % if field.ui is not None and field.ui.isUiType( 'choice', 'choice-auto-complete', 'combo' ):
 import { GcSelectList } from 'src/app/layouts/crud/model';
 <%
     break
@@ -37,7 +37,7 @@ import { GcSelectList } from 'src/app/layouts/crud/model';
  % endif
 % endfor
 % for field in obj.table.columns:
- % if field.ui is not None and ( field.ui.isChoice() or field.ui.isCombobox() ):
+ % if field.ui is not None and field.ui.isUiType( 'choice', 'choice-auto-complete', 'combo' ):
    % if field.ui.service is not None:
 import { ${ field.ui.service.cls } } from '${ field.ui.service.path }';
    % endif
@@ -60,7 +60,7 @@ export class Dialog${ obj.cls }Component extends GcBaseDialog
 {
 % for field in obj.table.columns:
  % if field.ui is not None:
-  % if field.ui.isPassword():
+  % if field.ui.isUiType( 'password' ):
     public hide_${ field.name }: boolean  = true;
   % elif field.ui is not None:
     % if field.ui.hasService():

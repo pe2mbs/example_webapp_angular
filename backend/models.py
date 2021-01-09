@@ -9,3 +9,5 @@ from backend.language_reference import LanguageReference, LanguageReferenceMemor
 from backend.language_translate import LanguageTranslate, LanguageTranslateMemory
 from backend.transalations import Transalations, TransalationsMemory
 from backend.language_translates import LanguageTransalates, LanguageTransalatesMemory
+from backend.user import User, UserMemory
+from backend.role import Role, RoleMemory

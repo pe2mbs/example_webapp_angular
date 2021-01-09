@@ -1,6 +1,6 @@
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -35,7 +35,7 @@ def registerApi( *args ):
     API.app.logger.info( 'Register Role routes' )
     API.app.register_blueprint( roleApi )
     try:
-        import backend.gn_role.entry_points  as EP
+        import backend.role.entry_points  as EP
         if hasattr( EP, 'entryPointApi' ):
             API.app.logger.info( 'Register Role entrypoint routes' )
             API.app.register_blueprint( EP.entryPointApi )
@@ -43,8 +43,9 @@ def registerApi( *args ):
         if hasattr( EP, 'registerWebSocket' ):
             EP.registerWebSocket()
 
-    except ModuleNotFoundError:
-        pass
+    except ModuleNotFoundError as exc:
+        if exc.name != 'backend.role.entry_points':
+            API.app.logger.error( traceback.format_exc() )
 
     except Exception:
         API.app.logger.error( traceback.format_exc() )
@@ -56,7 +57,7 @@ def registerApi( *args ):
 
 class RoleRecordLock( RecordLock ):
     def __init__(self):
-        RecordLock.__init__( self, 'gn_role', 'R_ID' )
+        RecordLock.__init__( self, 'role', 'R_ID' )
         return
 
 
@@ -79,5 +80,5 @@ class RoleCurdInterface( CrudInterface ):
         return record
 
 
-gn_role = RoleCurdInterface()
+role = RoleCurdInterface()
 

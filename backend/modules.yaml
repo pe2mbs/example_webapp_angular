@@ -31,3 +31,9 @@
 - model: LanguageTransalates
   module: backend.language_translates
   table: language_translates
+- model: User
+  module: backend.user
+  table: gn_user
+- model: Role
+  module: backend.role
+  table: gn_role

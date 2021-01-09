@@ -1,44 +1,40 @@
-<div class="container" id="${ obj.name }">
+<div id="${ obj.name }" fxLayout="column">
     <h3 mat-dialog-title id="${ obj.name }.title">{{ mode }} ${ obj.title }</h3>
-    <form class="mat-dialog-content" (ngSubmit)="submit" [formGroup]="formGroup" id="${ obj.name }.form">
+    <form fxLayout="column" (ngSubmit)="submit" [formGroup]="formGroup" id="${ obj.name }.form">
 % for field in obj.table.columns:
  % if field.hasLabel() and not field.hasTab:
         ${ field.angularUiInput() }
  % endif
 % endfor
-% if obj.table.hasTabs( 'dialog' ):
-        <${ obj.table.tabs( 'dialog' ).groupTag } class="mat-tab-group-dialog">
-% for label in obj.table.tabs( 'dialog' ).labels:
-            <${ obj.table.tabs( 'dialog' ).tabTag } label="${ label }" id="${ obj.name }.tab.${label.lower().replace( ' ', '_' )}">
-%   if obj.table.tabs( 'dialog' ).hasComponent( label ):
-                    <${obj.table.tabs( 'dialog' ).component( label )}>
-                    </${obj.table.tabs( 'dialog' ).component( label )}>
+% if obj.table.hasTabs():
+        <mat-tab-group fxFlex="100">
+% for label in obj.table.tabs().labels:
+            <mat-tab label="${ label }" id="${ obj.name }.tab.${label.lower().replace( ' ', '_' )}">
+                <mat-card fxLayout="column" class="max-box">
+%   if obj.table.tabs().hasComponent( label ):
+                <${obj.table.tabs( 'dialog' ).component( label )}>
+                </${obj.table.tabs( 'dialog' ).component( label )}>
 %   else:
-%     if obj.table.tabs( 'dialog' ).contentTag is not None:
-                <${ obj.table.tabs( 'dialog' ).contentTag }>
-%     endif
-%     for field in obj.table.tabs( 'dialog' ).fieldsFor( label ):
+%     for field in obj.table.tabs().fieldsFor( label ):
                     ${ field.angularUiInput() }
 %     endfor
-%     if obj.table.tabs( 'dialog' ).contentTag is not None:
-                </${ obj.table.tabs( 'dialog' ).contentTag }>
-%     endif
+                </mat-card>
 %   endif
-            </${ obj.table.tabs( 'dialog' ).tabTag }>
+            </mat-tab>
 %  endfor
-        </${ obj.table.tabs( 'dialog' ).groupTag }>
+        </mat-tab-group>
 % endif
-        <div mat-dialog-actions>
-            <button mat-button
-                    [type]="submit"
-                    id="${ obj.name }.submit"
-                    [disabled]="!formGroup.valid"
-                    [mat-dialog-close]="1"
-                    (click)="onSaveClick()">Save</button>
-            <button mat-button
-                    (click)="onCancelClick()"
-                    id="${ obj.name }.cancel"
-                    tabindex="-1">Cancel</button>
-        </div>
     </form>
+    <div mat-dialog-actions fxFlex="5">
+        <button mat-button
+                [type]="submit"
+                id="${ obj.name }.submit"
+                [disabled]="!formGroup.valid"
+                [mat-dialog-close]="1"
+                (click)="onSaveClick()">Save</button>
+        <button mat-button
+                (click)="onCancelClick()"
+                id="${ obj.name }.cancel"
+                tabindex="-1">Cancel</button>
+    </div>
 </div>

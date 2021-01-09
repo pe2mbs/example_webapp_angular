@@ -1,4 +1,4 @@
-class RecordLocksMixin( object ):
+class RecordLocksViewMixin( object ):
     def __init__( self ):
         # Disable locking for the locking table
         self._lock = False

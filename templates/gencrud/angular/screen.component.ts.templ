@@ -27,8 +27,8 @@ import { ${obj.cls}DataService } from './service';
 import { ${obj.cls}Record } from './model';
 
 % for field in obj.table.columns:
- % if field.ui is not None and ( field.ui.isChoice() or field.ui.isCombobox() ):
-import { GcSelectList } from 'src/app/gencrud/crud/model';
+ % if field.ui is not None and ( field.ui.isUiType( 'choice', 'choice-auto-complete', 'combo' ) ):
+import { GcSelectList } from 'src/app/layouts/crud/model';
 <%
     break
 %>
@@ -52,11 +52,11 @@ export class Screen${obj.cls}Component extends GcScreenBase<${obj.cls}Record>
 {
 % for field in obj.table.columns:
 %  if field.ui is not None:
-%   if field.ui.isPassword():
+%   if field.ui.isUiType( 'password' ):
     public hide_${ field.name }: boolean  = true;
 %   elif field.ui is not None:
 %    if field.ui.hasService():
-    public ${ field.ui.service.name }List: PytSelectList[];
+    public ${ field.ui.service.name }List: GcSelectList[];
 %    elif field.ui.hasResolveList():
     public ${ field.name }List = ${ field.ui.typescriptResolveList() };
 %    endif

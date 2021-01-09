@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#      gencrud: 2021-01-04 07:23:14 version 2.1.657 by user mbertens
+#      gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
 #
 from backend.language_reference.schema import *
 from backend.language_reference.model import *

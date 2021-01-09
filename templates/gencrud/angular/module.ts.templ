@@ -104,10 +104,10 @@ export const ${ obj.name }Route: Route = {
 */
 @NgModule( {
     declarations: [
-% if obj.actions.isDialog( 'new' ) or obj.actions.isDialog( 'new' ):
+% if obj.actions.isDialog( 'new' ) or obj.actions.isDialog( 'edit' ):
         Dialog${ obj.cls }Component,
 % endif
-% if obj.actions.isScreen( 'new' ) or obj.actions.isScreen( 'new' ):
+% if obj.actions.isScreen( 'new' ) or obj.actions.isScreen( 'edit' ):
         Screen${ obj.cls }Component,
 % endif
 % if obj.hasExtra():

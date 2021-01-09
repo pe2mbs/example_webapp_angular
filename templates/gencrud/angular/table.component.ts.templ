@@ -33,7 +33,7 @@ import { Dialog${ obj.cls }Component } from './dialog.component';
 % endif
 import { ${ obj.cls }DataService } from './service';
 % for field in obj.table.columns:
- % if field.ui is not None and ( field.ui.isChoice() or field.ui.isCombobox() ):
+ % if field.ui is not None and field.ui.isUiType( 'choice', 'choice-auto-complete', 'combo' ):
    % if field.ui.service is not None:
 import { ${field.ui.service.cls} } from '${ field.ui.service.path }';
    % endif
@@ -69,7 +69,7 @@ export class ${ obj.cls }TableComponent
 				label: '${ button.label }',
 				icon: '${ button.icon }',
 				action: (core: any, self: any) => {
-					self.${ button.function };
+					${ button.function };
 				}
 			},
 % endfor
@@ -99,14 +99,16 @@ export class ${ obj.cls }TableComponent
 				width: "${ column.listview.get( 'width', '' ) }",
 				filter: ${ column.listview.get( 'filter', 'false' ) },
 				sort: ${ column.listview.get( 'sort', 'false' ) },
-				cell: (row: ${ obj.cls }Record) => row.${ column.name }
-%  if column.hasService():
-              , dataService: ( self: any ) => self.${ column.ui.service.name }Service
-%  elif column.hasResolveList():
-              , resolveList: ( value ) => {
-                    const dataList = ${ column.ui.typescriptResolveList };
-                    return dataList[ value ]
+%  if column.hasResolveList():
+				cell: (row: ${ obj.cls }Record) => row.${ column.name }_LABEL
+%  elif column.hasService():
+                cell: (row: ${ obj.cls }Record) => {
+                    // TODO: This needs some extra work
+                    return ( row.${ column.name } );
+                    // self.${ column.ui.service.name }Service
                 }
+%  else:
+                cell: (row: ${ obj.cls }Record) => row.${ column.name }
 %  endif
             },
 % endfor
@@ -152,9 +154,11 @@ ${ obj.externalService } )
 % if obj.actions.isDialog( 'new' ):
         const newRecord = new ${ obj.cls }Record();
         const options: MatDialogConfig = {
-            data: { record: newRecord,
-                    mode: 'add' },
-            height: "${ ( 6 * 72 ) + 130 }px",
+            data: { record: newRecord, mode: 'add' },
+            width: "${ obj.actions.get( 'new' ).width }",
+%  if obj.actions.get( 'new' ).hasHeight():
+            height: "${ obj.actions.get( 'new' ).height }",
+%  endif
         };
         const dialogRef = this.dialog.open( Dialog${ obj.cls }Component, options );
         dialogRef.afterClosed().subscribe( result =>
@@ -175,9 +179,12 @@ ${ obj.externalService } )
 % if obj.actions.isDialog( 'edit' ):
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
-            data: { record: row,
-                    mode: 'add' },
-            height: "${ ( 6 * 72 ) + 190 }px",
+            data: { record: row, mode: 'add' },
+            width: "${ obj.actions.get( 'edit' ).width }",
+%  if obj.actions.get( 'new' ).hasHeight():
+            height: "${ obj.actions.get( 'edit' ).height }",
+%  endif
+
         };
         const dialogRef = this.dialog.open( Dialog${ obj.cls }Component, options );
         dialogRef.afterClosed().subscribe( result =>

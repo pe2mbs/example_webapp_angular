@@ -49,10 +49,12 @@ objects:
     -   name:                       new
         type:                       dialog
         position:                   header
+        width:                      60%
         function:                   self.addRecord()
     -   name:                       edit
         type:                       dialog
         position:                   row
+        width:                      60%
         function:                   self.editRecord( idx, row )
     -   name:                       delete
         label:                      Delete

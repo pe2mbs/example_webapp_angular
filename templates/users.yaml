@@ -3,11 +3,20 @@ linux:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
         angular:                    dashboard/src/app
+    template:
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        python:                     python
+        angular:                    angular
+        common:
+            python:                 python
+            angular:                angular
 application:                        backend
 options:
     ignore-case-db-ids:             true
     overwrite:                      true
     use-module:                     true
+    copy-support-files:             false
+    use-local-template:             true
 references:
     app-module:
         filename:                   app.module.ts
@@ -18,11 +27,11 @@ references:
         class:                      AppRoutingModule
         module:                     app.routingmodule.ts
 objects:
--   name:                           gn_user
+-   name:                           user
     title:                          Users
     remark:                         This is the Users maintenance screen
     class:                          User
-    uri:                            /api/gn_user
+    uri:                            /api/user
     menu:
         caption:                    Administration
         icon:                       settings
@@ -30,7 +39,7 @@ objects:
         menu:
             caption:                Users
             icon:                   accessibility
-            route:                  /gn_user
+            route:                  /user
             index:                  1
     actions:
     -   name:                       new
@@ -38,28 +47,19 @@ objects:
         type:                       screen
         icon:                       add
         position:                   header
-        route:
-            class:                  ScreenUserComponent
-            params:
-                id:                 0
-                mode:               "'add'"
+        function:                   self.addRecord()
     -   name:                       edit
         label:                      Edit
         type:                       screen
         icon:                       edit
         position:                   row
-        route:
-            class:                  ScreenUserComponent
-            params:
-                id:                 "'U_ID'"
-                mode:               "'edit'"
-                value:              row.U_ID
+        function:                   self.editRecord( idx, row )
     -   name:                       delete
         label:                      Delete
         type:                       dialog
         icon:                       delete
         position:                   cell
-        function:                   deleteRecord( i, row, 'U_NAME' )
+        function:                   core.deleteRecord( idx, row, 'U_ID', 'User', 'U_NAME'  )
     table:
         name:                       GN_USER
         tabs:
@@ -69,6 +69,7 @@ objects:
             -   Personal
             -   Remark
             -   Profile
+            -   Internal data
         columns:
         -   field:                  U_ID                        INT             AUTO NUMBER  PRIMARY KEY
             ui:
@@ -96,7 +97,7 @@ objects:
             ui:
                 type:               choice
                 service:
-                    name:           gn_role
+                    name:           role
                     class:          Role
                     value:          R_ID
                     label:          R_ROLE
@@ -202,3 +203,13 @@ objects:
             tab:
                 label:              Profile
                 index:              1
+        -   field:                  U_PROFILE                    CLOB            NULL
+            label:                  Profile data
+            ui:
+                type:               editor
+                attributes:
+                    language:       json
+                    minimap:        ^true
+            tab:
+                label:              Internal data
+                index:              0

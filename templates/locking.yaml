@@ -3,11 +3,20 @@ linux:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
         angular:                    dashboard/src/app
+    template:
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        python:                     python
+        angular:                    angular
+        common:
+            python:                 python
+            angular:                angular
 application:                        backend
 options:
     ignore-case-db-ids:             true
     overwrite:                      true
     use-module:                     true
+    copy-support-files:             false
+    use-local-template:             true
 references:
     app-module:
         filename:                   app.module.ts
@@ -50,7 +59,12 @@ objects:
         type:                       dialog
         icon:                       delete
         position:                   cell
-        function:                   deleteRecord( i, row, 'L_USER' )
+        function:                   core.deleteRecord( idx, row, 'L_ID', 'User', 'L_USER'  )
+    mixin:
+        python:
+            view:
+                filename:           backend.locking.mixin.py
+                class:              RecordLocksViewMixin
     table:
         name:                       LOCKING
         columns:
@@ -62,7 +76,7 @@ objects:
                 type:               textbox
             listview:
                 index:              0
-                width:              30%
+                width:              50%
 
         -   field:                  L_TABLE                     TEXT            NOT NULL
             label:                  Table
@@ -71,7 +85,7 @@ objects:
                 type:               textbox
             listview:
                 index:              1
-                width:              30%
+                width:              50%
 
         -   field:                  L_RECORD_ID                 INT             NOT NULL
             label:                  Table
@@ -86,4 +100,4 @@ objects:
                 type:               textbox
             listview:
                 index:              2
-                width:              30%
+                width:              300px
