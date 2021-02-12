@@ -5,7 +5,7 @@ import { GcDefaultComponent } from './layouts/default.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { GcAuthGuard } from './layouts/auth/auth-guard.service';
 import { TableHttpExample } from './modules/demo/table-http-example';
-import { CustDataTableComponent } from './modules/demo2/cust.data.table.component';
+import { CustDataTableComponent } from './layouts/crud/cust.data.table.component';
 const routes = [
     { path: '',
         component: GcDefaultComponent,

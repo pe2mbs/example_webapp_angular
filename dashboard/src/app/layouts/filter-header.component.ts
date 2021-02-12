@@ -54,12 +54,14 @@ export class GcFilterColumn
 	protected _column: string;
 	protected _value: string[];
 	protected _operator: string;
+	protected debug: boolean;
 	
-	constructor( column: string )
+	constructor( column: string, debug = false )
 	{
 		this._column = column;
 		this._value = null;
 		this._operator = null;
+		this.debug = debug;
 	}
 
 	public clear()
@@ -71,7 +73,10 @@ export class GcFilterColumn
 
 	public apply( values: any[], operator: string )
 	{
-		console.log( 'FilterColumn.apply', this._column, values, operator );
+		if ( this.debug )
+		{
+			console.log( 'FilterColumn.apply', this._column, values, operator );
+		}
 		this._value = values;
 		this._operator = operator;
 		return;
@@ -100,13 +105,21 @@ export class GcFilterEvent
 
 export class GcFilterRecord
 {
+	protected debug: boolean;
 	event: EventEmitter<GcFilterEvent> = new EventEmitter<GcFilterEvent>();
 	filterColumns: GcFilterColumn[] = new Array<GcFilterColumn>();
-	constructor( columns: string[] )
+	constructor( columns: string[], debug = false )
 	{
-		console.log( 'constructor( columns = ', columns, ' )' );
+		this.debug = debug;
+		if ( this.debug )
+		{
+			console.log( 'constructor( columns = ', columns, ' )' );
+		}
 		columns.forEach( field => {
-			console.log( 'constructor => ', field );
+			if ( this.debug )
+			{
+				console.log( 'constructor => ', field );
+			}
 			this.filterColumns.push( new GcFilterColumn( columns[ field ] ) );
 		} );
 		return;
@@ -115,7 +128,10 @@ export class GcFilterRecord
 	private findItem( column: string ): GcFilterColumn | null
 	{
 		let result = null;
-		console.log( `findItem( column = "${column}" )` );
+		if ( this.debug )
+		{
+			console.log( `findItem( column = "${column}" )` );
+		}
 		this.filterColumns.forEach( field =>
 		{
 			console.log( 'findItem => ', field );
@@ -143,7 +159,10 @@ export class GcFilterRecord
 		let col: GcFilterColumn = this.findItem( column );
 		if ( isNull( col ) )
 		{
-			console.log( `Adding filter to ${column} with value ${value}` );
+			if ( this.debug )
+			{
+				console.log( `Adding filter to ${column} with value ${value}` );
+			}
 			this.filterColumns.push( new GcFilterColumn( column ) );
 			col = this.findItem( column );
 		}
@@ -154,7 +173,10 @@ export class GcFilterRecord
 	public apply( column: string, values: any[], operator: string )
 	{
 		const col: GcFilterColumn = this.findItem( column );
-		console.log( "apply", column, values, operator, col );
+		if ( this.debug )
+		{
+			console.log( "apply", column, values, operator, col );
+		}
 		if ( col != null )
 		{
 			col.apply( values, operator );
@@ -167,7 +189,10 @@ export class GcFilterRecord
 		const columns: GcFilterColumnReq[] = new Array<GcFilterColumnReq>();
 		this.filterColumns.forEach( field =>
 		{
-			console.log( "getFilter", field );
+			if ( this.debug )
+			{
+				console.log( "getFilter", field );
+			}
 			if ( field.value != null || field.operator != null )
 			{
 				columns.push( { column: field.column,
@@ -377,4 +402,3 @@ export class GcFilterHeaderComponent implements OnInit
 		return;
 	}
 }
-

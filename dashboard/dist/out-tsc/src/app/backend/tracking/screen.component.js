@@ -2,7 +2,7 @@ import * as tslib_1 from "tslib";
 /*
 #
 #   Python backend and Angular frontend code generation by gencrud
-#   Copyright (C) 2018-2020 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
+#   Copyright (C) 2018-2021 Marc Bertens-Nguyen m.bertens@pe2mbs.nl
 #
 #   This library is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU Library General Public License GPL-2.0-only
@@ -18,18 +18,15 @@ import * as tslib_1 from "tslib";
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-09 07:56:12 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
 import { TrackingRecord } from './model';
-import { ScreenBaseComponent } from 'src/app/common/crud-screen-component';
-let ScreenTrackingComponent = class ScreenTrackingComponent extends ScreenBaseComponent {
-    constructor(route, router, dataService) {
-        super();
-        this.route = route;
-        this.router = router;
-        this.dataService = dataService;
+let ScreenTrackingComponent = class ScreenTrackingComponent extends GcScreenBase {
+    constructor(route, dataService) {
+        super(route, dataService);
         this.T_ACTIONList = [
             {
                 "label": "Insert",
@@ -55,32 +52,15 @@ let ScreenTrackingComponent = class ScreenTrackingComponent extends ScreenBaseCo
         });
         return;
     }
-    ngOnInit() {
-        if (this.id === undefined || this.id === null) {
-            this.registerSubscription(this.route.queryParams.subscribe(params => {
-                console.log(params);
-                this.id = params.id; // Contains the key field, currently only the primary key is supported.
-                this.value = params.value; // Contains val value for the key field.
-                this.mode = params.mode; // edit or new, filter only supported on the table component.
-                this.updateFixedValues(params);
-            }));
-        }
-        if (this.value != null || this.value !== undefined) {
-            this.registerSubscription(this.dataService.getRecordById(this.value).subscribe(record => {
-                this.row = record;
-                this.formGroup.patchValue({
-                    T_ID: this.row.T_ID,
-                    T_USER: this.row.T_USER,
-                    T_TABLE: this.row.T_TABLE,
-                    T_ACTION: this.row.T_ACTION,
-                    T_RECORD_ID: this.row.T_RECORD_ID,
-                    T_CHANGE_DATE_TIME: this.row.T_CHANGE_DATE_TIME,
-                    T_CONTENTS: this.row.T_CONTENTS,
-                });
-                this.updateFixedValues();
-                this.dataService.lockRecord(this.row);
-            }));
-        }
+    updateFormGroup(record) {
+        this.formGroup.patchValue({
+            T_USER: this.row.T_USER,
+            T_TABLE: this.row.T_TABLE,
+            T_ACTION: this.row.T_ACTION,
+            T_RECORD_ID: this.row.T_RECORD_ID,
+            T_CHANGE_DATE_TIME: this.row.T_CHANGE_DATE_TIME,
+            T_CONTENTS: this.row.T_CONTENTS,
+        });
         return;
     }
     get T_ID() {
@@ -110,8 +90,7 @@ ScreenTrackingComponent = tslib_1.__decorate([
         // tslint:disable-next-line:component-selector
         selector: 'app-tracking-screen',
         templateUrl: './screen.component.html',
-        styles: ['.editor-screen { height: calc( 100% - 300px )!important; }'],
-        styleUrls: ['../../common/common-mat-card.scss']
+        styleUrls: ['../../layouts/common-mat-card.scss']
     })
 ], ScreenTrackingComponent);
 export { ScreenTrackingComponent };

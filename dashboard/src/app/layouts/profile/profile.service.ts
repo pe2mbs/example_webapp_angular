@@ -67,7 +67,7 @@ export class GcProfileService extends ProfileInfo
 
 	public storeProfile(): void
 	{
-		if ( this._dirty )
+		if ( this._dirty && this.data != null )
 		{
 			console.log( "StoreProfile", this.data );
 			this._httpClient.post<ProfileInterface>( '/api/user/profile', this.data ).subscribe( data => {

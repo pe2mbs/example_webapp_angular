@@ -62,6 +62,10 @@ objects:
         function:                   core.deleteRecord( idx, row, 'R_ID', 'Role', 'R_ROLE'  )
     table:
         name:                       GN_ROLE
+        tabs:
+            labels:
+            -   Description
+            -   Remark
         columns:
         -   field:                  R_ID                        INT             AUTO NUMBER  PRIMARY KEY
         -   field:                  R_ROLE                      CHAR( 255 )     NOT NULL
@@ -71,6 +75,8 @@ objects:
             listview:
                 index:              0
                 width:              100%
+            tab:
+                label:              Description
         -   field:                  R_REMARK                    CLOB            NULL
             label:                  Remark
             hint:                   Miscellaneous information not related.
@@ -78,6 +84,6 @@ objects:
                 type:               editor
                 attributes:
                     language:       markdown
-                    height:         auto
                     minimap:        ^true
-                    heightAdjust:   ^-120
+            tab:
+                label:              Remark

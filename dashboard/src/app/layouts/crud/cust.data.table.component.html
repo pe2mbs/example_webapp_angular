@@ -4,7 +4,7 @@
 			<div fxFlex="grow">
 				<gc-breadcrumb *ngIf="filterField === ''" class="align-paginator"></gc-breadcrumb>
 			</div>
-			<mat-paginator #top_paginator fxFlex="500px"
+			<mat-paginator #top_paginator fxFlex="550px"
 							class="color-primary"
 							id="crud.header.paginator"
 							(page)="pagingEvent( $event, 'top' )"
@@ -29,7 +29,7 @@
 			</div>
 		</div>
 	</div>
-	<mat-card-content fxFlex="90" class="max-box">
+	<mat-card-content fxFlex="100" class="max-box">
 		<mat-table #table class="mat-cell" 
 					[dataSource]="dataSource" 
 					matSort 
@@ -57,7 +57,9 @@
 							[style.flex]="column.width"
 							(dblclick)="definition.rowDoubleClick( self, definition.self, idx, row )">
 					<div *ngIf="!column.buttons; else buttons_active">
-						{{ column.cell( row ) }}
+						<span class="ellipsis">
+							{{ column.cell( row ) }}
+						</span>
 					</div>
 					<ng-template #buttons_active >
 						<button fxFlex class="row-button" *ngFor="let but of column.buttons;" mat-icon-button 
@@ -83,7 +85,7 @@
 					</div>
 				</ng-template>
 			</div>
-			<mat-paginator #bot_paginator fxFlex="500px"
+			<mat-paginator #bot_paginator fxFlex="550px"
 							class="color-primary"
 							id="crud.botton.paginator"
 							[length]="resultsLength"

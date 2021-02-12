@@ -4,30 +4,9 @@ import { GcProfileService } from './profile.service';
 
 
 @Component({
-  	selector: 'app-user-profile',
-  	template: `<div *ngIf="!profileService.isLoggedIn(); else logged_in">
-	<button mat-menu-item routerLink="/login">
-		<mat-icon>login</mat-icon>Sign in
-	</button>
-</div>
-<ng-template #logged_in>
-	<div class="user-info">
-		User: {{ profileService.fullname }}
-	</div>
-	<mat-divider></mat-divider>
-	<button mat-menu-item (click)="logout()">
-		<mat-icon>exit_to_app</mat-icon>Sign out
-	</button>
-	<button mat-menu-item *ngIf="profileService.profilePage" 
-						[routerLink]="profileService.profilePage" 
-						[queryParams]="profileService.profileParameters">
-		<mat-icon>person_outline</mat-icon>Profile
-	</button>
-	<mat-divider></mat-divider>
-	<div class="user-info">
-		Role: {{ profileService.roleString }}
-	</div>
-</ng-template>`,
+  	// tslint:disable-next-line:component-selector
+  	selector: 'gc-user-profile',
+  	templateUrl: 'profile.component.html',
   	styles: [ '.user-info { padding: 10px; }' ]
 })
 export class GcUserProfileComponent 
@@ -37,6 +16,7 @@ export class GcUserProfileComponent
 				 private router: Router ) 
 	{ 
 		this.profileService.changeEvent.subscribe( event => {
+        	console.log("GcUserProfileComponent.event", event);
 			this.cdRef.detectChanges();
 		} );
 		return;

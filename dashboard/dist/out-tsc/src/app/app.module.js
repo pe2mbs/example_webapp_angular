@@ -7,18 +7,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MarkdownModule } from 'ngx-markdown';
 import { GridsterModule } from 'angular-gridster2';
 import { GenCrudModule } from './layouts/gencrud.module';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RoleModule } from './layouts/core/role/module';
-import { UserModule } from './layouts/core/user/module';
-import { RecordLocksModule } from './layouts/core/locking/module';
-import { TrackingModule } from './layouts/core/tracking/module';
 import { ExampleHttpDatabase } from './modules/demo/table-http-service';
 import { TableHttpExample } from './modules/demo/table-http-example';
 import localeNl from '@angular/common/locales/nl';
 import { registerLocaleData } from '@angular/common';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { CustDataTableComponent } from './modules/demo2/cust.data.table.component';
+import { LanguagesModule } from './backend/languages/module';
+import { LanguageReferenceModule } from './backend/language_reference/module';
+import { LanguageTransalatesModule } from './backend/language_translates/module';
+import { HttpClientModule } from '@angular/common/http';
+import { TrackingModule } from './backend/tracking/module';
+import { RecordLocksModule } from './backend/locking/module';
+import { UserModule } from './backend/user/module';
+import { RoleModule } from './backend/role/module';
 registerLocaleData(localeNl);
 let AppModule = class AppModule {
 };
@@ -30,8 +32,7 @@ AppModule = tslib_1.__decorate([
         declarations: [
             AppComponent,
             TableHttpExample,
-            DashboardComponent,
-            CustDataTableComponent
+            DashboardComponent
         ],
         imports: [
             BrowserModule,
@@ -46,7 +47,10 @@ AppModule = tslib_1.__decorate([
             RoleModule,
             RecordLocksModule,
             TrackingModule,
-            UserModule,
+            LanguagesModule,
+            LanguageReferenceModule,
+            LanguageTransalatesModule,
+            UserModule
         ],
         providers: [
             ExampleHttpDatabase,

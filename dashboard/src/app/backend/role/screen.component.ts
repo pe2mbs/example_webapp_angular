@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-14 07:48:51 version 2.1.658 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -33,7 +33,7 @@ import { RoleRecord } from './model';
     templateUrl: './screen.component.html',
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class ScreenRoleComponent extends GcScreenBase<RoleRecord>
+export class ScreenRoleComponent extends GcScreenBase<RoleRecord> implements OnInit
 {
 
     constructor( route: ActivatedRoute
@@ -51,6 +51,12 @@ export class ScreenRoleComponent extends GcScreenBase<RoleRecord>
         return;
     }
 
+    ngOnInit()
+    {
+        super.ngOnInit();
+        return;
+    }
+
     protected updateFormGroup( record: RoleRecord ): void
 	{
 		this.formGroup.patchValue( {
@@ -62,7 +68,7 @@ export class ScreenRoleComponent extends GcScreenBase<RoleRecord>
 
     public get R_ID()
     {
-        return ( this.formGroup.get( 'R_ID' ) );
+        return ( this.row.R_ID );
     }
 
     public get R_ROLE()

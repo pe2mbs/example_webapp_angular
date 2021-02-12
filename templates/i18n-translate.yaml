@@ -36,12 +36,13 @@ objects:
         icon:                       settings
         index:                      -2
         menu:
-            caption:                Language Transalations
-            icon:                   transalations
+            caption:                Transalations
+            icon:                   translate
             index:                  0
             route:                  /language_translates
     actions:
     -   name:                       new
+        icon:                       add
         type:                       screen
         position:                   header
         function:                   self.addRecord()
@@ -55,6 +56,9 @@ objects:
         icon:                       delete
         position:                   cell
         function:                   core.deleteRecord( idx, row, 'LR_ID', 'Label', 'LR_LABEL' )
+    modules:
+    -   class:                      LanguageReferenceModule
+        path:                       language_reference
     table:
         name:                       LANGUAGE_TRANSLATES
         tabs:
@@ -63,8 +67,8 @@ objects:
             -   Translates
             tab:
             -   label:              Translates
-                component:          app-language_refernce-table
-                class:              LanguageReference
+                component:          app-language_reference-table
+                class:              LanguageReferenceTableComponent
                 module:             language_reference
                 params:
                     id:             LR_LT_ID

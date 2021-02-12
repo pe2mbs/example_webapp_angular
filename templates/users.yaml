@@ -60,6 +60,11 @@ objects:
         icon:                       delete
         position:                   cell
         function:                   core.deleteRecord( idx, row, 'U_ID', 'User', 'U_NAME'  )
+    mixin:
+        python:
+            view:
+                class:              UserViewMixin
+                filename:           backend.user.mixin.py
     table:
         name:                       GN_USER
         tabs:
@@ -79,9 +84,6 @@ objects:
             hint:                   When a user is set active (checked) login is posible, otherwise login is not possible.
             ui:
                 type:               checkbox
-                resolve-list:
-                    true:           'Yes'
-                    false:          'No'
         -   field:                  U_NAME                      CHAR( 30 )      NOT NULL
             unique:                 true
             hint:                   The user name used to identify at login to the application.

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-10 08:21:51 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
@@ -90,6 +90,22 @@ export class TrackingTableComponent
 				sort: false,
                 cell: (row: TrackingRecord) => row.T_CHANGE_DATE_TIME
             },
+            {
+                columnDef: null,
+				display: true,
+				header: 'Options',
+				width: '70px',
+				cell: (row: TrackingRecord) => {},
+                buttons: [
+                    {
+						label: 'Restore',
+						icon: 'restore',
+						action: (core: any, self: any, idx: number, row: TrackingRecord) => {
+							self.restoreRecord( idx, row );
+						}
+					},
+                ]
+            }
         ]
     };
 

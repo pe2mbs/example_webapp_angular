@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-14 05:19:44 version 2.1.658 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -35,7 +35,7 @@ import { RoleDataService } from '../role/service';
     templateUrl: './screen.component.html',
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class ScreenUserComponent extends GcScreenBase<UserRecord>
+export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnInit
 {
     public U_ACTIVEList = [
         {
@@ -105,7 +105,20 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord>
                                               [  ]  ),
             U_LISTITEMS: new FormControl( this.row.U_LISTITEMS || 0,
                                               [  ]  ),
+            U_PROFILE: new FormControl( this.row.U_PROFILE || '',
+                                              [  ]  ),
         } );
+        return;
+    }
+
+    ngOnInit()
+    {
+        super.ngOnInit();
+        this.registerSubscription( this.roleService.getSelectList( 'R_ID'
+                                    , 'R_ROLE'
+                                     ).subscribe( dataList => {
+            this.roleList = dataList;
+        } ) );
         return;
     }
 
@@ -124,13 +137,14 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord>
             U_REMARK: this.row.U_REMARK,
             U_LOCALE: this.row.U_LOCALE,
             U_LISTITEMS: this.row.U_LISTITEMS,
+            U_PROFILE: this.row.U_PROFILE,
 		} );
 		return;
 	}
 
     public get U_ID()
     {
-        return ( this.formGroup.get( 'U_ID' ) );
+        return ( this.row.U_ID );
     }
 
     public get U_ACTIVE()
@@ -211,6 +225,11 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord>
     public get U_LISTITEMS()
     {
         return ( this.formGroup.get( 'U_LISTITEMS' ) );
+    }
+
+    public get U_PROFILE()
+    {
+        return ( this.formGroup.get( 'U_PROFILE' ) );
     }
 
 }

@@ -19,7 +19,7 @@ export class GcAuthService
 		if ( this.isLoggedIn() )
 		{
 			this.currentUser = this.jwtHelper.decodeToken( this.token );
-		} 
+		}    
 		return;
   	}
 
@@ -79,18 +79,9 @@ export class GcAuthService
 		{
 			return ( '' );
 		}
-		return ( this.currentUser.username );
+		return ( this.currentUser.identity );
 	}
 
-	get fullName(): string
-	{
-		if ( isNullOrUndefined( this.currentUser ) )
-		{
-			return ( '' );
-		}
-		return ( this.currentUser.fullname );
-	}
-	
 	get token() 
 	{
 		return ( localStorage.getItem( 'token' ) );

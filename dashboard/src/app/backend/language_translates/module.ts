@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:44 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-13 05:38:00 version 2.1.658 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -31,6 +31,7 @@ import { ScreenLanguageTransalatesComponent } from './screen.component';
 
 import { LanguageTransalatesTableComponent } from './table.component';
 import { LanguageTransalatesDataService } from './service';
+import { LanguageReferenceModule } from '../language_reference/module';
 import { GcDefaultComponent } from 'src/app/layouts/default.component';
 
 
@@ -105,6 +106,7 @@ export const language_translatesRoute: Route = {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        LanguageReferenceModule,
         RouterModule.forChild( [ language_translatesRoute ] ),
         GenCrudModule
     ],

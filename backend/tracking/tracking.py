@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from webapp2.common.jsonenc import JsonEncoder
 import webapp2.api as API
-from backend.tracking import Tracking
+from backend.tracking.model import Tracking
 
 
 

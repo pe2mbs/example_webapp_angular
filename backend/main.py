@@ -18,12 +18,15 @@
 #
 import os
 import json
+import copy
 import yaml
 import logging
 import traceback
+from sqlalchemy import desc
 import importlib
 from flask import Blueprint, jsonify
 import webapp2.api as API
+from backend.models import *
 
 __version__     = '0.0.0'
 __date__        = '1970-01-01'
@@ -187,11 +190,41 @@ def registerCommands():
     return
 
 
+def getMenu( role: int ):
+    modules = API.db.session.query( RoleAccess ).\
+                            filter( RoleAccess.RA_R_ID == role ).\
+                            order_by( desc( RoleAccess.RA_MODULE ) ).all()
+    def processMenu( source_menu ):
+        menu = []
+        for item in source_menu:
+            route = item.get( 'route', None )
+            API.logger.info( "Menu Item: {} => {}".format( item.get( 'caption' ), route ) )
+            if route is None:   # Sub menu
+                result = processMenu( item.get( 'children', [] ) )
+                if len( result ) > 0:
+                    tmp = copy.copy( item )
+                    tmp[ 'children' ] = copy.copy( result )
+                    menu.append( tmp )
+
+            else:               # Menu item
+                ending = route.rsplit( '/', 1 )[ -1 ]
+                for module in modules:
+                    API.logger.info( "Route match {} == {}".format( ending, module.RA_MODULE ) )
+                    if module.RA_MODULE == ending or module.RA_MODULE ==  '*' or ending == '':
+                        menu.append( item )
+
+        return menu
+
+    return processMenu( API.menuItems )
+
+
 @applicApi.route( "/api/menu", methods=[ 'GET' ] )
 def getAppMenu():
-    return jsonify( API.menuItems )
+    # return jsonify( API.menuItems )
+    return jsonify( getMenu( 1 ) )  # Administrator
 
 
 @applicApi.route( "/api/application/menu", methods=[ 'GET' ] )
 def getUserMenu():
-    return jsonify( API.menuItems )
+    # return jsonify( API.menuItems )
+    return jsonify( getMenu( 1 ) )  # Administrator

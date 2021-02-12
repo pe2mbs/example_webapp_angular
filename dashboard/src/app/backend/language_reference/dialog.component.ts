@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-13 05:37:59 version 2.1.658 by user mbertens
 */
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
@@ -59,11 +59,11 @@ export class DialogLanguageReferenceComponent extends GcBaseDialog
             LR_LT_ID: new FormControl( data.record.LR_LT_ID || 0,
                                               [ Validators.required,  ]  ),
         } );
-        this.languagesService.getSelectList( 'LA_LABEL', 'LA_ID' ).subscribe( dataList => {
+        this.languagesService.getSelectList( 'LA_ID', 'LA_LABEL' ).subscribe( dataList => {
             this.languagesList = dataList;
             this.updateFixedValues();
         } );
-        this.language_translatesService.getSelectList( 'LT_LABEL', 'LT_ID' ).subscribe( dataList => {
+        this.language_translatesService.getSelectList( 'LT_ID', 'LT_LABEL' ).subscribe( dataList => {
             this.language_translatesList = dataList;
             this.updateFixedValues();
         } );

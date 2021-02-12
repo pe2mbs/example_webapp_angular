@@ -17,12 +17,14 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:42 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-12 09:36:57 version 2.1.663 by user mbertens
 */
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/layouts/profile/profile.service';
+import { CustDataTableComponent } from 'src/app/layouts/crud/cust.data.table.component';
+import { isNullOrUndefined } from 'util';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { LanguagesRecord } from './model';
 import { DialogLanguagesComponent } from './dialog.component';
@@ -34,12 +36,20 @@ import { LanguagesDataService } from './service';
     selector: 'app-languages-table',
     template: `<app-cust-data-table
 				class="card-content"
+				[id]="id"
+				[value]="value"
+				[mode]="mode"
 				[definition]="definition">
 </app-cust-data-table>`,
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
 export class LanguagesTableComponent
 {
+    @ViewChild( CustDataTableComponent, { static: true } )	tableComponent: CustDataTableComponent;
+    @Input()	id: string;
+	@Input()	value: any;
+	@Input()	mode: string;
+
     public definition: TableDefintion<LanguagesRecord> = {
         toggleUpdate: false,
         name: 'LanguagesTable',
@@ -50,7 +60,7 @@ export class LanguagesTableComponent
         headerButtons: [
 			{
 				label: 'New',
-				icon: '',
+				icon: 'add',
 				action: (core: any, self: any) => {
 					self.addRecord();
 				}
@@ -135,14 +145,21 @@ export class LanguagesTableComponent
 	    console.log( 'addRecord()' );
         const newRecord = new LanguagesRecord();
         const options: MatDialogConfig = {
-            data: { record: newRecord, mode: 'add' },
+            data: { record: newRecord,
+                    fixed: {},
+                    mode: 'add'
+            },
             width: "60%",
         };
+        if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
+		{
+			options.data.fixed[ this.id ] = this.value;
+		}
         const dialogRef = this.dialog.open( DialogLanguagesComponent, options );
         dialogRef.afterClosed().subscribe( result =>
         {
             console.log( 'addNew() dialog result ', result );
-            this.definition.profileService.changeEvent.emit();
+            this.tableComponent.refresh();
         } );
 		return;
 	}
@@ -151,16 +168,22 @@ export class LanguagesTableComponent
 	{
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
-            data: { record: row, mode: 'add' },
+            data: { record: row,
+                    fixed: {},
+                    mode: 'add'
+            },
             width: "60%",
-
         };
+        if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
+		{
+			options.data.fixed[ this.id ] = this.value;
+		}
         const dialogRef = this.dialog.open( DialogLanguagesComponent, options );
         dialogRef.afterClosed().subscribe( result =>
         {
             console.log( 'editRecord() dialog result ', result );
             this.definition.dataService.unlockRecord( row );
-            this.definition.profileService.changeEvent.emit();
+            this.tableComponent.refresh();
         } );
         return;
 	}

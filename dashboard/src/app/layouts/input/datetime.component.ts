@@ -154,10 +154,8 @@ export class GcDateTimeInputComponent extends GcBaseComponent implements OnInit
     dateChange( event )
     {
         const dt: Date = new Date( this.timeFormGroup.get('dateControl').value );
-        this.localDate.setHours( dt.getHours() );
-        this.localDate.setMinutes( dt.getMinutes() );
-        this.localDate.setSeconds( dt.getSeconds() );
-        this.control.setValue( this.localDate.toUTCString() );
+        this.localDate.setDate( dt.getDate() );
+        this.control.setValue( this.localDate );
         return;
     }
 

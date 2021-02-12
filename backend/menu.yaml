@@ -8,9 +8,9 @@
     icon: languages
     id: 127709D66303C0BEAE01573E304384E7
     route: /languages
-  - caption: Language Transalations
-    icon: transalations
-    id: 784BEB6CD125B425B5BFB01C20255E7C
+  - caption: Transalations
+    icon: translate
+    id: A0E870DBE7F45A2EFD9E38EE92DCAD79
     route: /language_translates
   - caption: Users
     icon: accessibility
@@ -20,6 +20,10 @@
     icon: group_work
     id: BBD58F23590A9F3AAED4D61B35C4BA9E
     route: /role
+  - caption: Role Access
+    icon: group_work
+    id: 46EC03C6D0334791BF11FFF80DF0DF5B
+    route: /role_access
   - caption: DataBase
     children:
     - caption: Record locks

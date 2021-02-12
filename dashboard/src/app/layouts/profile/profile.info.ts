@@ -30,10 +30,10 @@ export class ProfileInfo
 	{
 		this.data = new Object();
 		// tslint:disable-next-line:forin
-		for ( const propt in defaultProfile )
+		for ( const property in defaultProfile )
 		{
-			console.log( propt + ': ' + defaultProfile[ propt ] );
-			this.data[ propt ] = defaultProfile[ propt ];
+			console.log( property + ': ' + defaultProfile[ property ] );
+			this.data[ property ] = defaultProfile[ property ];
 		}
 		if ( !isNullOrUndefined( data ) )
         {

@@ -48,7 +48,7 @@ import { ${ field.ui.service.cls } } from '${ field.ui.service.path }';
     templateUrl: './screen.component.html',
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
-export class Screen${obj.cls}Component extends GcScreenBase<${obj.cls}Record>
+export class Screen${obj.cls}Component extends GcScreenBase<${obj.cls}Record> implements OnInit
 {
 % for field in obj.table.columns:
 %  if field.ui is not None:
@@ -81,6 +81,29 @@ ${ obj.externalService }  )
         return;
     }
 
+    ngOnInit()
+    {
+        super.ngOnInit();
+% for field in obj.table.columns:
+%  if field.ui is not None:
+%   if field.ui.hasService():
+        this.registerSubscription( this.${ field.ui.service.name }Service.getSelectList( '${ field.ui.service.value }'
+                                    , '${ field.ui.service.label }'
+%    if field.ui.service.hasInitial():
+                                    , ${ field.ui.service.initial }
+%    endif
+%    if field.ui.service.hasFinal():
+                                    , ${ field.ui.service.final }
+%    endif
+                                     ).subscribe( dataList => {
+            this.${ field.ui.service.name }List = dataList;
+        } ) );
+%   endif
+%  endif
+% endfor
+        return;
+    }
+
     protected updateFormGroup( record: ${obj.cls}Record ): void
 	{
 		this.formGroup.patchValue( {
@@ -94,7 +117,13 @@ ${ obj.externalService }  )
 	}
 
 % for field in obj.table.columns:
-%  if field.frontend:
+%  if field.isPrimaryKey():
+    public get ${ field.name }()
+    {
+        return ( this.row.${ field.name } );
+    }
+
+%  elif field.frontend:
     public get ${ field.name }()
     {
         return ( this.formGroup.get( '${ field.name }' ) );

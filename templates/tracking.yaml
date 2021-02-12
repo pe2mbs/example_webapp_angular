@@ -60,6 +60,15 @@ objects:
     -   name:                       delete
         type:                       none
         position:                   none
+    -   name:                       restore
+        type:                       mixin
+        position:                   cell
+        icon:                       restore
+        function:                   self.restoreRecord( idx, row )
+    mixin:
+        python:
+            init:
+                filename:           backend/tracking/tracking.py
     table:
         name:                       TRACKING
         tabs:

@@ -37,7 +37,7 @@ export class GcBreadcrumbComponent
             {
 				// this.menuItems = this.createBreadcrumbs( this.activatedRoute.root );
 				this.routeItems = this.createBreadcrumbs( this.activatedRoute.root );
-				console.log( "GcBreadcrumbComponent:", this.routeItems );
+				// console.log( "GcBreadcrumbComponent:", this.routeItems );
             }
         } );
         return;

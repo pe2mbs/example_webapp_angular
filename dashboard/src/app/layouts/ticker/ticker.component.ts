@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { GcTickerDataService } from './service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 interface NewsItem
 {
@@ -68,6 +69,11 @@ export class GcTickerComponent implements AfterViewInit
 
     ngAfterViewInit() 
     {
+		if ( !environment.readNews )
+		{
+			// Do NOT start the news reader.
+			return;
+		}
 		this.triggerEvent.subscribe( () => {
 			if ( this.subscribedEvent != null )
             {

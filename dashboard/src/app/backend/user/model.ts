@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-14 05:19:44 version 2.1.658 by user mbertens
 */
 export class UserRecord
 {
@@ -38,6 +38,7 @@ export class UserRecord
     U_REMARK: string;
     U_LOCALE: number;
     U_LISTITEMS: number;
+    U_PROFILE: string;
     U_ACTIVE_LABEL: string;
     U_ROLE_FK: any;
     U_LOCALE_LABEL: string;

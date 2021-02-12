@@ -19,24 +19,21 @@ import * as tslib_1 from "tslib";
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-09 07:56:12 version 2.1.658 by user mbertens
 */
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GenCrudModule } from '../../common/gencrud.module';
-import { DefaultModule } from '../../layouts/default.module';
-import { SpinnerService } from '../../common/spinner-service';
-import { CustomHttpInterceptor } from '../../common/http-interceptor';
-import { DeleteRecordLocksDialog } from './delete.dialog';
+import { GenCrudModule } from 'src/app/layouts/gencrud.module';
+import { GcHttpInterceptor } from 'src/app/layouts/http-interceptor';
 import { RecordLocksTableComponent } from './table.component';
 import { RecordLocksDataService } from './service';
-import { DefaultComponent } from '../../layouts/default.component';
+import { GcDefaultComponent } from 'src/app/layouts/default.component';
 export const lockingRoute = {
     path: '',
-    component: DefaultComponent,
+    component: GcDefaultComponent,
     children: [
         {
             path: 'locking',
@@ -80,32 +77,26 @@ let RecordLocksModule = RecordLocksModule_1 = class RecordLocksModule {
 RecordLocksModule = RecordLocksModule_1 = tslib_1.__decorate([
     NgModule({
         declarations: [
-            DeleteRecordLocksDialog,
-            RecordLocksTableComponent,
+            RecordLocksTableComponent
         ],
-        entryComponents: [
-            DeleteRecordLocksDialog,
-        ],
+        entryComponents: [],
         providers: [
             RecordLocksDataService,
             {
                 provide: HTTP_INTERCEPTORS,
-                useClass: CustomHttpInterceptor,
+                useClass: GcHttpInterceptor,
                 multi: true
             },
-            SpinnerService,
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         imports: [
             CommonModule,
             FormsModule,
             ReactiveFormsModule,
-            DefaultModule,
-            GenCrudModule,
-            RouterModule.forChild([lockingRoute])
+            RouterModule.forChild([lockingRoute]),
+            GenCrudModule
         ],
         exports: [
-            DeleteRecordLocksDialog,
             RecordLocksTableComponent,
         ]
     })

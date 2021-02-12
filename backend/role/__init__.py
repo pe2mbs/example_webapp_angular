@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#      gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#      gencrud: 2021-01-14 07:48:51 version 2.1.658 by user mbertens
 #
 from backend.role.schema import *
 from backend.role.model import *
@@ -26,3 +26,5 @@ try:
 
 except ImportError:
     pass
+
+

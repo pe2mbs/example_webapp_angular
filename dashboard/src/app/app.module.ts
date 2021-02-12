@@ -11,7 +11,7 @@ import { ExampleHttpDatabase } from './modules/demo/table-http-service';
 import { TableHttpExample } from './modules/demo/table-http-example';
 import localeNl from '@angular/common/locales/nl';
 import { registerLocaleData } from '@angular/common';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { DashboardComponent, TrackByItemComponent } from './modules/dashboard/dashboard.component';
 import { LanguagesModule } from './backend/languages/module';
 import { LanguageReferenceModule } from './backend/language_reference/module';
 import { LanguageTransalatesModule } from './backend/language_translates/module';
@@ -20,6 +20,11 @@ import { TrackingModule } from './backend/tracking/module';
 import { RecordLocksModule } from './backend/locking/module';
 import { UserModule } from './backend/user/module';
 import { RoleModule } from './backend/role/module';
+import { RoleAccessModule } from './backend/role_access/module';
+import { ModuleAccessModule } from './backend/mod_access/module';
+import { WidgetWrapperComponent } from './modules/widget-wrapper/widget-wrapper.component';
+import { WeatherWidgetComponent } from './modules/widgets/weather-widget/weather-widget.component';
+import { VelocityWidgetComponent } from './modules/widgets/velocity-widget/velocity-widget.component';
 
 
 registerLocaleData(localeNl);
@@ -31,7 +36,11 @@ registerLocaleData(localeNl);
   declarations: [
     AppComponent,
     TableHttpExample,
-    DashboardComponent
+	DashboardComponent,
+	TrackByItemComponent,
+    WidgetWrapperComponent,
+    WeatherWidgetComponent,
+    VelocityWidgetComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +58,8 @@ registerLocaleData(localeNl);
     LanguagesModule,
     LanguageReferenceModule,
     LanguageTransalatesModule,
+    RoleAccessModule,
+    ModuleAccessModule,
     UserModule
   ],
   providers: [

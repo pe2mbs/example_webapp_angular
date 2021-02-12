@@ -17,12 +17,14 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-14 05:19:44 version 2.1.658 by user mbertens
 */
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/layouts/profile/profile.service';
+import { CustDataTableComponent } from 'src/app/layouts/crud/cust.data.table.component';
+import { isNullOrUndefined } from 'util';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { UserRecord } from './model';
 import { UserDataService } from './service';
@@ -34,12 +36,20 @@ import { RoleDataService } from '../role/service';
     selector: 'app-user-table',
     template: `<app-cust-data-table
 				class="card-content"
+				[id]="id"
+				[value]="value"
+				[mode]="mode"
 				[definition]="definition">
 </app-cust-data-table>`,
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
 export class UserTableComponent
 {
+    @ViewChild( CustDataTableComponent, { static: true } )	tableComponent: CustDataTableComponent;
+    @Input()	id: string;
+	@Input()	value: any;
+	@Input()	mode: string;
+
     public definition: TableDefintion<UserRecord> = {
         toggleUpdate: false,
         name: 'UserTable',

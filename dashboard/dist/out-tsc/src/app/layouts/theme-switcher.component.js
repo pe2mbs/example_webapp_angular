@@ -1,5 +1,6 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
+import { isNullOrUndefined } from 'util';
 let GcThemeSwitcherComponent = class GcThemeSwitcherComponent {
     constructor(profileService) {
         this.profileService = profileService;
@@ -11,6 +12,11 @@ let GcThemeSwitcherComponent = class GcThemeSwitcherComponent {
         ];
         this.themeColor = 'light-theme';
         this.profileService.changeEvent.subscribe(data => {
+            if (isNullOrUndefined(data.theme)) {
+                this.selectTheme(this.themeColor);
+                console.error("theme value not available");
+                return;
+            }
             if (this.themeColor !== data.theme) {
                 this.selectTheme(data.theme);
             }

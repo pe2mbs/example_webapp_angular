@@ -8,6 +8,7 @@ import { GcFilterRecord } from 'src/app/layouts/filter-header.component';
 import { TableDefintion } from '../../modules/demo/table-http-example';
 import { GcCrudServiceBase } from 'src/app/layouts/crud/crud.service.base';
 import { GcDeleteDialog } from 'src/app/layouts/dialog/delete.dialog';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 	public filterField = '';
 	constructor( protected dialog: MatDialog )
 	{
-		this.debug = true;
+		this.debug = false;
 		this.self = this;
 		this.dataSource = new MatTableDataSource<any>();
 		return;
@@ -53,7 +54,10 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 	ngOnInit() 
 	{
 		const filterFields = new Array<string>();
-		console.log( `mode: ${this.mode} id: ${this.id} value: ${this.value}` );
+		if ( this.debug )
+		{
+			console.log( `mode: ${this.mode} id: ${this.id} value: ${this.value}` );
+		}
 		if ( this.mode === 'filter' )
 		{
 			// Custom filter, need to remove the column from the view
@@ -61,7 +65,10 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 		}
 		this.displayedColumns = new Array<string>();
 		this.definition.columns.forEach( elem => {
-			console.log( 'ngOnChanges => ', elem );
+			if ( this.debug )
+			{
+				console.log( 'ngOnChanges => ', elem );
+			}
 			if ( elem.display && this.filterField !== elem.columnDef )
 			{
 				this.displayedColumns.push( elem.header );
@@ -82,7 +89,10 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 
 	public ngOnChanges(): void
 	{
-		console.log( 'ngOnChanges' );
+		if ( this.debug )
+		{
+			console.log( 'ngOnChanges' );
+		}
 		if ( !isNullOrUndefined( this.filterRecord ) && this.mode === 'filter' )
 		{
 			this.filterRecord.set( this.id, this.value );
@@ -184,6 +194,15 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 					return ( data.records );
 				} ),
 				catchError( err => {
+					if ( err instanceof HttpErrorResponse ) 
+					{
+						if ( err.status === 422 || err.status === 401 ) 
+						{
+							// This some what brute force, just to avoid injecting the router
+							window.location.href = '/#/login';
+							return;
+						}
+					}
 					console.error( "GcTableBase.catchError", err );
 					this.isLoadingResults = false;
 					return observableOf( [] );

@@ -1,5 +1,28 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
-import { GridsterConfig, GridsterItem, GridType, CompactType, GridsterItemComponent, DisplayGrid } from 'angular-gridster2';
+import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, Input } from '@angular/core';
+import { GridsterConfig, GridsterItem, GridType, CompactType, GridsterItemComponent, 
+		 DisplayGrid, GridsterItemComponentInterface } from 'angular-gridster2';
+
+@Component( {
+	selector: 'app-trackby-item',
+	template: `
+	  <div class="button-holder">
+		<div style="font-size: 30px">ID: {{id}}</div>
+	  </div>
+	`,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	encapsulation: ViewEncapsulation.None
+} )
+export class TrackByItemComponent extends GridsterItemComponentInterface implements OnInit 
+{
+	@Input() id: string;
+  
+	ngOnInit(): void 
+	{
+	  	// tslint:disable-next-line:no-console
+	  	console.info(`Init ${this.id}`);
+	}
+}
+
 
 @Component({
 	selector: 'app-dashboard',
@@ -12,7 +35,7 @@ export class DashboardComponent implements OnInit
 {
 	options: GridsterConfig;
 	dashboard: Array<GridsterItem>;
-	itemToPush: GridsterItemComponent;
+	itemToPush: GridsterItemComponentInterface;
 
 	static itemChange( item, itemComponent ) 
 	{
@@ -66,7 +89,7 @@ export class DashboardComponent implements OnInit
 		return;
   	}
 
-	public initItem( item: GridsterItem, itemComponent: GridsterItemComponent): void
+	public initItem( item: GridsterItem, itemComponent: GridsterItemComponentInterface ): void
 	{
 		this.itemToPush = itemComponent;
 	}

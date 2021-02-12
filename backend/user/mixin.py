@@ -5,7 +5,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime, timedelta
 import webapp2.api as API
 from backend.user.model import User
-import jwt
+import flask_jwt_extended
 
 
 class UserViewMixin():
@@ -17,43 +17,64 @@ class UserViewMixin():
         return
 
     def restoreProfile( self, username ):
-        userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
-        if userRecord.U_REMARK is None:
-            userRecord.U_REMARK = ''
+        if username not in ( '', None, 'undefined' ):
+            API.logger.info( "Restore profile for user: {}".format( username ) )
+            userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
+            if userRecord.U_PROFILE is None:
+                userRecord.U_PROFILE = ''
 
-        if userRecord.U_REMARK.startswith( '{' ) and userRecord.U_REMARK.endswith( '}' ):
-            # TODO: This needs to be moved to it own field U_PROFILE
-            data = json.loads( userRecord.U_REMARK )
+            if userRecord.U_PROFILE.startswith( '{' ) and userRecord.U_PROFILE.endswith( '}' ):
+                # TODO: This needs to be moved to it own field U_PROFILE
+                data = json.loads( userRecord.U_PROFILE )
 
+            else:
+                data = { }
+
+            profileData = { 'locale': userRecord.U_LOCALE,
+                            'pageSize': userRecord.U_LISTITEMS,
+                            'pageSizeOptions': [ 5, 10, 25, 100 ],
+                            'user': userRecord.U_NAME,
+                            'fullname': "{} {}".format( userRecord.U_FIRST_NAME, userRecord.U_LAST_NAME ),
+                            'role': userRecord.U_ROLE,
+                            'roleString': userRecord.U_ROLE_FK.R_ROLE,
+                            'theme': data.get( 'theme', 'light-theme' ),
+                            'objects': data.get( 'objects', { } ),
+                            'profilePage': '/user/edit',
+                            'profileParameters': { 'id': 'U_ID', 'mode': 'edit', 'value': userRecord.U_ID, } }
+            API.logger.info( "RESTORE.PROFILE: {}".format( profileData ) )
         else:
-            data = { }
+            profileData = { 'locale': 'en_GB',
+                            'pageSize': 10,
+                            'pageSizeOptions': [ 5, 10, 25, 100 ],
+                            'user': 'guest',
+                            'fullname': "Guest",
+                            'role': 0,
+                            'roleString': 'Guest',
+                            'theme': 'light-theme', 'objects': { },
+                            'profilePage': '', 'profileParameters': {} }
 
-        profileData = { 'locale': userRecord.U_LOCALE,
-                        'pageSize': userRecord.U_LISTITEMS,
-                        'pageSizeOptions': [ 5, 10, 25, 100 ],
-                        'user': userRecord.U_NAME,
-                        'fullname': "{} {}".format( userRecord.U_FIRST_NAME, userRecord.U_LAST_NAME ),
-                        'role': userRecord.U_ROLE,
-                        'roleString': userRecord.U_ROLE_FK.R_ROLE,
-                        'theme': data.get( 'theme', 'light-theme' ),
-                        'objects': data.get( 'objects', { } ),
-                        'profilePage': '/user/edit',
-                        'profileParameters': { 'id': 'U_ID', 'mode': 'edit', 'value': userRecord.U_ID, } }
-        API.logger.info( "RESTORE.PROFILE: {}".format( profileData ) )
         return jsonify( profileData )
 
 
     def storeProfile( self ):
         profileData = request.json
-        username = profileData.get( 'user', None )
-        userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
-        data = { 'theme': profileData.get( 'theme', 'light-theme' ), 'objects': profileData.get( 'objects', { } ) }
-        userRecord.U_REMARK = json.dumps( data )
-        API.logger.info( "STORE.PROFILE: {}".format( data ) )
-        API.db.session.commit()
+        username = flask_jwt_extended.get_jwt_identity()
+        API.logger.info( "Store profile for user: {}".format( username ) )
+        if username not in ( '', None, 'undefined' ):
+            userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
+            data = { 'theme': profileData.get( 'theme', 'light-theme' ), 'objects': profileData.get( 'objects', { } ) }
+            userRecord.U_PROFILE = json.dumps( data )
+            API.logger.info( "STORE.PROFILE: {}".format( data ) )
+            API.db.session.commit()
+
+        else:
+            API.logger.error( "Missing username" )
+
         return jsonify( ok = True )
 
-    def createToken( self, username, fullname, userrole, keepsignedin ):
+    JWT_KEY = 'verysecretkey'
+
+    def encodeToken( self, username, userrole, keepsignedin ):
         """
             “exp” (Expiration Time) Claim
             “nbf” (Not Before Time) Claim
@@ -67,16 +88,27 @@ class UserViewMixin():
         else:
             expiration = timedelta( days = 1 )
 
-        message = { 'username': username,
-                    'fullname': fullname,
-                    'userrole': userrole,
-                    'parameters': { 'id': 'U_ID', 'mode': 'edit', 'value': 3 },
-                    'profile': '/user/edit',
-                    'iss': API.app.config.get( 'HOSTNAME', 'http://localhost/' ),
-                    'iat': datetime.utcnow(),
-                    'exp': datetime.utcnow() + expiration }
-        key = 'verysecretkey'
-        return jwt.encode( message, key, algorithm = 'HS256' )
+        # message = { 'username': username,
+        #             'userrole': userrole,
+        #             'iss': API.app.config.get( 'HOSTNAME', 'http://localhost/' ),
+        #             'iat': datetime.utcnow(),
+        #             'exp': datetime.utcnow() + expiration }
+        API.logger.info( "identity = {}".format( username ) )
+        return flask_jwt_extended.create_access_token( identity = username, expires_delta = expiration )
+        # return jwt.encode( message, self.JWT_KEY, algorithm = 'HS256' )
+
+    def decodeToken( self, token ):
+        try:
+            decoded = flask_jwt_extended.decode_token( token )
+            API.logger.info( "Decoded TOKEN: {}".format( decoded ) )
+            # decoded = jwt.decode( token, self.JWT_KEY, algorithms = [ "HS256" ] )
+            return decoded[ 'username' ], decoded[ 'userrole' ]
+
+        except Exception:
+            return None, None
+
+        except Exception:
+            raise
 
     def getUserAuthenticate( self ):
         data = request.json
@@ -88,18 +120,14 @@ class UserViewMixin():
         passwd = data.get( 'password', None )
         keepsignedin = data.get( 'keepsignedin', False )
         try:
+            API.logger.info( "data: {}".format( data ) )
             userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
             if userRecord.U_ACTIVE:
                 API.app.logger.debug( "User '{}' password '{}' == '{}'".format( username, userRecord.U_HASH_PASSWORD, passwd ) )
                 if userRecord.U_HASH_PASSWORD == passwd:
-                    if userRecord.U_MIDDLE_NAME not in (None, ""):
-                        fullname = userRecord.U_FIRST_NAME + " " + userRecord.U_MIDDLE_NAME + " " + userRecord.U_LAST_NAME
-
-                    else:
-                        fullname = userRecord.U_FIRST_NAME + " " + userRecord.U_LAST_NAME
-
-                    userrole = userRecord.U_ROLE_FK.R_ROLE
-                    return jsonify( result = True, token = self.createToken( username, fullname, userrole, keepsignedin ) )
+                    return jsonify( result = True, token = self.encodeToken( username,
+                                                                             userRecord.U_ROLE,
+                                                                             keepsignedin ) )
 
                 else:
                     API.app.logger.error( "User '{}' password verify fail".format( username ) )

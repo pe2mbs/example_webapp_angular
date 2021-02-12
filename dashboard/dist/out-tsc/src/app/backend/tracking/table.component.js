@@ -18,54 +18,93 @@ import * as tslib_1 from "tslib";
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2020-12-18 21:35:19 version 2.1.657 by user mbertens
+#   gencrud: 2021-01-09 07:56:12 version 2.1.658 by user mbertens
 */
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { TableBaseComponent } from '../../common/crud-table-component';
-import { TrackingRecord } from './model';
-import { TrackingDataSource } from './datasource';
-let TrackingTableComponent = class TrackingTableComponent extends TableBaseComponent {
-    constructor(httpClient, route, dialog, router, dataService, spinnerService) {
-        super('TrackingTable', null, null, route, dialog, dataService);
-        this.httpClient = httpClient;
-        this.route = route;
+import { Component } from '@angular/core';
+let TrackingTableComponent = class TrackingTableComponent {
+    constructor(dataService, profileService, dialog, router) {
         this.dialog = dialog;
         this.router = router;
-        this.dataService = dataService;
-        this.spinnerService = spinnerService;
-        this.filterRecord = new TrackingRecord();
-        this.searchValue = {};
-        this.displayedColumns = ['T_USER', 'T_TABLE', 'T_ACTION', 'T_CHANGE_DATE_TIME'];
+        this.definition = {
+            toggleUpdate: false,
+            name: 'TrackingTable',
+            helpTopic: 'tracking-table',
+            defaultSortField: 'T_ID',
+            defaultSortDirection: 'desc',
+            sortDisableClear: true,
+            headerButtons: [],
+            footerButtons: [],
+            rowDoubleClick: (core, self, idx, row) => {
+                self.editRecord(idx, row);
+            },
+            columns: [
+                {
+                    columnDef: 'T_USER',
+                    header: "User",
+                    display: true,
+                    width: "30%",
+                    filter: false,
+                    sort: false,
+                    cell: (row) => row.T_USER
+                },
+                {
+                    columnDef: 'T_TABLE',
+                    header: "Table",
+                    display: true,
+                    width: "30%",
+                    filter: false,
+                    sort: false,
+                    cell: (row) => row.T_TABLE
+                },
+                {
+                    columnDef: 'T_ACTION',
+                    header: "Action",
+                    display: true,
+                    width: "10%",
+                    filter: false,
+                    sort: false,
+                    cell: (row) => row.T_ACTION_LABEL
+                },
+                {
+                    columnDef: 'T_CHANGE_DATE_TIME',
+                    header: "Change timestamp",
+                    display: true,
+                    width: "300px",
+                    filter: false,
+                    sort: false,
+                    cell: (row) => row.T_CHANGE_DATE_TIME
+                },
+            ]
+        };
+        this.definition.dataService = dataService;
+        this.definition.profileService = profileService;
+        this.definition.dialog = dialog;
+        this.definition.self = this;
         return;
     }
-    loadData() {
-        this.dataSource = new TrackingDataSource(this.dataService, this.bot_paginator, this.sort, this.paginatorEvent, this.backendFilter);
+    addRecord() {
+        console.log('addRecord()');
+        this.router.navigate(['/tracking/edit'], {
+            queryParams: { mode: 'new' }
+        });
         return;
     }
-    newRecord() {
-        return (new TrackingRecord());
-    }
-    setFilter(filter) {
-        this.dataSource.filter = filter;
-        return;
-    }
-    lockRecord(record) {
-        this.dataService.lockRecord(record);
-        return;
-    }
-    unlockRecord(record) {
-        this.dataService.unlockRecord(record);
+    editRecord(idx, row) {
+        this.router.navigate(['/tracking/edit'], {
+            queryParams: { id: 'T_ID', mode: 'edit', value: row.T_ID }
+        });
         return;
     }
 };
 TrackingTableComponent = tslib_1.__decorate([
     Component({
-        changeDetection: ChangeDetectionStrategy.OnPush,
         // tslint:disable-next-line:component-selector
         selector: 'app-tracking-table',
-        templateUrl: './table.component.html',
-        styleUrls: ['./table.component.scss',
-            '../../common/common-mat-card.scss']
+        template: `<app-cust-data-table
+				class="card-content"
+				[definition]="definition">
+</app-cust-data-table>`,
+        styleUrls: ['../../layouts/common-mat-card.scss']
     })
 ], TrackingTableComponent);
 export { TrackingTableComponent };

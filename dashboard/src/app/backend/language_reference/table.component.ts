@@ -17,12 +17,14 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-13 05:37:59 version 2.1.658 by user mbertens
 */
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/layouts/profile/profile.service';
+import { CustDataTableComponent } from 'src/app/layouts/crud/cust.data.table.component';
+import { isNullOrUndefined } from 'util';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { LanguageReferenceRecord } from './model';
 import { DialogLanguageReferenceComponent } from './dialog.component';
@@ -36,12 +38,20 @@ import { LanguageTransalatesDataService } from '../language_translates/service';
     selector: 'app-language_reference-table',
     template: `<app-cust-data-table
 				class="card-content"
+				[id]="id"
+				[value]="value"
+				[mode]="mode"
 				[definition]="definition">
 </app-cust-data-table>`,
     styleUrls: [ '../../layouts/common-mat-card.scss' ]
 })
 export class LanguageReferenceTableComponent
 {
+    @ViewChild( CustDataTableComponent, { static: true } )	tableComponent: CustDataTableComponent;
+    @Input()	id: string;
+	@Input()	value: any;
+	@Input()	mode: string;
+
     public definition: TableDefintion<LanguageReferenceRecord> = {
         toggleUpdate: false,
         name: 'LanguageReferenceTable',
@@ -68,36 +78,21 @@ export class LanguageReferenceTableComponent
                 columnDef: 'LR_LA_ID',
 				header: "Language",
 				display: true,
-				width: "15%",
+				width: "20%",
 				filter: false,
 				sort: false,
                 cell: (row: LanguageReferenceRecord) => {
-                    // TODO: This needs some extra work
-                    return ( row.LR_LA_ID );
-                    // self.languagesService
+                    return ( row.LR_LA_ID_FK.LA_LABEL );
                 }
             },
             {
                 columnDef: 'TR_TEXT',
 				header: "Text",
 				display: true,
-				width: "40%",
+				width: "80%",
 				filter: false,
 				sort: false,
                 cell: (row: LanguageReferenceRecord) => row.TR_TEXT
-            },
-            {
-                columnDef: 'LR_LT_ID',
-				header: "Text",
-				display: true,
-				width: "30%",
-				filter: false,
-				sort: false,
-                cell: (row: LanguageReferenceRecord) => {
-                    // TODO: This needs some extra work
-                    return ( row.LR_LT_ID );
-                    // self.language_translatesService
-                }
             },
             {
                 columnDef: null,
@@ -137,14 +132,21 @@ export class LanguageReferenceTableComponent
 	    console.log( 'addRecord()' );
         const newRecord = new LanguageReferenceRecord();
         const options: MatDialogConfig = {
-            data: { record: newRecord, mode: 'add' },
+            data: { record: newRecord,
+                    fixed: {},
+                    mode: 'add'
+            },
             width: "80%",
         };
+        if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
+		{
+			options.data.fixed[ this.id ] = this.value;
+		}
         const dialogRef = this.dialog.open( DialogLanguageReferenceComponent, options );
         dialogRef.afterClosed().subscribe( result =>
         {
             console.log( 'addNew() dialog result ', result );
-            this.definition.profileService.changeEvent.emit();
+            this.tableComponent.refresh();
         } );
 		return;
 	}
@@ -153,16 +155,23 @@ export class LanguageReferenceTableComponent
 	{
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
-            data: { record: row, mode: 'add' },
+            data: { record: row,
+                    fixed: {},
+                    LT_ID: row.LR_LT_ID,
+                    mode: 'add'
+            },
             width: "80%",
-
         };
+        if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
+		{
+			options.data.fixed[ this.id ] = this.value;
+		}
         const dialogRef = this.dialog.open( DialogLanguageReferenceComponent, options );
         dialogRef.afterClosed().subscribe( result =>
         {
             console.log( 'editRecord() dialog result ', result );
             this.definition.dataService.unlockRecord( row );
-            this.definition.profileService.changeEvent.emit();
+            this.tableComponent.refresh();
         } );
         return;
 	}

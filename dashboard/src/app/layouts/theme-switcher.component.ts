@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GcProfileService } from './profile/profile.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   	// tslint:disable-next-line:component-selector
@@ -25,9 +26,21 @@ export class GcThemeSwitcherComponent implements OnInit
 	constructor( protected profileService: GcProfileService ) 
 	{
 		this.profileService.changeEvent.subscribe( data => {
-			if ( this.themeColor !== data.theme )
+			if ( isNullOrUndefined( data.theme ) )
 			{
+				this.selectTheme( this.themeColor );
+				console.error( "theme value not available" );
+				return;
+			}
+			else if ( !isNullOrUndefined( data.theme ) && this.themeColor !== data.theme )
+			{
+				console.log( `theme set to {data.theme}` );
 				this.selectTheme( data.theme );
+			}
+			else
+			{
+				console.error( "theme default" );
+				this.selectTheme( this.themeColor );
 			}
 		} );
 		return;

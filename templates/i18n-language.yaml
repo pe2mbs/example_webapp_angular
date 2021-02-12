@@ -48,6 +48,7 @@ objects:
     actions:
     -   name:                       new
         type:                       dialog
+        icon:                       add
         position:                   header
         width:                      60%
         function:                   self.addRecord()

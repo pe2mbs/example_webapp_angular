@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-09 07:56:12 version 2.1.658 by user mbertens
 */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';

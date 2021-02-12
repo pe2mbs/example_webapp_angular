@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-08 17:40:43 version 2.1.658 by user mbertens
+#   gencrud: 2021-01-14 05:19:44 version 2.1.658 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.parameters import SerializationDictField
@@ -27,7 +27,7 @@ class UserSchema( API.mm.SQLAlchemySchema ):
     When modifing the file make sure that you remove the table from the configuration.
     """
     class Meta:
-        fields = [ "U_ID", "U_ACTIVE", "U_ACTIVE_LABEL", "U_NAME", "U_ROLE", "U_ROLE_FK", "U_HASH_PASSWORD", "U_MUST_CHANGE", "U_FIRST_NAME", "U_MIDDLE_NAME", "U_LAST_NAME", "U_EMAIL", "U_ACCESS_TOKEN", "U_REFRESH_TOKEN", "U_TOKEN_DT", "U_CREATE_DT", "U_REMARK", "U_LOCALE", "U_LOCALE_LABEL", "U_LISTITEMS", "U_LISTITEMS_LABEL" ]
+        fields = [ "U_ID", "U_ACTIVE", "U_ACTIVE_LABEL", "U_NAME", "U_ROLE", "U_ROLE_FK", "U_HASH_PASSWORD", "U_MUST_CHANGE", "U_FIRST_NAME", "U_MIDDLE_NAME", "U_LAST_NAME", "U_EMAIL", "U_ACCESS_TOKEN", "U_REFRESH_TOKEN", "U_TOKEN_DT", "U_CREATE_DT", "U_REMARK", "U_LOCALE", "U_LOCALE_LABEL", "U_LISTITEMS", "U_LISTITEMS_LABEL", "U_PROFILE" ]
 
     U_ACTIVE_LABEL          = SerializationDictField( attribute="U_ACTIVE",
                                                       dictionary = {True: 'Yes', False: 'No'} )
