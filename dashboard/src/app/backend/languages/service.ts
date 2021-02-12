@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-12 09:36:57 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-12 18:22:45 version 2.1.663 by user mbertens
 */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-12 09:36:57 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-12 18:22:45 version 2.1.663 by user mbertens
 */
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
@@ -52,8 +52,10 @@ export class DialogLanguagesComponent extends GcBaseDialog
                                               [ Validators.required, Validators.maxLength( 2 ),  ]  ),
             LA_CODE3: new FormControl( data.record.LA_CODE3 || '',
                                               [ Validators.required, Validators.maxLength( 3 ),  ]  ),
-            LA_LOCALE: new FormControl( data.record.LA_LOCALE || '',
-                                              [ Validators.required, Validators.maxLength( 5 ),  ]  ),
+            LA_COUNTRY_CODE2: new FormControl( data.record.LA_COUNTRY_CODE2 || '',
+                                              [ Validators.required, Validators.maxLength( 2 ),  ]  ),
+            LA_COUNTRY_CODE3: new FormControl( data.record.LA_COUNTRY_CODE3 || '',
+                                              [ Validators.required, Validators.maxLength( 3 ),  ]  ),
         } );
         this.updateFixedValues();
         return;
@@ -79,9 +81,14 @@ export class DialogLanguagesComponent extends GcBaseDialog
         return ( this.formGroup.get( 'LA_CODE3' ) );
     }
 
-    public get LA_LOCALE()
+    public get LA_COUNTRY_CODE2()
     {
-        return ( this.formGroup.get( 'LA_LOCALE' ) );
+        return ( this.formGroup.get( 'LA_COUNTRY_CODE2' ) );
+    }
+
+    public get LA_COUNTRY_CODE3()
+    {
+        return ( this.formGroup.get( 'LA_COUNTRY_CODE3' ) );
     }
 
     onSaveClick(): void

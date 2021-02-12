@@ -36,8 +36,8 @@ registerLocaleData(localeNl);
   declarations: [
     AppComponent,
     TableHttpExample,
-	DashboardComponent,
-	TrackByItemComponent,
+    DashboardComponent,
+    TrackByItemComponent,
     WidgetWrapperComponent,
     WeatherWidgetComponent,
     VelocityWidgetComponent

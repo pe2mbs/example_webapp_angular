@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-12 09:36:57 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-12 18:22:45 version 2.1.663 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -76,37 +76,46 @@ export class LanguagesTableComponent
                 columnDef: 'LA_LABEL',
 				header: "Label",
 				display: true,
-				width: "65%",
+				width: "40%",
 				filter: false,
 				sort: false,
                 cell: (row: LanguagesRecord) => row.LA_LABEL
             },
             {
                 columnDef: 'LA_CODE2',
-				header: "Code-2",
+				header: "Language code-2",
 				display: true,
-				width: "10%",
+				width: "15%",
 				filter: false,
 				sort: false,
                 cell: (row: LanguagesRecord) => row.LA_CODE2
             },
             {
                 columnDef: 'LA_CODE3',
-				header: "Code-3",
+				header: "Language code-3",
 				display: true,
-				width: "10%",
+				width: "15%",
 				filter: false,
 				sort: false,
                 cell: (row: LanguagesRecord) => row.LA_CODE3
             },
             {
-                columnDef: 'LA_LOCALE',
-				header: "Locale",
+                columnDef: 'LA_COUNTRY_CODE2',
+				header: "Country code-2",
 				display: true,
 				width: "15%",
 				filter: false,
 				sort: false,
-                cell: (row: LanguagesRecord) => row.LA_LOCALE
+                cell: (row: LanguagesRecord) => row.LA_COUNTRY_CODE2
+            },
+            {
+                columnDef: 'LA_COUNTRY_CODE3',
+				header: "Country code-3",
+				display: true,
+				width: "15%",
+				filter: false,
+				sort: false,
+                cell: (row: LanguagesRecord) => row.LA_COUNTRY_CODE3
             },
             {
                 columnDef: null,
