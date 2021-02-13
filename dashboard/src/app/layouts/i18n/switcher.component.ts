@@ -28,7 +28,7 @@ class LanguageObject implements Languages
 export class GcLanguageSwitcherComponent // implements OnInit
 {
 	public languages: Languages[] = [ 
-		{ label: 'English', code2: "en" }, 
+		{ label: 'English', code2: "gb" }, 
 		{ label: 'Nederlands', code2: "nl" }, 
 	]; 
 	public selected: Languages = null;

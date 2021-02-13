@@ -22,6 +22,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { GcCrudServiceBase } from '../crud/crud.service.base';
 import { GcSubscribers } from '../subscribers';
+import { isNullOrUndefined } from 'util';
 
 
 export class GcBaseDialog extends GcSubscribers
@@ -34,7 +35,10 @@ export class GcBaseDialog extends GcSubscribers
     protected fixedValues: any = null;
     public mode: string;
 
-    constructor( dialogRef: MatDialogRef<any>, dataService: GcCrudServiceBase<any>, mode: string = 'edit', fixed_values: any = null )
+	constructor( dialogRef: MatDialogRef<any>, 
+				 dataService: GcCrudServiceBase<any>, 
+				 mode: string = 'edit', 
+				 fixed_values: any = null )
     {
         super();
         this.dialogRef = dialogRef;
@@ -94,20 +98,21 @@ export class GcBaseDialog extends GcSubscribers
 
     protected updateFixedValues(): void
     {
-        if ( this.fixedValues != null )
+		console.log("this.fixedValues", this.fixedValues);
+		if ( !isNullOrUndefined( this.fixedValues ) )
         {
             this.formGroup.patchValue( this.fixedValues );
-        }
-        if ( this.isEditMode() )
-        {
-            // For the fixed value fields, they should be "readonly" !!!
-            this.fixedValues.array.forEach( key => {
-                const ctrl = this.formGroup.get( key );
-                if ( ctrl != null )
-                {
-                    ctrl.disable( { onlySelf: true } );
-                }
-            } );
+        	if ( this.isEditMode() )
+        	{
+            	// For the fixed value fields, they should be "readonly" !!!
+            	this.fixedValues.array.forEach( key => {
+                	const ctrl = this.formGroup.get( key );
+                	if ( ctrl != null )
+                	{
+                    	ctrl.disable( { onlySelf: true } );
+                	}
+				} );
+			}
         }
         return;
     }

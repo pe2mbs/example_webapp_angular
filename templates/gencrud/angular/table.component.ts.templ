@@ -163,7 +163,7 @@ ${ obj.externalService } )
         const newRecord = new ${ obj.cls }Record();
         const options: MatDialogConfig = {
             data: { record: newRecord,
-                    fixed: {},
+                    fixed: null,
 %  for key, value in obj.actions.get( 'new' ).params.items():
                     ${key}: ${value},
 %  endfor
@@ -198,11 +198,11 @@ ${ obj.externalService } )
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
             data: { record: row,
-                    fixed: {},
+                    fixed: null,
 %  for key, value in obj.actions.get( 'edit' ).params.items():
                     ${key}: ${value},
 %  endfor
-                    mode: 'add'
+                    mode: 'edit'
             },
             width: "${ obj.actions.get( 'edit' ).width }",
 %  if obj.actions.get( 'edit' ).hasHeight():

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-12 18:22:45 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-13 05:17:30 version 2.1.663 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -155,7 +155,7 @@ export class LanguagesTableComponent
         const newRecord = new LanguagesRecord();
         const options: MatDialogConfig = {
             data: { record: newRecord,
-                    fixed: {},
+                    fixed: null,
                     mode: 'add'
             },
             width: "60%",
@@ -178,8 +178,8 @@ export class LanguagesTableComponent
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
             data: { record: row,
-                    fixed: {},
-                    mode: 'add'
+                    fixed: null,
+                    mode: 'edit'
             },
             width: "60%",
         };
