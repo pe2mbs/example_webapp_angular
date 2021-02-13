@@ -63,7 +63,6 @@ export class GcCrudServiceBase<T>
             throw new GcBackendError( error.message, error.error );
         });
         return;
-		return;
 	}
 
     public get uri(): string

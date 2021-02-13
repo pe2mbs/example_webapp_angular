@@ -122,6 +122,10 @@ import { GcMissingTranslationHandler } from './i18n/missing.translation';
 import { GcDeleteDialog } from './dialog/delete.dialog';
 import { CustDataTableComponent } from './crud/cust.data.table.component';
 import { GcI18nLoader } from './i18n/custom.i18n.loader';
+import { ErrorDialogComponent } from './error-dialog/errordialog.component';
+import { FrontendErrorDialogComponent } from './error-dialog/frontend-errordialog.component';
+import { BackendErrorDialogComponent } from './error-dialog/backend-errordialog.component';
+import { ErrorDialogService } from './error-dialog/errordialog.service';
 
 
 const importExportModules = [
@@ -209,7 +213,9 @@ const declareExportComponents = [
 	GcLanguageSwitchComponent,
 	GcLanguageSwitcherComponent,
 	GcDeleteDialog,
-	CustDataTableComponent
+	CustDataTableComponent,
+	ErrorDialogComponent
+
 ];
 
 
@@ -226,13 +232,19 @@ const defaultRoute: Route = {
 
 @NgModule({
     declarations: [
-        ...declareExportComponents
+		...declareExportComponents,
+		ErrorDialogComponent,
+		FrontendErrorDialogComponent,
+		BackendErrorDialogComponent
     ],
     entryComponents: [
 		GcHelpDialogComponent,
 		GcLoginDialogComponent,
 		GcSignupDialogComponent,
-		GcDeleteDialog
+		GcDeleteDialog,
+		ErrorDialogComponent,
+		FrontendErrorDialogComponent,
+		BackendErrorDialogComponent
     ],
     providers: [
 		GcHelpService,
@@ -242,7 +254,8 @@ const defaultRoute: Route = {
 		GcAuthService,
 		GcThemeSwitcherComponent,
 		GcProfileService,
-        GcTickerDataService,
+		GcTickerDataService,
+		ErrorDialogService,
 		{
 		  provide: LocationStrategy,
 		  useClass: HashLocationStrategy

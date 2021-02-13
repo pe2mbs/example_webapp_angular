@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { GcAuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { ErrorDialogService } from '../error-dialog/errordialog.service';
 
 
 @Injectable({
@@ -9,7 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class GcTokenInterceptorService implements HttpInterceptor 
 {
-  	constructor( private authService: GcAuthService ) 
+	constructor( private authService: GcAuthService,
+				 public errorDialogService: ErrorDialogService ) 
 	{ 
 		return;
 	}
@@ -26,6 +29,36 @@ export class GcTokenInterceptorService implements HttpInterceptor
 										 'JWT ' + this.authService.token );
 							 
 		} 
-		return next.handle( req.clone( { headers: newHeaders } ) );
+		return next.handle( req.clone( { headers: newHeaders } ) ).pipe(
+            map((event: HttpEvent<any>) => {
+                if (event instanceof HttpResponse) {
+                    console.log('event--->>>', event);
+                }
+                return event;
+			} ),
+			catchError( ( error: HttpErrorResponse ) => {
+				let data = {};
+				data = {
+					reason: error && error.error && error.error.reason ? error.error.reason : '',
+					status: error.status
+				};
+				console.log( "error >> ", data );
+				if ( error.status >= 400 && error.status <= 499 && error.status !== 401 )
+				{
+					// Backend error that some thing is not allowed
+					this.errorDialogService.openDialog( data );
+				}
+				else if ( error.status >= 500 && error.status <= 599 )
+				{
+					// Backend error that some thing is not allowed
+					this.errorDialogService.openDialogBackendError( data );
+				}
+				else
+				{
+					this.errorDialogService.openDialogFrontendError( error );
+				}
+                return throwError( error );
+            } )
+		);
   	}
 }
