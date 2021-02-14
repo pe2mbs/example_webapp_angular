@@ -25,12 +25,12 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 % if obj.Mixin.Angular.hasComponentDialog():
 import { ${obj.Mixin.Angular.ComponentDialog.cls} } from '${obj.Mixin.Angular.ComponentDialog.filename}';
 % else:
-import { GcBaseDialog } from 'src/app/layouts/dialog/dialog';
+import { GcBaseDialog } from 'src/app/gencrud/dialog/dialog';
 % endif
 import { ${ obj.cls }DataService } from './service';
 % for field in obj.table.columns:
  % if field.ui is not None and field.ui.isUiType( 'choice', 'choice-auto-complete', 'combo' ):
-import { GcSelectList } from 'src/app/layouts/crud/model';
+import { GcSelectList } from 'src/app/gencrud/crud/model';
 <%
     break
 %>
@@ -49,7 +49,7 @@ import { ${ field.ui.service.cls } } from '${ field.ui.service.path }';
     // tslint:disable-next-line:component-selector
     selector: 'app-${ obj.name }-dialog',
     templateUrl: './dialog.component.html',
-    styleUrls: [ '../../layouts/dialog/dialog.scss' ]
+    styleUrls: [ '../../gencrud/dialog/dialog.scss' ]
 })
 
 % if obj.Mixin.Angular.hasComponentDialog():

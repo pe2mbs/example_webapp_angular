@@ -17,12 +17,12 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-13 05:17:30 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
 */
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { GcBaseDialog } from 'src/app/layouts/dialog/dialog';
+import { GcBaseDialog } from 'src/app/gencrud/dialog/dialog';
 import { LanguagesDataService } from './service';
 
 
@@ -30,7 +30,7 @@ import { LanguagesDataService } from './service';
     // tslint:disable-next-line:component-selector
     selector: 'app-languages-dialog',
     templateUrl: './dialog.component.html',
-    styleUrls: [ '../../layouts/dialog/dialog.scss' ]
+    styleUrls: [ '../../gencrud/dialog/dialog.scss' ]
 })
 
 export class DialogLanguagesComponent extends GcBaseDialog

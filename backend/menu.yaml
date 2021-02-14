@@ -8,7 +8,7 @@
     icon: languages
     id: 127709D66303C0BEAE01573E304384E7
     route: /languages
-  - caption: Transalations
+  - caption: Translations
     icon: translate
     id: A0E870DBE7F45A2EFD9E38EE92DCAD79
     route: /language_translates

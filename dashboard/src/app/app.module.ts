@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MarkdownModule } from 'ngx-markdown';
 import { GridsterModule } from 'angular-gridster2';
-import { GenCrudModule } from './layouts/gencrud.module';
+import { GenCrudModule } from './gencrud/gencrud.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExampleHttpDatabase } from './modules/demo/table-http-service';
 import { TableHttpExample } from './modules/demo/table-http-example';

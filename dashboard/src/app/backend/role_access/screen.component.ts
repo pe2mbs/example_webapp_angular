@@ -17,16 +17,16 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-15 07:46:48 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
-import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
+import { GcScreenBase } from 'src/app/gencrud/crud/curd.screen.base';
 import { RoleAccessDataService } from './service';
 import { RoleAccessRecord } from './model';
 
-import { GcSelectList } from 'src/app/layouts/crud/model';
+import { GcSelectList } from 'src/app/gencrud/crud/model';
 import { RoleDataService } from '../role/service';
 import { ModuleAccessDataService } from '../mod_access/service';
 
@@ -34,7 +34,7 @@ import { ModuleAccessDataService } from '../mod_access/service';
     // tslint:disable-next-line:component-selector
     selector: 'app-role_access-screen',
     templateUrl: './screen.component.html',
-    styleUrls: [ '../../layouts/common-mat-card.scss' ]
+    styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
 export class ScreenRoleAccessComponent extends GcScreenBase<RoleAccessRecord> implements OnInit
 {

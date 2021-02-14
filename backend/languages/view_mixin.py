@@ -32,13 +32,11 @@ class LanguagesViewMixin( object ):
             API.db.session.add( translateRecord )
             API.db.session.commit()
 
-        if languageRecord.LA_CODE2 != 'en':
-            return jsonify( ok = True )
-
         try:
-            API.db.session.query( LanguageReference ). \
+            API.db.session.query( LanguageReference, LanguageTransalates ). \
+                join( LanguageTransalates, LanguageReference.LR_LT_ID == LanguageTransalates.LT_ID ).\
                 filter( LanguageReference.LR_LA_ID == languageRecord.LA_ID ). \
-                filter( LanguageReference.LR_LT_ID == translateRecord.LT_ID )
+                filter( LanguageReference.LR_LA_ID == translateRecord.LT_ID ).one()
 
         except NoResultFound:
             referenceRecord = LanguageReference( LR_LA_ID = languageRecord.LA_ID,

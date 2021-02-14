@@ -76,6 +76,8 @@ objects:
             listview:
                 index:              0
                 width:              40%
+                sort:               true
+                filter:             true
         -   field:                  LA_CODE2                  CHAR( 2 )         NOT NULL
             label:                  Language code-2
             unique:                 true
@@ -84,6 +86,8 @@ objects:
             listview:
                 index:              1
                 width:              15%
+                sort:               true
+                filter:             true
         -   field:                  LA_CODE3                  CHAR( 3 )         NOT NULL
             label:                  Language code-3
             unique:                 true
@@ -92,6 +96,8 @@ objects:
             listview:
                 index:              2
                 width:              15%
+                sort:               true
+                filter:             true
         -   field:                  LA_COUNTRY_CODE2          CHAR( 2 )         NOT NULL
             label:                  Country code-2
             unique:                 true
@@ -100,6 +106,8 @@ objects:
             listview:
                 index:              3
                 width:              15%
+                sort:               true
+                filter:             true
         -   field:                  LA_COUNTRY_CODE3          CHAR( 3 )         NOT NULL
             label:                  Country code-3
             unique:                 true
@@ -108,3 +116,5 @@ objects:
             listview:
                 index:              4
                 width:              15%
+                sort:               true
+                filter:             true

@@ -24,8 +24,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GenCrudModule } from 'src/app/layouts/gencrud.module';
-import { GcHttpInterceptor } from 'src/app/layouts/http-interceptor';
+import { GenCrudModule } from 'src/app/gencrud/gencrud.module';
+import { GcHttpInterceptor } from 'src/app/gencrud/http-interceptor';
 <%  componentList = []  %>
 % for action in obj.actions.unique:
 %  if action.isDialog() and action.name != 'delete' and "Dialog${ obj.cls }Component" not in componentList:
@@ -41,9 +41,10 @@ import { ${ obj.cls }DataService } from './service';
 % for mod in obj.modules:
 import { ${ mod.cls } } from '${ mod.importPath }';
 % endfor
-import { GcDefaultComponent } from 'src/app/layouts/default.component';
+import { GcDefaultComponent } from 'src/app/gencrud/default.component';
 
 
+// tslint:disable-next-line:variable-name
 export const ${ obj.name }Route: Route = {
     path: '',
     component: GcDefaultComponent,

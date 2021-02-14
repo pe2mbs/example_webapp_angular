@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-15 07:32:07 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API

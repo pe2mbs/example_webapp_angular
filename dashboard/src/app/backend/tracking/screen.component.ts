@@ -17,24 +17,24 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-10 08:21:51 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
-import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
+import { GcScreenBase } from 'src/app/gencrud/crud/curd.screen.base';
 import { TrackingDataService } from './service';
 import { TrackingRecord } from './model';
 
-import { GcSelectList } from 'src/app/layouts/crud/model';
+import { GcSelectList } from 'src/app/gencrud/crud/model';
 
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-tracking-screen',
     templateUrl: './screen.component.html',
-    styleUrls: [ '../../layouts/common-mat-card.scss' ]
+    styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
-export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord>
+export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord> implements OnInit
 {
     public T_ACTIONList = [
         {
@@ -74,6 +74,12 @@ export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord>
         return;
     }
 
+    ngOnInit()
+    {
+        super.ngOnInit();
+        return;
+    }
+
     protected updateFormGroup( record: TrackingRecord ): void
 	{
 		this.formGroup.patchValue( {
@@ -89,7 +95,7 @@ export class ScreenTrackingComponent extends GcScreenBase<TrackingRecord>
 
     public get T_ID()
     {
-        return ( this.formGroup.get( 'T_ID' ) );
+        return ( this.row.T_ID );
     }
 
     public get T_USER()

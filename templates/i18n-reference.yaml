@@ -43,13 +43,13 @@ objects:
         position:                   row
         function:                   self.editRecord( idx, row )
         params:
-            LT_ID:                  row.LR_LT_ID
+            LT_ID:                  row.LR_ID
     -   name:                       delete
         label:                      Delete
         type:                       dialog
         icon:                       delete
         position:                   cell
-        function:                   core.deleteRecord( idx, row, 'TL_ID', 'Language text', 'TL_TEXT' )
+        function:                   core.deleteRecord( idx, row, 'LR_ID', 'Language text', 'TR_TEXT' )
     table:
         name:                       LANGUAGE_REFERENCE
         columns:

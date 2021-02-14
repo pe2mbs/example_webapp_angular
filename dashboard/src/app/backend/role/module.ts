@@ -17,21 +17,21 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-14 07:48:51 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GenCrudModule } from 'src/app/layouts/gencrud.module';
-import { GcHttpInterceptor } from 'src/app/layouts/http-interceptor';
+import { GenCrudModule } from 'src/app/gencrud/gencrud.module';
+import { GcHttpInterceptor } from 'src/app/gencrud/http-interceptor';
 
 import { ScreenRoleComponent } from './screen.component';
 
 import { RoleTableComponent } from './table.component';
 import { RoleDataService } from './service';
-import { GcDefaultComponent } from 'src/app/layouts/default.component';
+import { GcDefaultComponent } from 'src/app/gencrud/default.component';
 
 
 export const roleRoute: Route = {

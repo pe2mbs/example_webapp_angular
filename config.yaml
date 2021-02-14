@@ -83,7 +83,7 @@ DEVELOPMENT:    &development
     ENV:                                dev
     LOGGING_FOLDER:                     log
     APP_PATH:                           .
-    ANGULAR_PATH:                       dashboard/dist/dashboard
+    ANGULAR_PATH:                       frontend-v10/dist/frontend-v10
     DATABASE:
         <<: *database
 

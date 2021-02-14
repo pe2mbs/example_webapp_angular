@@ -17,13 +17,13 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-13 05:37:59 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { GcProfileService } from 'src/app/layouts/profile/profile.service';
-import { CustDataTableComponent } from 'src/app/layouts/crud/cust.data.table.component';
+import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
+import { CustDataTableComponent } from 'src/app/gencrud/crud/cust.data.table.component';
 import { isNullOrUndefined } from 'util';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { LanguageTransalatesRecord } from './model';
@@ -40,7 +40,7 @@ import { LanguageTransalatesDataService } from './service';
 				[mode]="mode"
 				[definition]="definition">
 </app-cust-data-table>`,
-    styleUrls: [ '../../layouts/common-mat-card.scss' ]
+    styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
 export class LanguageTransalatesTableComponent
 {
@@ -59,7 +59,7 @@ export class LanguageTransalatesTableComponent
         headerButtons: [
 			{
 				label: 'New',
-				icon: '',
+				icon: 'add',
 				action: (core: any, self: any) => {
 					self.addRecord();
 				}
@@ -76,8 +76,8 @@ export class LanguageTransalatesTableComponent
 				header: "Label",
 				display: true,
 				width: "100%",
-				filter: false,
-				sort: false,
+				filter: true,
+				sort: true,
                 cell: (row: LanguageTransalatesRecord) => row.LT_LABEL
             },
             {

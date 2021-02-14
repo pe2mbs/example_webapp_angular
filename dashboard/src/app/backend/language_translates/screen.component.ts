@@ -17,12 +17,12 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-13 05:37:59 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
-import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
+import { GcScreenBase } from 'src/app/gencrud/crud/curd.screen.base';
 import { LanguageTransalatesDataService } from './service';
 import { LanguageTransalatesRecord } from './model';
 
@@ -31,9 +31,9 @@ import { LanguageTransalatesRecord } from './model';
     // tslint:disable-next-line:component-selector
     selector: 'app-language_translates-screen',
     templateUrl: './screen.component.html',
-    styleUrls: [ '../../layouts/common-mat-card.scss' ]
+    styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
-export class ScreenLanguageTransalatesComponent extends GcScreenBase<LanguageTransalatesRecord>
+export class ScreenLanguageTransalatesComponent extends GcScreenBase<LanguageTransalatesRecord> implements OnInit
 {
 
     constructor( route: ActivatedRoute
@@ -46,6 +46,12 @@ export class ScreenLanguageTransalatesComponent extends GcScreenBase<LanguageTra
             LT_LABEL: new FormControl( this.row.LT_LABEL || '',
                                               [ Validators.required, Validators.maxLength( 256 ),  ]  ),
         } );
+        return;
+    }
+
+    ngOnInit()
+    {
+        super.ngOnInit();
         return;
     }
 

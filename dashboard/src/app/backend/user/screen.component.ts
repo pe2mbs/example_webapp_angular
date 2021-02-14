@@ -17,23 +17,23 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-14 05:19:44 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
-import { GcScreenBase } from 'src/app/layouts/crud/curd.screen.base';
+import { GcScreenBase } from 'src/app/gencrud/crud/curd.screen.base';
 import { UserDataService } from './service';
 import { UserRecord } from './model';
 
-import { GcSelectList } from 'src/app/layouts/crud/model';
+import { GcSelectList } from 'src/app/gencrud/crud/model';
 import { RoleDataService } from '../role/service';
 
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'app-user-screen',
     templateUrl: './screen.component.html',
-    styleUrls: [ '../../layouts/common-mat-card.scss' ]
+    styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
 export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnInit
 {
@@ -49,6 +49,16 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
     ];
     public roleList: GcSelectList[];
     public hide_U_HASH_PASSWORD: boolean  = true;
+    public U_MUST_CHANGEList = [
+        {
+            "label": "Yes",
+            "value": true
+        },
+        {
+            "label": "No",
+            "value": false
+        }
+    ];
     public U_LOCALEList = [
         {
             "label": "nl_NL",

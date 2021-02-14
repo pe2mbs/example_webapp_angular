@@ -17,13 +17,13 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-01-13 05:37:59 version 2.1.658 by user mbertens
+#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { GcProfileService } from 'src/app/layouts/profile/profile.service';
-import { CustDataTableComponent } from 'src/app/layouts/crud/cust.data.table.component';
+import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
+import { CustDataTableComponent } from 'src/app/gencrud/crud/cust.data.table.component';
 import { isNullOrUndefined } from 'util';
 import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { LanguageReferenceRecord } from './model';
@@ -43,7 +43,7 @@ import { LanguageTransalatesDataService } from '../language_translates/service';
 				[mode]="mode"
 				[definition]="definition">
 </app-cust-data-table>`,
-    styleUrls: [ '../../layouts/common-mat-card.scss' ]
+    styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
 export class LanguageReferenceTableComponent
 {
@@ -105,7 +105,7 @@ export class LanguageReferenceTableComponent
 						label: 'Delete',
 						icon: 'delete',
 						action: (core: any, self: any, idx: number, row: LanguageReferenceRecord) => {
-							core.deleteRecord( idx, row, 'TL_ID', 'Language text', 'TL_TEXT' );
+							core.deleteRecord( idx, row, 'LR_ID', 'Language text', 'TR_TEXT' );
 						}
 					},
                 ]
@@ -133,7 +133,7 @@ export class LanguageReferenceTableComponent
         const newRecord = new LanguageReferenceRecord();
         const options: MatDialogConfig = {
             data: { record: newRecord,
-                    fixed: {},
+                    fixed: null,
                     mode: 'add'
             },
             width: "80%",
@@ -156,9 +156,9 @@ export class LanguageReferenceTableComponent
         this.definition.dataService.lockRecord( row );
         const options: MatDialogConfig = {
             data: { record: row,
-                    fixed: {},
-                    LT_ID: row.LR_LT_ID,
-                    mode: 'add'
+                    fixed: null,
+                    LT_ID: row.LR_ID,
+                    mode: 'edit'
             },
             width: "80%",
         };

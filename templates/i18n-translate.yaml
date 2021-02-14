@@ -28,15 +28,15 @@ references:
         module:                     app.routingmodule.ts
 objects:
 -   name:                           language_translates
-    title:                          Language Transalations
-    class:                          LanguageTransalates
+    title:                          Language Translations
+    class:                          LanguageTranslations
     uri:                            /api/language_reference
     menu:
         caption:                    Administration
         icon:                       settings
         index:                      -2
         menu:
-            caption:                Transalations
+            caption:                Translations
             icon:                   translate
             index:                  0
             route:                  /language_translates
@@ -55,7 +55,7 @@ objects:
         type:                       dialog
         icon:                       delete
         position:                   cell
-        function:                   core.deleteRecord( idx, row, 'LR_ID', 'Label', 'LR_LABEL' )
+        function:                   core.deleteRecord( idx, row, 'LT_ID', 'Label', 'LT_LABEL' )
     modules:
     -   class:                      LanguageReferenceModule
         path:                       language_reference
@@ -63,7 +63,6 @@ objects:
         name:                       LANGUAGE_TRANSLATES
         tabs:
             labels:
-            -   Info
             -   Translates
             tab:
             -   label:              Translates
@@ -82,7 +81,7 @@ objects:
             ui:
                 type:               textbox
             listview:
+                sort:               true
+                filter:             true
                 index:              0
                 width:              100%
-            tab:
-                label:              Info
