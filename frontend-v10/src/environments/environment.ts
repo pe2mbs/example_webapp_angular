@@ -10,7 +10,7 @@ export const environment =
 	headerTitle: 'Webapp2 core application',
 	headerLogo: 'logo-equensWorldline.png',
 	footerText: 'DEVELOPMENT - Webapp2 Python-flask angular v10 (beta) core, \u00A9 Copyright 2017-2020 All rights reserved by Marc Bertens-Nguyen',
-	readNews: false
+	readNews: true
 };
 
 /*
