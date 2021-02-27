@@ -16,14 +16,15 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:03:42 version 2.1.666 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
 from webapp2.common.crud import CrudInterface, RecordLock
 import traceback
-from backend.language_translates.model import LanguageTransalates
-from backend.language_translates.schema import LanguageTransalatesSchema
+from backend.language_translates.model import LanguageTranslations
+from backend.language_translates.schema import LanguageTranslationsSchema
+from backend.language_translates.view_mixin import LangTranslateViewMixin
 
 
 language_translatesApi = Blueprint( 'language_translatesApi', __name__ )
@@ -32,12 +33,12 @@ language_translatesApi = Blueprint( 'language_translatesApi', __name__ )
 # Args is for downwards compatibility !!!!!
 def registerApi( *args ):
     # Set the logger for the users module
-    API.app.logger.info( 'Register LanguageTransalates routes' )
+    API.app.logger.info( 'Register LanguageTranslations routes' )
     API.app.register_blueprint( language_translatesApi )
     try:
         import backend.language_translates.entry_points  as EP
         if hasattr( EP, 'entryPointApi' ):
-            API.app.logger.info( 'Register LanguageTransalates entrypoint routes' )
+            API.app.logger.info( 'Register LanguageTranslations entrypoint routes' )
             API.app.register_blueprint( EP.entryPointApi )
 
         if hasattr( EP, 'registerWebSocket' ):
@@ -55,21 +56,23 @@ def registerApi( *args ):
 
 
 
-class LanguageTransalatesRecordLock( RecordLock ):
+class LanguageTranslationsRecordLock( RecordLock ):
     def __init__(self):
         RecordLock.__init__( self, 'language_translates', 'LT_ID' )
         return
 
 
-class LanguageTransalatesCurdInterface( CrudInterface ):
-    _model_cls = LanguageTransalates
-    _lock_cls = LanguageTransalatesRecordLock
-    _schema_cls = LanguageTransalatesSchema()
-    _schema_list_cls = LanguageTransalatesSchema( many = True )
+class LanguageTranslationsCurdInterface( CrudInterface, LangTranslateViewMixin ):
+    _model_cls = LanguageTranslations
+    _lock_cls = LanguageTranslationsRecordLock
+    _schema_cls = LanguageTranslationsSchema()
+    _schema_list_cls = LanguageTranslationsSchema( many = True )
     _uri = '/api/language_translates'
+    _relations = [{'table': 'LANGUAGE_REFERENCE', 'class': 'LanguageReference', 'cascade': 'delete,all'}]
 
     def __init__( self ):
         CrudInterface.__init__( self, language_translatesApi )
+        LangTranslateViewMixin.__init__( self )
         return
 
     def beforeUpdate( self, record ):
@@ -80,5 +83,5 @@ class LanguageTransalatesCurdInterface( CrudInterface ):
         return record
 
 
-language_translates = LanguageTransalatesCurdInterface()
+language_translates = LanguageTranslationsCurdInterface()
 

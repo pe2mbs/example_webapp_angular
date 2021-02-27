@@ -42,7 +42,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core';
+import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -112,7 +112,7 @@ import { GcThemeSwitcherComponent } from './theme-switcher.component';
 import { GcLoginDialogComponent } from './login/login.dialog.component';
 import { GcSignupDialogComponent } from './login/signup.dialog.component';
 import { GcSignedOutComponent } from './login/signedout.component';
-import { GcBreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { GcBreadcrumbComponent, GcBreadcrumbService } from './breadcrumb/breadcrumb.component';
 import { GcTickerComponent } from './ticker/ticker.component';
 import { GcTickerDataService } from './ticker/service';
 import { GcProfileService } from './profile/profile.service';
@@ -161,6 +161,7 @@ const importExportModules = [
 	MatGridListModule,
 	MatRadioModule,
 	MatDatepickerModule,
+	MatNativeDateModule ,
 	MatTooltipModule,
 	MatSlideToggleModule,
 	MatSliderModule,
@@ -251,10 +252,12 @@ const defaultRoute: Route = {
 		GcNavService,
     	GcAuthGuard,
 		GcAdminAuthGuard,
+		MatDatepickerModule,
 		GcAuthService,
 		GcThemeSwitcherComponent,
 		GcProfileService,
 		GcTickerDataService,
+		GcBreadcrumbService,
 		ErrorDialogService,
 		{
 		  provide: LocationStrategy,

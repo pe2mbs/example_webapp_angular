@@ -2,9 +2,9 @@ linux:
     source:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
-        angular:                    dashboard/src/app
+        angular:                    frontend-v10/src/app
     template:
-        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud-v10
         python:                     python
         angular:                    angular
         common:
@@ -79,7 +79,7 @@ objects:
             ui:
                 type:               choice
                 service:
-                    class:          LanguageTransalates
+                    class:          LanguageTranslations
                     name:           language_translates
                     value:          LT_ID
                     label:          LT_LABEL

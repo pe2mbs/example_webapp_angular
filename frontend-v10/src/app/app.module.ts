@@ -25,6 +25,7 @@ import { ModuleAccessModule } from './backend/mod_access/module';
 import { WidgetWrapperComponent } from './modules/widget-wrapper/widget-wrapper.component';
 import { WeatherWidgetComponent } from './modules/widgets/weather-widget/weather-widget.component';
 import { VelocityWidgetComponent } from './modules/widgets/velocity-widget/velocity-widget.component';
+import { NewsModule } from './backend/news/module';
 
 
 registerLocaleData(localeNl);
@@ -60,6 +61,7 @@ registerLocaleData(localeNl);
     LanguageTranslationsModule,
     RoleAccessModule,
     ModuleAccessModule,
+    NewsModule,
     UserModule
   ],
   providers: [

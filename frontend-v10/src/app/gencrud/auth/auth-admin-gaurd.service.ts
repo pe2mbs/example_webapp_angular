@@ -1,7 +1,9 @@
 import { GcAuthGuard } from './auth-guard.service';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class GcAdminAuthGuard extends GcAuthGuard 
 {
 	canActivate() 

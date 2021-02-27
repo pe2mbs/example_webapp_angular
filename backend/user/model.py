@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 09:09:14 version 2.1.666 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -30,11 +30,11 @@ class User( API.db.Model, CrudModelMixin ):
     When modifing the file make sure that you remove the table from the configuration.
     """
     __field_list__       = ['U_ID', 'U_ACTIVE', 'U_NAME', 'U_ROLE', 'U_HASH_PASSWORD', 'U_MUST_CHANGE', 'U_FIRST_NAME', 'U_MIDDLE_NAME', 'U_LAST_NAME', 'U_EMAIL', 'U_ACCESS_TOKEN', 'U_REFRESH_TOKEN', 'U_TOKEN_DT', 'U_CREATE_DT', 'U_REMARK', 'U_LOCALE', 'U_LISTITEMS', 'U_PROFILE']
-    __tablename__        = 'gn_user'
+    __tablename__        = 'user'
     U_ID                 = API.db.Column( "u_id", API.db.Integer, autoincrement = True, primary_key = True )
     U_ACTIVE             = API.db.Column( "u_active", API.db.Boolean, default = False )
     U_NAME               = API.db.Column( "u_name", API.db.String( 30 ), nullable = False )
-    U_ROLE               = API.db.Column( "u_role", API.db.Integer, API.db.ForeignKey( "gn_role.r_id" ) )
+    U_ROLE               = API.db.Column( "u_role", API.db.Integer, API.db.ForeignKey( "role.r_id" ) )
     U_HASH_PASSWORD      = API.db.Column( "u_hash_password", API.db.String( 255 ), nullable = False )
     U_MUST_CHANGE        = API.db.Column( "u_must_change", API.db.Boolean, default = False )
     U_FIRST_NAME         = API.db.Column( "u_first_name", API.db.String( 50 ), nullable = False )
@@ -50,7 +50,7 @@ class User( API.db.Model, CrudModelMixin ):
     U_LISTITEMS          = API.db.Column( "u_listitems", API.db.Integer, default = 10 )
     U_PROFILE            = API.db.Column( "u_profile", API.db.LONGTEXT, nullable = True )
 
-    U_ROLE_FK            = API.db.relationship( 'Role', backref = 'gn_user', lazy = True )
+    U_ROLE_FK            = API.db.relationship( 'Role', backref = 'user', lazy = True )
     API.db.UniqueConstraint( 'U_NAME', name='U_NAME_IDX' )
 
     def memoryInstance( self ):

@@ -2,9 +2,9 @@ linux:
     source:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
-        angular:                    dashboard/src/app
+        angular:                    frontend-v10/src/app
     template:
-        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud-v10
         python:                     python
         angular:                    angular
         common:
@@ -68,7 +68,7 @@ objects:
             -   Remark
         columns:
         -   field:                  RA_ID                       INT             AUTO NUMBER  PRIMARY KEY
-        -   field:                  RA_R_ID                     INT             FOREIGN KEY GN_ROLE.R_ID  NOT NULL
+        -   field:                  RA_R_ID                     INT             FOREIGN KEY ROLE.R_ID  NOT NULL
             label:                  Role
             ui:
                 type:               choice

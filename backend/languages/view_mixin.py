@@ -3,10 +3,12 @@ from sqlalchemy.orm.exc import NoResultFound
 import webapp2.api as API
 from backend.languages.model import Languages
 from backend.language_reference.model import LanguageReference
-from backend.language_translates.model import LanguageTransalates
+from backend.language_translates.model import LanguageTranslations
+
 
 class LanguagesViewMixin( object ):
     def __init__( self ):
+        self.useJWT = False
         self.registerRoute( 'i18n/<language>', self.getLanguage, methods = [ 'GET' ] )
         self.registerRoute( 'i18n/missing', self.missingTranslation, methods = [ 'POST' ] )
 
@@ -24,17 +26,17 @@ class LanguagesViewMixin( object ):
             return jsonify( ok = False )
 
         try:
-            translateRecord: LanguageTransalates = API.db.session.query( LanguageTransalates ).\
-                                filter( LanguageTransalates.LT_LABEL == text ).one()
+            translateRecord: LanguageTranslations = API.db.session.query( LanguageTranslations ).\
+                                filter( LanguageTranslations.LT_LABEL == text ).one()
 
         except NoResultFound:
-            translateRecord = LanguageTransalates( LT_LABEL = text )
+            translateRecord = LanguageTranslations( LT_LABEL = text )
             API.db.session.add( translateRecord )
             API.db.session.commit()
 
         try:
-            API.db.session.query( LanguageReference, LanguageTransalates ). \
-                join( LanguageTransalates, LanguageReference.LR_LT_ID == LanguageTransalates.LT_ID ).\
+            API.db.session.query( LanguageReference, LanguageTranslations ). \
+                join( LanguageTranslations, LanguageReference.LR_LT_ID == LanguageTranslations.LT_ID ).\
                 filter( LanguageReference.LR_LA_ID == languageRecord.LA_ID ). \
                 filter( LanguageReference.LR_LA_ID == translateRecord.LT_ID ).one()
 
@@ -56,11 +58,11 @@ class LanguagesViewMixin( object ):
             API.logger.error( "Language: {} NOT FOUND".format( language ) )
             return jsonify( {} )
 
-        query = API.db.session.query( LanguageTransalates, LanguageReference ).\
-                    join( LanguageReference, LanguageReference.LR_LT_ID == LanguageTransalates.LT_ID ).\
+        query = API.db.session.query( LanguageTranslations, LanguageReference ).\
+                    join( LanguageReference, LanguageReference.LR_LT_ID == LanguageTranslations.LT_ID ).\
                     filter( LanguageReference.LR_LA_ID == languageRecord.LA_ID )
 
         if query.count():
-            result = { recordSet.LanguageTransalates.LT_LABEL: recordSet.LanguageReference.TR_TEXT for recordSet in query.all() }
+            result = { recordSet.LanguageTranslations.LT_LABEL: recordSet.LanguageReference.TR_TEXT for recordSet in query.all() }
 
         return jsonify( result )

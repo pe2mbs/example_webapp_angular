@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 09:08:21 version 2.1.666 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -30,7 +30,7 @@ class Role( API.db.Model, CrudModelMixin ):
     When modifing the file make sure that you remove the table from the configuration.
     """
     __field_list__       = ['R_ID', 'R_ROLE', 'R_REMARK']
-    __tablename__        = 'gn_role'
+    __tablename__        = 'role'
     R_ID                 = API.db.Column( "r_id", API.db.Integer, autoincrement = True, primary_key = True )
     R_ROLE               = API.db.Column( "r_role", API.db.String( 255 ), nullable = False )
     R_REMARK             = API.db.Column( "r_remark", API.db.LONGTEXT, nullable = True )

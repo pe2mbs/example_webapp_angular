@@ -63,6 +63,9 @@ class ${obj.cls}( ${ modelClasses( obj ) } ):
     API.db.UniqueConstraint( ${ fields }, name='${ index }' )
  % endfor
 % endif
+% for relation in obj.table.relationShips:
+    ${relation.table}_relation       = API.db.relationship( "${relation.cls}", cascade="${relation.cascade}", backref = '${ obj.table.name }', lazy = True )
+% endfor
 
     def memoryInstance( self ):
         return ${obj.cls}Memory( self )

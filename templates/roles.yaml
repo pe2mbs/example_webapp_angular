@@ -2,9 +2,9 @@ linux:
     source:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
-        angular:                    dashboard/src/app
+        angular:                    frontend-v10/src/app
     template:
-        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud-v10
         python:                     python
         angular:                    angular
         common:
@@ -61,7 +61,7 @@ objects:
         position:                   cell
         function:                   core.deleteRecord( idx, row, 'R_ID', 'Role', 'R_ROLE'  )
     table:
-        name:                       GN_ROLE
+        name:                       ROLE
         tabs:
             labels:
             -   Description

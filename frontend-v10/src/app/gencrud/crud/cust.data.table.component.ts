@@ -12,6 +12,7 @@ import { GcFilterRecord } from './filter.record';
 import { GcCrudServiceBase } from './crud.service.base';
 import { GcCrudPageInfo } from './model';
 import { GcDeleteDialog } from '../dialog/delete.dialog';
+import { GcProfileService } from '../profile/profile.service';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 	public displayedColumns: string[] = null;
 	public self: CustDataTableComponent;
 	public filterField = '';
-	constructor( protected dialog: MatDialog )
+	constructor( protected dialog: MatDialog, private profileService: GcProfileService )
 	{
 		this.debug = false;
 		this.self = this;
@@ -55,7 +56,7 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 	}
 
 	ngOnInit() 
-	{
+	{		
 		const filterFields = new Array<string>();
 		if ( this.debug )
 		{
@@ -87,6 +88,8 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 			this.filterRecord.set( this.id, this.value );
 		}
 		this.dataService = this.definition.dataService;
+		this.pageData = this.profileService.getParam( this.definition.name, this.pageData );
+		this.setPageData( this.pageData );
 		return;
 	}
 
@@ -127,6 +130,16 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 		return;
 	}
 
+	protected setPageData( o: any ): void
+	{
+		this.bot_paginator.pageIndex = o.pageIndex;
+		this.bot_paginator.pageSize = o.pageSize;
+		this.top_paginator.pageIndex = o.pageIndex;
+		this.top_paginator.pageSize = o.pageSize;
+		this.filterRecord.setFilters( o.filter );
+		return;
+	}
+
 	public pagingEvent( $event, source: string )
 	{
 		if ( source === 'top' )
@@ -140,8 +153,8 @@ export class CustDataTableComponent implements OnInit, AfterViewInit, OnChanges
 		this.pageData.pageIndex = $event.pageIndex;
 		this.pageData.pageSize =  $event.pageSize;  
 		this.pageData.filters = this.filterRecord.getFilters();
-		this.definition.profileService.setParam( this.definition.name, 
-												 this.pageData );
+		this.profileService.setParam( this.definition.name, 
+									  this.pageData );
 		this.paginatorEvent.emit( $event );
 		return;
 	}

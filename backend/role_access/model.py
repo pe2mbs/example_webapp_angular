@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 09:09:24 version 2.1.666 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -32,7 +32,7 @@ class RoleAccess( API.db.Model, CrudModelMixin ):
     __field_list__       = ['RA_ID', 'RA_R_ID', 'RA_MODULE', 'RA_CREATE', 'RA_READ', 'RA_UPDATE', 'RA_DELETE', 'R_REMARK']
     __tablename__        = 'role_access'
     RA_ID                = API.db.Column( "ra_id", API.db.Integer, autoincrement = True, primary_key = True )
-    RA_R_ID              = API.db.Column( "ra_r_id", API.db.Integer, API.db.ForeignKey( "gn_role.r_id" ), nullable = False )
+    RA_R_ID              = API.db.Column( "ra_r_id", API.db.Integer, API.db.ForeignKey( "role.r_id" ), nullable = False )
     RA_MODULE            = API.db.Column( "ra_module", API.db.String( 50 ), API.db.ForeignKey( "mod_access.ma_module" ), nullable = False )
     RA_CREATE            = API.db.Column( "ra_create", API.db.Boolean, default = False )
     RA_READ              = API.db.Column( "ra_read", API.db.Boolean, default = False )

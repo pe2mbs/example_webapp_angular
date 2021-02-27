@@ -39,8 +39,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
                 class="custom-input"
                 matInput [matDatepicker]="datepicker"
                 id="{{ id }}"
-               [attr.readonly]="readonly"
-               [attr.readonly]="disabled"
+                [attr.readonly]="readonly"
+                [attr.readonly]="disabled"
                 placeholder="{{ placeholder }}"
                 [formControl]="control"
                 [min]="minDate"
@@ -81,7 +81,8 @@ export class GcDatePickerInputComponent extends GcBaseComponent
     @Input()                disabled: boolean = false;
     constructor( formGroupDir: FormGroupDirective ) 
     {
-        super( formGroupDir );
+		super( formGroupDir );
+		this.debug = true;
         return;
     }
 
@@ -92,6 +93,10 @@ export class GcDatePickerInputComponent extends GcBaseComponent
 
     public dateChange( $event )
     {
+		console.log( "GcDatePickerInputComponent.dateChange", $event );
+		// Correct for Timezone 
+		$event.value.setTime( $event.value.getTime() + $event.value.getTimezoneOffset()*60*1000 );
+		this.control.setValue( $event.value );
         return;
     }
 }

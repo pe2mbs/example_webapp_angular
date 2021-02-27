@@ -106,6 +106,7 @@ class ${ obj.cls }CurdInterface( ${ makeInheritList( obj ) } ):
     _schema_cls = ${ obj.cls }Schema()
     _schema_list_cls = ${ obj.cls }Schema( many = True )
     _uri = '/api/${ obj.name }'
+    _relations = ${ obj.table.relationShipList }
 
     def __init__( self ):
         CrudInterface.__init__( self, ${ obj.name }Api )
@@ -119,11 +120,17 @@ class ${ obj.cls }CurdInterface( ${ makeInheritList( obj ) } ):
             if field in record:
                 del record[ field ]
 
+% if obj.Mixin.Python.hasView():
+        if hasattr( ${ obj.Mixin.Python.View.cls }, 'beforeUpdate' ):
+            record = ${ obj.Mixin.Python.View.cls }.beforeUpdate( self, record )
+% endif
+
 %if countForeignKeyFieldList( obj.table.columns ) > 0:
         for field in ( ${ makeForeignKeyFieldList( obj.table.columns ) } ):
             if field in record and record[ field ] == 0:
                 record[ field ] = None
 %endif
+
         return record
 
 

@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:02:59 version 2.1.666 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -43,6 +43,7 @@ class Languages( API.db.Model, CrudModelMixin ):
     API.db.UniqueConstraint( 'LA_CODE3', name='LA_CODE3_IDX' )
     API.db.UniqueConstraint( 'LA_COUNTRY_CODE2', name='LA_COUNTRY_CODE2_IDX' )
     API.db.UniqueConstraint( 'LA_COUNTRY_CODE3', name='LA_COUNTRY_CODE3_IDX' )
+    LANGUAGE_REFERENCE_relation       = API.db.relationship( "LanguageReference", cascade="delete,all", backref = 'language', lazy = True )
 
     def memoryInstance( self ):
         return LanguagesMemory( self )

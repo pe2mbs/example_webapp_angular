@@ -14,7 +14,11 @@ class UserViewMixin():
         self.registerRoute( 'profile', self.storeProfile, methods = [ 'POST' ] )
         self.registerRoute( 'authenticate', self.getUserAuthenticate, methods = [ 'POST' ] )
         self.registerRoute( 'signup', self.getUserSignup, methods = [ 'POST' ] )
+        self.registerRoute( 'logout', self.userLogout, methods = [ 'POST' ] )
         return
+
+    def userLogout( self ):
+        return "", 200
 
     def restoreProfile( self, username ):
         if username not in ( '', None, 'undefined' ):

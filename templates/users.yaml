@@ -2,9 +2,9 @@ linux:
     source:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
-        angular:                    dashboard/src/app
+        angular:                    frontend-v10/src/app
     template:
-        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud-v10
         python:                     python
         angular:                    angular
         common:
@@ -66,7 +66,7 @@ objects:
                 class:              UserViewMixin
                 filename:           backend.user.mixin.py
     table:
-        name:                       GN_USER
+        name:                       USER
         tabs:
             labels:
             -   General
@@ -93,7 +93,7 @@ objects:
             listview:
                 width:              150px
                 index:              0
-        -   field:                  U_ROLE                      INT             FOREIGN KEY GN_ROLE.R_ID
+        -   field:                  U_ROLE                      INT             FOREIGN KEY ROLE.R_ID
             label:                  User role
             hint:                   The user role in the application
             ui:

@@ -1,50 +1,41 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Injectable, OnInit } from '@angular/core';
 import { isNullOrUndefined } from 'util';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
-export interface BreadcrumbItems
+export interface BreadcrumbItem
 {
 	label: string;
 	url: string;
 }
 
-// keyboard_arrow_right
-// chevron_right
-// home
 
-@Component({
-  	// tslint:disable-next-line:component-selector
-  	selector: 'gc-breadcrumb',
-	// template: '<p-breadcrumb class="color-primary" [home]="home2" [model]="menuItems"></p-breadcrumb>',
-	templateUrl: 'breadcrumb.component.html',
-	styleUrls: [ 'breadcrumb.component.scss' ]
-} )
-export class GcBreadcrumbComponent
+@Injectable({
+	providedIn: 'root'
+})
+export class GcBreadcrumbService 
 {
-    static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
-	@Input() home: string = '/';
-	public routeItems: BreadcrumbItems[] = new Array<BreadcrumbItems>();
-	home_item: BreadcrumbItems = {
-		label: 'home',	// This is the icon
-		url: '/#/'
-	};
+	private activatedRoute: ActivatedRoute
+	public routeItems: BreadcrumbItem[] = new Array<BreadcrumbItem>();
 
-    constructor( private router: Router, private activatedRoute: ActivatedRoute )
-    {
-        this.router.events.subscribe( event => {
-            if ( event instanceof NavigationEnd ) 
+	constructor( public router: Router ) 
+	{
+		this.router.events.subscribe( event => {
+            if ( event instanceof NavigationEnd && !isNullOrUndefined( this.activatedRoute ) ) 
             {
-				// this.menuItems = this.createBreadcrumbs( this.activatedRoute.root );
 				this.routeItems = this.createBreadcrumbs( this.activatedRoute.root );
 				// console.log( "GcBreadcrumbComponent:", this.routeItems );
-            }
+			}
+			// else
+			// {
+			// 	console.log( "GcBreadcrumbComponent.event:", event );
+			// }
         } );
-        return;
-    }
+	}
 
-	// private createBreadcrumbs(route: ActivatedRoute, url: string = '#', breadcrumbs: MenuItem[] = []): MenuItem[]
-    private createBreadcrumbs(route: ActivatedRoute, url: string = '#', breadcrumbs: BreadcrumbItems[] = []): BreadcrumbItems[]
+	private createBreadcrumbs( route: ActivatedRoute, url: string = '#', 
+							   breadcrumbs: BreadcrumbItem[] = []): BreadcrumbItem[]
     {
+		// console.log( "GcBreadcrumbComponent.createBreadcrumbs:", route );
         const children: ActivatedRoute[] = route.children;
         if ( children.length === 0 )
         {
@@ -69,10 +60,49 @@ export class GcBreadcrumbComponent
             return this.createBreadcrumbs(child, url, breadcrumbs);
         }
 	}
-	
-	public itemClick( $event, item: BreadcrumbItems )
+
+	public setActivatedRoute( activatedRoute: ActivatedRoute )
 	{
-		this.router.navigate( [ item ] );
+		this.activatedRoute = activatedRoute;
+		this.routeItems = this.createBreadcrumbs( this.activatedRoute.root );
+		return;
+	}
+}
+
+
+@Component({
+  	// tslint:disable-next-line:component-selector
+  	selector: 'gc-breadcrumb',
+	templateUrl: 'breadcrumb.component.html',
+	styleUrls: [ 'breadcrumb.component.scss' ],
+} )
+export class GcBreadcrumbComponent implements OnInit
+{
+    static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+	@Input() home: string = '/';
+	home_item: BreadcrumbItem = {
+		label: 'home',	// This is the icon
+		url: '/#/'
+	};
+
+    constructor( private service: GcBreadcrumbService, private activatedRoute: ActivatedRoute )
+    {
+        return;
+    }
+
+	public ngOnInit()
+	{
+		this.service.setActivatedRoute( this.activatedRoute );
+	}
+
+	public get routeItems(): BreadcrumbItem[]
+	{
+		return ( this.service.routeItems );
+	}
+	
+	public itemClick( $event, item: BreadcrumbItem )
+	{
+		this.service.router.navigate( [ item ] );
 		return;
 	}
 }

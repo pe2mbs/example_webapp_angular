@@ -111,4 +111,9 @@ export class GcFilterRecord
 		} );
 		return ( columns );
 	}
+
+	public setFilters( columns: GcFilterColumnReq[] )
+	{
+		return
+	}
 }

@@ -7,7 +7,8 @@ Create Date: ${create_date}
 """
 from alembic import op
 import sqlalchemy as sa
-from datetime import datetime
+import importlib
+import logging
 import webapp2.extensions.database
 from sqlalchemy import orm
 ${imports if imports else ""}
@@ -19,18 +20,39 @@ branch_labels = ${repr(branch_labels)}
 depends_on = ${repr(depends_on)}
 
 
-def get_session():
-    bind = op.get_bind()
-    return orm.Session( bind = bind )
-
-
 def upgrade():
     ${upgrades if upgrades else "pass"}
-    session = get_session()
+    try:
+        module = importlib.import_module( 'runonce.{}'.format( revision ) )
+        if hasattr( module, 'upgrade' ):
+            module.upgrade()
+
+        else:
+            logging.warning( "Revision '{}' has no upgrade() function".format( revision ) )
+
+    except ModuleNotFoundError:
+        logging.warning( "Revision '{}' has no runonce script".format( revision ) )
+
+    except Exception:
+        raise
 
     return
 
 
 def downgrade():
+    try:
+        module = importlib.import_module( 'runonce.{}'.format( revision ) )
+        if hasattr( module, 'downgrade' ):
+            module.downgrade()
+
+        else:
+            logging.warning( "Revision '{}' has no downgrade() function".format( revision ) )
+
+    except ModuleNotFoundError:
+        logging.warning( "Revision '{}' has no runonce script".format( revision ) )
+
+    except Exception:
+        raise
+
     ${downgrades if downgrades else "pass"}
     return

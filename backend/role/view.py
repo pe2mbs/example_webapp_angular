@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 09:08:21 version 2.1.666 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -67,6 +67,7 @@ class RoleCurdInterface( CrudInterface ):
     _schema_cls = RoleSchema()
     _schema_list_cls = RoleSchema( many = True )
     _uri = '/api/role'
+    _relations = []
 
     def __init__( self ):
         CrudInterface.__init__( self, roleApi )

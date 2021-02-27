@@ -5,7 +5,9 @@ import { ProfileInterface } from './model';
 import { ProfileInfo } from './profile.info';
 
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class GcProfileService extends ProfileInfo
 {
 	constructor( private _httpClient: HttpClient, 

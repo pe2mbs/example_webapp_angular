@@ -15,7 +15,7 @@ class RecordTracking( object ):
         return
 
     def action( self, action, table, rec_id, record, user ):
-        API.logger.debug( "record insert( {} )".format( record ) )
+        API.logger.debug( "record action: {} => {}".format( action, record ) )
         if isinstance( record, dict ):
             data = json.dumps( record, cls = JsonEncoder )
         else:

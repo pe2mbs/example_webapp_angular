@@ -81,7 +81,8 @@ export class GcDateInputComponent extends GcBaseComponent
     @Input()                disabled: boolean = false;
     constructor( formGroupDir: FormGroupDirective ) 
     {
-        super( formGroupDir );
+		super( formGroupDir );
+		this.debug = true;
         return;
     }
 
@@ -92,6 +93,10 @@ export class GcDateInputComponent extends GcBaseComponent
 
     public dateChange( $event )
     {
+		console.log( 'GcDateInputComponent.dateChange', $event );
+		// Correct for Timezone 
+		$event.value.setTime( $event.value.getTime() + $event.value.getTimezoneOffset()*60*1000 );
+		this.control.setValue( $event.value );
         return;
     }
 }

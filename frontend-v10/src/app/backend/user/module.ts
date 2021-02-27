@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:04 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 09:09:14 version 2.1.666 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,6 +34,7 @@ import { UserDataService } from './service';
 import { GcDefaultComponent } from 'src/app/gencrud/default.component';
 
 
+// tslint:disable-next-line:variable-name
 export const userRoute: Route = {
     path: '',
     component: GcDefaultComponent,
@@ -115,7 +116,8 @@ export const userRoute: Route = {
 } )
 export class UserModule
 {
-    static forRoot(): ModuleWithProviders<UserModule> {
+    static forRoot(): ModuleWithProviders<UserModule>
+    {
         return {
             ngModule: UserModule,
             providers: [

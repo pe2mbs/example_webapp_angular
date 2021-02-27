@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:02:59 version 2.1.666 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,6 +34,7 @@ import { LanguagesDataService } from './service';
 import { GcDefaultComponent } from 'src/app/gencrud/default.component';
 
 
+// tslint:disable-next-line:variable-name
 export const languagesRoute: Route = {
     path: '',
     component: GcDefaultComponent,
@@ -98,8 +99,8 @@ export const languagesRoute: Route = {
 } )
 export class LanguagesModule
 {
-	static forRoot(): ModuleWithProviders<LanguagesModule> 
-	{
+    static forRoot(): ModuleWithProviders<LanguagesModule>
+    {
         return {
             ngModule: LanguagesModule,
             providers: [

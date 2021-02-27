@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:13:46 version 2.1.666 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -99,7 +99,8 @@ export const language_referenceRoute: Route = {
 } )
 export class LanguageReferenceModule
 {
-    static forRoot(): ModuleWithProviders<LanguageReferenceModule> {
+    static forRoot(): ModuleWithProviders<LanguageReferenceModule>
+    {
         return {
             ngModule: LanguageReferenceModule,
             providers: [

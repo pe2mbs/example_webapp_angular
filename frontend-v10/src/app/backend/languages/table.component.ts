@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:02:59 version 2.1.666 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -74,27 +74,27 @@ export class LanguagesTableComponent
 		columns: [
             {
                 columnDef: 'LA_LABEL',
-				header: "Label",
+				header: "Language",
 				display: true,
-				width: "40%",
+				width: "20%",
 				filter: true,
 				sort: true,
                 cell: (row: LanguagesRecord) => row.LA_LABEL
             },
             {
                 columnDef: 'LA_CODE2',
-				header: "Language code-2",
+				header: "Lang. code-2",
 				display: true,
-				width: "15%",
+				width: "20%",
 				filter: true,
 				sort: true,
                 cell: (row: LanguagesRecord) => row.LA_CODE2
             },
             {
                 columnDef: 'LA_CODE3',
-				header: "Language code-3",
+				header: "Lang. code-3",
 				display: true,
-				width: "15%",
+				width: "20%",
 				filter: true,
 				sort: true,
                 cell: (row: LanguagesRecord) => row.LA_CODE3
@@ -103,7 +103,7 @@ export class LanguagesTableComponent
                 columnDef: 'LA_COUNTRY_CODE2',
 				header: "Country code-2",
 				display: true,
-				width: "15%",
+				width: "20%",
 				filter: true,
 				sort: true,
                 cell: (row: LanguagesRecord) => row.LA_COUNTRY_CODE2
@@ -112,7 +112,7 @@ export class LanguagesTableComponent
                 columnDef: 'LA_COUNTRY_CODE3',
 				header: "Country code-3",
 				display: true,
-				width: "15%",
+				width: "20%",
 				filter: true,
 				sort: true,
                 cell: (row: LanguagesRecord) => row.LA_COUNTRY_CODE3
@@ -128,7 +128,7 @@ export class LanguagesTableComponent
 						label: 'Delete',
 						icon: 'delete',
 						action: (core: any, self: any, idx: number, row: LanguagesRecord) => {
-							core.deleteRecord( idx, row, 'LA_ID', 'Label', 'LA_LABEL' );
+							core.deleteRecord( idx, row, 'LA_ID', 'Language', 'LA_LABEL' );
 						}
 					},
                 ]
@@ -162,6 +162,7 @@ export class LanguagesTableComponent
         };
         if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
 		{
+		    options.data.fixed = {}
 			options.data.fixed[ this.id ] = this.value;
 		}
         const dialogRef = this.dialog.open( DialogLanguagesComponent, options );
@@ -185,6 +186,7 @@ export class LanguagesTableComponent
         };
         if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
 		{
+		    options.data.fixed = {}
 			options.data.fixed[ this.id ] = this.value;
 		}
         const dialogRef = this.dialog.open( DialogLanguagesComponent, options );

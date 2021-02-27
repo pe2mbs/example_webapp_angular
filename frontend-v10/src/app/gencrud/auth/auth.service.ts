@@ -7,7 +7,9 @@ import { isNullOrUndefined } from 'util';
 import { GcSignupData, GcAuthResponse } from './model';
 
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class GcAuthService 
 {
 	public changeEvent: EventEmitter<GcAuthService> = new EventEmitter<GcAuthService>(); 

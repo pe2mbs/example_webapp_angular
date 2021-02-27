@@ -2,9 +2,9 @@ linux:
     source:
         base:                       /home/mbertens/src/python/example_webapp_angular
         python:                     .
-        angular:                    dashboard/src/app
+        angular:                    frontend-v10/src/app
     template:
-        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud
+        base:                       /home/mbertens/src/python/example_webapp_angular/templates/gencrud-v10
         python:                     python
         angular:                    angular
         common:
@@ -59,8 +59,17 @@ objects:
     modules:
     -   class:                      LanguageReferenceModule
         path:                       language_reference
+    mixin:
+        python:
+            view:
+                class:              LangTranslateViewMixin
+                filename:           backend.language_translates.view_mixin.py
     table:
         name:                       LANGUAGE_TRANSLATES
+        relationship:
+        -   table:                  LANGUAGE_REFERENCE
+            class:                  LanguageReference
+            cascade:                delete,all
         tabs:
             labels:
             -   Translates

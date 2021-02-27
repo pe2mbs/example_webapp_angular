@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:02:59 version 2.1.666 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -68,6 +68,7 @@ class LanguagesCurdInterface( CrudInterface, LanguagesViewMixin ):
     _schema_cls = LanguagesSchema()
     _schema_list_cls = LanguagesSchema( many = True )
     _uri = '/api/languages'
+    _relations = [{'table': 'LANGUAGE_REFERENCE', 'class': 'LanguageReference', 'cascade': 'delete,all'}]
 
     def __init__( self ):
         CrudInterface.__init__( self, languagesApi )

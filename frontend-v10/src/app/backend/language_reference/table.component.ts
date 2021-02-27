@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:13:46 version 2.1.666 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -140,7 +140,7 @@ export class LanguageReferenceTableComponent
         };
         if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
 		{
-			options.data.fixed = {}
+		    options.data.fixed = {}
 			options.data.fixed[ this.id ] = this.value;
 		}
         const dialogRef = this.dialog.open( DialogLanguageReferenceComponent, options );
@@ -165,7 +165,7 @@ export class LanguageReferenceTableComponent
         };
         if ( !isNullOrUndefined( this.id ) && !isNullOrUndefined( this.value ) )
 		{
-			options.data.fixed = {}
+		    options.data.fixed = {}
 			options.data.fixed[ this.id ] = this.value;
 		}
         const dialogRef = this.dialog.open( DialogLanguageReferenceComponent, options );

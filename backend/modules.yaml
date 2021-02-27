@@ -10,18 +10,21 @@
 - model: LanguageReference
   module: backend.language_reference
   table: language_reference
-- model: LanguageTransalates
+- model: LanguageTranslations
   module: backend.language_translates
   table: language_translates
 - model: User
   module: backend.user
-  table: gn_user
+  table: user
 - model: Role
   module: backend.role
-  table: gn_role
+  table: role
 - model: RoleAccess
   module: backend.role_access
   table: role_access
 - model: ModuleAccess
   module: backend.mod_access
   table: mod_access
+- model: News
+  module: backend.news
+  table: news

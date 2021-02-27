@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:13:45 version 2.1.666 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -37,7 +37,7 @@ class LanguageReference( API.db.Model, CrudModelMixin ):
     LR_LT_ID             = API.db.Column( "lr_lt_id", API.db.Integer, API.db.ForeignKey( "language_translates.lt_id" ), nullable = False )
 
     LR_LA_ID_FK          = API.db.relationship( 'Languages', backref = 'language_reference', lazy = True )
-    LR_LT_ID_FK          = API.db.relationship( 'LanguageTransalates', backref = 'language_reference', lazy = True )
+    LR_LT_ID_FK          = API.db.relationship( 'LanguageTranslations', backref = 'language_reference', lazy = True )
 
     def memoryInstance( self ):
         return LanguageReferenceMemory( self )

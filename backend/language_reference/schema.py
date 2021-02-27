@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:02 version 2.1.663 by user mbertens
+#   gencrud: 2021-02-21 08:13:45 version 2.1.666 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.parameters import SerializationDictField
@@ -30,7 +30,7 @@ class LanguageReferenceSchema( API.mm.SQLAlchemySchema ):
         fields = [ "LR_ID", "LR_LA_ID", "LR_LA_ID_FK", "TR_TEXT", "LR_LT_ID", "LR_LT_ID_FK" ]
 
     LR_LA_ID_FK             = API.mm.Nested( 'LanguagesSchema' )
-    LR_LT_ID_FK             = API.mm.Nested( 'LanguageTransalatesSchema' )
+    LR_LT_ID_FK             = API.mm.Nested( 'LanguageTranslationsSchema' )
 
 language_referenceSchema   = LanguageReferenceSchema()
 language_referencesSchema  = LanguageReferenceSchema( many = True )
