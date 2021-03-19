@@ -22,7 +22,7 @@
 - lr_la_id: 2
   lr_lt_id: 8
   tr_text: Talen
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 9
   tr_text: Dashboard
 - lr_la_id: 2
@@ -34,10 +34,10 @@
 - lr_la_id: 2
   lr_lt_id: 12
   tr_text: Record slot
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 13
   tr_text: Database
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 14
   tr_text: Demo
 - lr_la_id: 2
@@ -67,7 +67,7 @@
 - lr_la_id: 2
   lr_lt_id: 23
   tr_text: Verwijder
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 24
   tr_text: News
 - lr_la_id: 2
@@ -88,7 +88,7 @@
 - lr_la_id: 2
   lr_lt_id: 30
   tr_text: Groter of gelijk aan >=
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 31
   tr_text: Is leeg
 - lr_la_id: 2
@@ -115,13 +115,13 @@
 - lr_la_id: 2
   lr_lt_id: 39
   tr_text: Voornaam
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 40
   tr_text: Gebruikersnaam
 - lr_la_id: 2
   lr_lt_id: 41
   tr_text: Vertalingen
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 42
   tr_text: Fout, opnieuw
 - lr_la_id: 2
@@ -145,7 +145,7 @@
 - lr_la_id: 2
   lr_lt_id: 49
   tr_text: Gebruiker naam moet moet minimaal 7 karakters bevatten
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 50
   tr_text: Taal
 - lr_la_id: 2
@@ -169,30 +169,30 @@
 - lr_la_id: 2
   lr_lt_id: 57
   tr_text: Laatste pagina
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 58
   tr_text: Label
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 59
   tr_text: Taal code-2
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 60
   tr_text: Taal code-3
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 61
   tr_text: Land code-2
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 62
   tr_text: Lang code-3
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 63
   tr_text: Max. waarde
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 64
   tr_text: Min. waarde
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 65
   tr_text: Taal code-2
-- lr_la_id: 1
+- lr_la_id: 2
   lr_lt_id: 66
   tr_text: Taal code-3

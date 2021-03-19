@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-21 09:09:14 version 2.1.666 by user mbertens
+#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -29,6 +29,7 @@ import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { UserRecord } from './model';
 import { UserDataService } from './service';
 import { RoleDataService } from '../role/service';
+import { LanguagesDataService } from '../languages/service';
 
 
 @Component({
@@ -131,7 +132,8 @@ export class UserTableComponent
                , profileService: GcProfileService
                , protected dialog: MatDialog
                , public router: Router
-                 , public roleService: RoleDataService )
+                 , public roleService: RoleDataService
+                 , public languagesService: LanguagesDataService )
     {
         this.definition.dataService = dataService;
 		this.definition.profileService = profileService;

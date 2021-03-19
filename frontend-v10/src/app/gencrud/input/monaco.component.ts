@@ -26,7 +26,25 @@ import { trigger, state, style,
 import { GcBaseComponent } from './base.input.component';
 import { NgxMonacoEditorConfig } from "ngx-monaco-editor";
 import { NgxEditorModel } from 'ngx-monaco-editor';
-// import * as vscode from 'monaco-editor/monaco';
+/*
+*   This module depends on the following versions
+*   "ngx-monaco-editor": "^8.1.1",
+*   "monaco-editor": "^0.21.2",
+*
+*   And the following chnage in angular.json
+*   "assets": [
+*           ...
+*    				{ 	"glob": "** /*",
+*    					"input": "node_modules/ngx-monaco-editor/assets/monaco/",
+*    					"output": "./assets/monaco/"
+*    				},
+*    				{ 	"glob": "** /*",
+*    					"input": "node_modules/monaco-editor/min/",
+*    					"output": "./assets/monaco/"
+*    				}
+*   ],
+*/
+declare const monaco: any;
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -65,23 +83,19 @@ export const monacoConfig: NgxMonacoEditorConfig = {
                        [(ngModel)]="code" class="ngx-monaco-editor">
     </ngx-monaco-editor>
     </div>`,
-	styles: [ `:host
-    {
-        height: calc( 100% - 40px );
-    }
-
+	styles: [ `
     .monaco-code-editor
     {
 		width: 100%;
 		min-height: 200px;
-		height: calc( 100% - 20px );
+		height: calc( 100% - 25px );
 		padding-bottom: 35px;
 		box-sizing: content-box;
 	}
 
 	.ngx-monaco-editor
 	{
-		height: calc( 100% - 16px );
+		height: calc( 100% - 25px );
 		border: 1px solid rgba(0, 0, 0, 0.10) !important;
 	}
 
@@ -99,7 +113,7 @@ export const monacoConfig: NgxMonacoEditorConfig = {
     'visibilityChanged', [
         state( 'true',  style( { 'height': '*', 'padding-top': '4px' } ) ),
         state( 'false', style( { height: '0px', 'padding-top': '0px' } ) ),
-        transition( '*=>*', animate( '200ms' ) )
+        // transition( '*=>*', animate( '200ms' ) )
     ] )
     ]
 } )
@@ -110,7 +124,7 @@ export class GcMonacoEditorComponent extends GcBaseComponent implements OnChange
     @Input() minimap: boolean = true;
     public monacoOptions = monacoConfig.defaultOptions;
     public code: string = "";
-    private _editorInstance: any;
+    private _editorInstance: any; // monaco.editor.IStandaloneCodeEditor;
     @ViewChild( "editor", { static: true } ) editorContent: ElementRef;
 
     constructor( formGroupDir: FormGroupDirective )
@@ -137,7 +151,7 @@ export class GcMonacoEditorComponent extends GcBaseComponent implements OnChange
                                               minimap: { enabled: this.minimap }
         } );
 		const model = this._editorInstance.getModel(); // we'll create a model for you if the editor created from string value.
-		this._editorInstance.setModelLanguage( model, this.language );
+		monaco.editor.setModelLanguage( model, this.language );
         this._editorInstance.onDidChangeModelContent( () => {
             this.control.patchValue( this._editorInstance.getValue() );
             this.control.markAsPending();

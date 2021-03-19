@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-21 09:09:14 version 2.1.666 by user mbertens
+#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -76,9 +76,13 @@ class UserCurdInterface( CrudInterface, UserViewMixin ):
         return
 
     def beforeUpdate( self, record ):
-        for field in ( "U_ID", "U_ACTIVE_LABEL", "U_ROLE_FK", "U_MUST_CHANGE_LABEL", "U_LOCALE_LABEL", "U_LISTITEMS_LABEL", ):
+        for field in ( "U_ID", "U_ACTIVE_LABEL", "U_ROLE_FK", "U_MUST_CHANGE_LABEL", "U_LISTITEMS_LABEL", ):
             if field in record:
                 del record[ field ]
+
+        if hasattr( UserViewMixin, 'beforeUpdate' ):
+            record = UserViewMixin.beforeUpdate( self, record )
+
 
         return record
 

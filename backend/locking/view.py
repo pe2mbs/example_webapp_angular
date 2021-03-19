@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -68,6 +68,7 @@ class RecordLocksCurdInterface( CrudInterface, RecordLocksViewMixin ):
     _schema_cls = RecordLocksSchema()
     _schema_list_cls = RecordLocksSchema( many = True )
     _uri = '/api/locking'
+    _relations = []
 
     def __init__( self ):
         CrudInterface.__init__( self, lockingApi )
@@ -78,6 +79,10 @@ class RecordLocksCurdInterface( CrudInterface, RecordLocksViewMixin ):
         for field in ( "L_ID", ):
             if field in record:
                 del record[ field ]
+
+        if hasattr( RecordLocksViewMixin, 'beforeUpdate' ):
+            record = RecordLocksViewMixin.beforeUpdate( self, record )
+
 
         return record
 

@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-21 08:13:45 version 2.1.666 by user mbertens
+#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -77,6 +77,8 @@ class LanguageReferenceCurdInterface( CrudInterface ):
         for field in ( "LR_ID", "LR_LA_ID_FK", "LR_LT_ID_FK", ):
             if field in record:
                 del record[ field ]
+
+
 
         return record
 

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,6 +34,7 @@ import { TrackingDataService } from './service';
 import { GcDefaultComponent } from 'src/app/gencrud/default.component';
 
 
+// tslint:disable-next-line:variable-name
 export const trackingRoute: Route = {
     path: '',
     component: GcDefaultComponent,
@@ -105,7 +106,8 @@ export const trackingRoute: Route = {
 } )
 export class TrackingModule
 {
-    static forRoot(): ModuleWithProviders<TrackingModule> {
+    static forRoot(): ModuleWithProviders<TrackingModule>
+    {
         return {
             ngModule: TrackingModule,
             providers: [

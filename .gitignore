@@ -48,6 +48,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+dashboard.db
 
 # python files
 __pycache__/
@@ -55,3 +56,4 @@ __pycache__/
 *.pyc
 TEST
 venv38/
+venv39/

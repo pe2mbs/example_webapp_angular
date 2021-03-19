@@ -17,7 +17,7 @@
 #   Boston, MA 02110-1301 USA
 #*/
 // Angular modules
-import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA, SecurityContext } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Route } from '@angular/router';
@@ -42,7 +42,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
+import { MatRippleModule, DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -67,7 +67,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 // Gencrud components
@@ -98,8 +98,8 @@ import { GcHeaderComponent } from './header/header.component';
 import { GcFooterComponent } from './footer.component';
 import { GcNavSidebarComponent } from './nav/sidebar.component';
 import { GcHelpComponent } from './help/help.component';
-import { GcHelpService } from './help/service.service';
-import { GcHelpDialogComponent } from './help/dialog.component';
+import { GcHelpService } from './help/help-service';
+import { GcHelpDialogComponent } from './help/help-dialog/help-dialog.component';
 import { GcMenuListItemComponent } from './nav/menu.item.component/item.component';
 import { GcNavService } from './nav/nav.service';
 import { GcAuthService } from './auth/auth.service';
@@ -126,6 +126,8 @@ import { ErrorDialogComponent } from './error-dialog/errordialog.component';
 import { FrontendErrorDialogComponent } from './error-dialog/frontend-errordialog.component';
 import { BackendErrorDialogComponent } from './error-dialog/backend-errordialog.component';
 import { ErrorDialogService } from './error-dialog/errordialog.service';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 
 
 const importExportModules = [
@@ -161,7 +163,8 @@ const importExportModules = [
 	MatGridListModule,
 	MatRadioModule,
 	MatDatepickerModule,
-	MatNativeDateModule ,
+	// MatNativeDateModule,
+	MatMomentDateModule,
 	MatTooltipModule,
 	MatSlideToggleModule,
 	MatSliderModule,
@@ -170,7 +173,7 @@ const importExportModules = [
 	FlexLayoutModule,
 	TranslateModule,
 	NgSelectModule,
-    NgxMaterialTimepickerModule,
+	NgxMaterialTimepickerModule,
 ];
 
 const declareExportComponents = [
@@ -216,7 +219,6 @@ const declareExportComponents = [
 	GcDeleteDialog,
 	CustDataTableComponent,
 	ErrorDialogComponent
-
 ];
 
 
@@ -230,6 +232,7 @@ const defaultRoute: Route = {
 		}
 	]
 };
+
 
 @NgModule({
     declarations: [
@@ -272,7 +275,13 @@ const defaultRoute: Route = {
 			provide: MatPaginatorIntl, 
 			useClass: GcMatPaginatorIntl,
 			deps: [ TranslateService ]
-		}
+		},
+		GcHelpService,  
+        {
+            provide: MatDialogRef,
+            useValue: {
+            }
+        },
 	],
 	schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     imports: [
@@ -281,7 +290,9 @@ const defaultRoute: Route = {
         FormsModule,
         ReactiveFormsModule,
 		MonacoEditorModule.forRoot(),
-		MarkdownModule.forChild(),
+		MarkdownModule.forRoot( {
+			sanitize: SecurityContext.NONE
+		} ),
 		GridsterModule,
 		RouterModule.forChild( [ defaultRoute ] ),
         TranslateModule.forRoot( {

@@ -2,7 +2,7 @@
 
 Revision ID: WEBAPP_CORE_V2
 Revises: 
-Create Date: 2021-02-21 09:23:05.491196
+Create Date: 2021-02-28 08:48:24.535403
 
 """
 from alembic import op
@@ -10,6 +10,7 @@ import sqlalchemy as sa
 import importlib
 import logging
 import webapp2.extensions.database
+from sqlalchemy import orm
 
 
 # revision identifiers, used by Alembic.
@@ -118,10 +119,6 @@ def upgrade():
     sa.Column('u_middle_name', sa.String(length=50), nullable=True),
     sa.Column('u_last_name', sa.String(length=50), nullable=False),
     sa.Column('u_email', sa.String(length=100), nullable=False),
-    sa.Column('u_access_token', sa.String(length=512), nullable=True),
-    sa.Column('u_refresh_token', sa.String(length=512), nullable=True),
-    sa.Column('u_token_dt', sa.DateTime(), nullable=True),
-    sa.Column('u_create_dt', sa.DateTime(), nullable=True),
     sa.Column('u_remark', webapp2.extensions.database.LONGTEXT(), nullable=True),
     sa.Column('u_locale', sa.Integer(), nullable=True),
     sa.Column('u_listitems', sa.Integer(), nullable=True),

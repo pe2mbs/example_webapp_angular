@@ -1,43 +1,45 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { GcHelpDialogComponent, GcHelpDialogData } from './dialog.component';
-import { GcHelpService } from './service.service';
+import { GcHelpDialogComponent } from './help-dialog/help-dialog.component';
+import { GcHelpService } from './help-service';
+import { Overlay } from '@angular/cdk/overlay';
+import { HelpInformationData } from './model';
 
-@Component({
-	// tslint:disable-next-line:component-selector
-	selector: 'gc-help',
-	template: `<button mat-icon-button [color]="color" (click)="helpButton()"><mat-icon>help_outline</mat-icon></button>`,
+@Component( {
+    // tslint:disable-next-line:component-selector
+    selector: 'gc-help',
+    template: `<button mat-icon-button color="primary" id="help-button" style="float: right;"
+                                       (click)="onHelpClick()"><mat-icon aria-label="Help">help_outline</mat-icon>
+                                       </button>`,
+    styleUrls: []
 } )
-export class GcHelpComponent
+export class GcHelpComponent implements OnInit
 {
-	@Input() helpitem: string;
-	@Input() fallback: string;
-	@Input() color: string;
+    @Input()    helpitem: string;
+    @Input()    fallback: string;
+    private     helpData: HelpInformationData;
 
-	constructor( public dialog: MatDialog
-		       , public service: GcHelpService ) 
-	{ 
-		return;
-	}
+    constructor( public helpService: GcHelpService
+               , public dialog: MatDialog
+               , private overlay: Overlay )
+    {
+        this.helpData = null;
+        return;
+    }
 
-	public helpButton(): void
-	{
-		const helpdata: GcHelpDialogData =
-		{
-			name: this.helpitem,
-			text: this.service.getHelp( this.helpitem, this.fallback ),
-		};
-		console.log( 'helpButton' );
-		const dialogRef = this.dialog.open( GcHelpDialogComponent, {  
-			autoFocus: false,
-			// maxHeight: '80vh',
-			width: '80%',
-			height: '80%',
-			data: helpdata
-		} );
-	    dialogRef.afterClosed().subscribe( result => {
-    	  	console.log(`Dialog result: ${result}`);
-    	} );
-		return;
-	}
+    public ngOnInit(): void
+    {
+        return;
+    }
+
+    public onHelpClick(): void
+    {
+        const dialogRef = this.dialog.open( GcHelpDialogComponent, {
+                data: this.helpService.getHelp( this.helpitem, this.fallback ),
+                autoFocus: false,
+                panelClass: 'custom-dialog-container'
+            } );
+        dialogRef.updateSize( '85%', '85%' );
+        return;
+    }
 }

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-21 09:09:14 version 2.1.666 by user mbertens
+#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -28,6 +28,7 @@ import { UserRecord } from './model';
 
 import { GcSelectList } from 'src/app/gencrud/crud/model';
 import { RoleDataService } from '../role/service';
+import { LanguagesDataService } from '../languages/service';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -59,12 +60,7 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
             "value": false
         }
     ];
-    public U_LOCALEList = [
-        {
-            "label": "nl_NL",
-            "value": 1
-        }
-    ];
+    public languagesList: GcSelectList[];
     public U_LISTITEMSList = [
         {
             "label": "5 Records",
@@ -86,7 +82,8 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
 
     constructor( route: ActivatedRoute
                , dataService: UserDataService
-                 , public roleService: RoleDataService  )
+                 , public roleService: RoleDataService
+                 , public languagesService: LanguagesDataService  )
     {
         super( route, dataService );
         this.row = new UserRecord();
@@ -128,6 +125,11 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
                                     , 'R_ROLE'
                                      ).subscribe( dataList => {
             this.roleList = dataList;
+        } ) );
+        this.registerSubscription( this.languagesService.getSelectList( 'LA_ID'
+                                    , 'LA_LABEL'
+                                     ).subscribe( dataList => {
+            this.languagesList = dataList;
         } ) );
         return;
     }
@@ -200,26 +202,6 @@ export class ScreenUserComponent extends GcScreenBase<UserRecord> implements OnI
     public get U_EMAIL()
     {
         return ( this.formGroup.get( 'U_EMAIL' ) );
-    }
-
-    public get U_ACCESS_TOKEN()
-    {
-        return ( this.formGroup.get( 'U_ACCESS_TOKEN' ) );
-    }
-
-    public get U_REFRESH_TOKEN()
-    {
-        return ( this.formGroup.get( 'U_REFRESH_TOKEN' ) );
-    }
-
-    public get U_TOKEN_DT()
-    {
-        return ( this.formGroup.get( 'U_TOKEN_DT' ) );
-    }
-
-    public get U_CREATE_DT()
-    {
-        return ( this.formGroup.get( 'U_CREATE_DT' ) );
     }
 
     public get U_REMARK()

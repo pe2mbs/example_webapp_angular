@@ -133,7 +133,7 @@ objects:
             tab:
                 label:              Personal
                 index:              0
-        -   field:                  U_MIDDLE_NAME               CHAR( 50 )      NULL
+        -   field:                  U_MIDDLE_NAME               CHAR( 50 )      DEFAULT NULL
             hint:                   The user's additional names
             label:                  Middle name
             ui:
@@ -163,15 +163,7 @@ objects:
             tab:
                 label:              General
                 index:              3
-        -   field:                  U_ACCESS_TOKEN              CHAR( 512 )     NULL
-            remark:                 This is used for the token handling, therefore not shown in the UI
-        -   field:                  U_REFRESH_TOKEN             CHAR( 512 )     NULL
-            remark:                 This is used for the token handling, therefore not shown in the UI
-        -   field:                  U_TOKEN_DT                  TIMESTAMP       NULL
-            remark:                 This is used for the token handling, therefore not shown in the UI
-        -   field:                  U_CREATE_DT                 TIMESTAMP       NULL
-            remark:                 This is used for the token handling, therefore not shown in the UI
-        -   field:                  U_REMARK                    CLOB            NULL
+        -   field:                  U_REMARK                    CLOB            DEFAULT NULL
             label:                  Remark
             hint:                   Miscellaneous information not related.
             ui:
@@ -182,13 +174,16 @@ objects:
             tab:
                 label:              Remark
                 index:              0
-        -   field:                  U_LOCALE                    INT
+        -   field:                  U_LOCALE                    INT             DEFAULT 1
             hint:                   The users locale (country and timezone).
             label:                  Locale
             ui:
                 type:               choice
-                resolve-list:
-                    1:              nl_NL
+                service:
+                    name:           languages
+                    class:          Languages
+                    value:          LA_ID
+                    label:          LA_LABEL
             tab:
                 label:              Profile
                 index:              0
@@ -205,7 +200,7 @@ objects:
             tab:
                 label:              Profile
                 index:              1
-        -   field:                  U_PROFILE                    CLOB            NULL
+        -   field:                  U_PROFILE                    CLOB            DEFAULT NULL
             label:                  Profile data
             ui:
                 type:               editor

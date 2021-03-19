@@ -31,8 +31,9 @@ export class GcTokenInterceptorService implements HttpInterceptor
 		} 
 		return next.handle( req.clone( { headers: newHeaders } ) ).pipe(
             map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
+				if ( event instanceof HttpResponse ) 
+				{
+                    // console.log('event--->>>', event);
                 }
                 return event;
 			} ),
@@ -42,13 +43,12 @@ export class GcTokenInterceptorService implements HttpInterceptor
 					reason: error && error.error && error.error.reason ? error.error.reason : '',
 					status: error.status
 				};
-				console.log( "error >> ", data );
+				// console.log( "error >> ", data );
 				if ( error.status === 401 )
 				{
 					console.log( "Handled by higher level application" );
-					
 				}
-				if ( error.status >= 400 && error.status <= 499 )
+				else if ( error.status >= 400 && error.status <= 499 )
 				{
 					// Backend error that some thing is not allowed
 					this.errorDialogService.openDialog( data );

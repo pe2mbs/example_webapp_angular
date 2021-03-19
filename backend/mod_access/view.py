@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -67,6 +67,7 @@ class ModuleAccessCurdInterface( CrudInterface ):
     _schema_cls = ModuleAccessSchema()
     _schema_list_cls = ModuleAccessSchema( many = True )
     _uri = '/api/mod_access'
+    _relations = []
 
     def __init__( self ):
         CrudInterface.__init__( self, mod_accessApi )
@@ -76,6 +77,8 @@ class ModuleAccessCurdInterface( CrudInterface ):
         for field in ( "MA_ID", ):
             if field in record:
                 del record[ field ]
+
+
 
         return record
 

@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-14 06:07:03 version 2.1.663 by user mbertens
+#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -67,6 +67,7 @@ class TrackingCurdInterface( CrudInterface ):
     _schema_cls = TrackingSchema()
     _schema_list_cls = TrackingSchema( many = True )
     _uri = '/api/tracking'
+    _relations = []
 
     def __init__( self ):
         CrudInterface.__init__( self, trackingApi )
@@ -76,6 +77,8 @@ class TrackingCurdInterface( CrudInterface ):
         for field in ( "T_ID", "T_ACTION_LABEL", ):
             if field in record:
                 del record[ field ]
+
+
 
         return record
 

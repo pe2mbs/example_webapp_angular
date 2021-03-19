@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-02-21 08:03:42 version 2.1.666 by user mbertens
+#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -79,6 +79,10 @@ class LanguageTranslationsCurdInterface( CrudInterface, LangTranslateViewMixin )
         for field in ( "LT_ID", ):
             if field in record:
                 del record[ field ]
+
+        if hasattr( LangTranslateViewMixin, 'beforeUpdate' ):
+            record = LangTranslateViewMixin.beforeUpdate( self, record )
+
 
         return record
 

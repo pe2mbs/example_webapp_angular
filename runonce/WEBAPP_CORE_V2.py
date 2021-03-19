@@ -78,7 +78,7 @@ def upgrade():
     session.execute( "DELETE FROM language_reference" )
     for language in ( 'en', 'nl', 'de', 'fr', 'it' ):
         executeListCommands( session,
-                             loadDataFile( "language-{}.yaml".format( language ) ),
+                             loadDataFile( "language-{}.yaml".format( language ), __name__ ),
                              "INSERT INTO language_reference ( lr_la_id, lr_lt_id, tr_text )"
                              "VALUES ( :lr_la_id, :lr_lt_id, :tr_text )" )
 

@@ -95,7 +95,7 @@ export class GcDateInputComponent extends GcBaseComponent
     {
 		console.log( 'GcDateInputComponent.dateChange', $event );
 		// Correct for Timezone 
-		$event.value.setTime( $event.value.getTime() + $event.value.getTimezoneOffset()*60*1000 );
+		// $event.value.setTime( $event.value.getTime() + $event.value.getTimezoneOffset()*60*1000 );
 		this.control.setValue( $event.value );
         return;
     }
