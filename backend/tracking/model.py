@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:09 version 2.1.680 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -44,6 +44,12 @@ class Tracking( API.db.Model, CrudModelMixin ):
         return TrackingMemory( self )
 
 
-class TrackingMemory( DbBaseMemory ):
-    __model_cls__   = Tracking
+API.dbtables.register( Tracking )
 
+
+class TrackingMemory( DbBaseMemory ):
+    __model_cls__       = Tracking
+    __tablename__       = 'tracking'
+
+
+API.memorytables.register( TrackingMemory )

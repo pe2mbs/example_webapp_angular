@@ -25,7 +25,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
 import { CustDataTableComponent } from 'src/app/gencrud/crud/cust.data.table.component';
 import { isNullOrUndefined } from 'util';
-import { TableDefintion } from 'src/app/modules/demo/table-http-example';
+import { TableDefintion } from 'src/app/gencrud/crud/model';
 import { ${ obj.cls }Record } from './model';
 % if obj.Mixin.Angular.hasTableComponent():
 import { ${obj.Mixin.Angular.TableComponent.cls} } from '${obj.Mixin.Angular.TableComponent.filename}';
@@ -143,12 +143,21 @@ export class ${ obj.cls }TableComponent
         ]
     };
 
+% if obj.Mixin.Angular.hasTableComponent():
+    constructor( dataService: ${ obj.cls }DataService
+               , profileService: GcProfileService
+               , dialog: MatDialog
+               , router: Router
+${ obj.externalService } )
+    {
+        super( dataService, profileService, dialog, router );
+% else:
     constructor( dataService: ${ obj.cls }DataService
                , profileService: GcProfileService
                , protected dialog: MatDialog
-               , public router: Router
-${ obj.externalService } )
+               , public router: Router )
     {
+% endif
         this.definition.dataService = dataService;
 		this.definition.profileService = profileService;
 		this.definition.dialog = dialog;

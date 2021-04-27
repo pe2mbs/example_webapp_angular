@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:09 version 2.1.680 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -42,6 +42,12 @@ class RecordLocks( API.db.Model, CrudModelMixin ):
         return RecordLocksMemory( self )
 
 
-class RecordLocksMemory( DbBaseMemory ):
-    __model_cls__   = RecordLocks
+API.dbtables.register( RecordLocks )
 
+
+class RecordLocksMemory( DbBaseMemory ):
+    __model_cls__       = RecordLocks
+    __tablename__       = 'locking'
+
+
+API.memorytables.register( RecordLocksMemory )

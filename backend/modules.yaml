@@ -18,7 +18,7 @@
   table: user
 - model: Role
   module: backend.role
-  table: role
+  table: roles
 - model: RoleAccess
   module: backend.role_access
   table: role_access

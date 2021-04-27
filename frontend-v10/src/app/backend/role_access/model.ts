@@ -17,20 +17,20 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:27:09 version 2.1.680 by user mbertens
 */
 export class RoleAccessRecord
 {
     RA_ID: number;
     RA_R_ID: number;
-    RA_MODULE: string;
+    RA_MA_ID: number;
     RA_CREATE: boolean;
     RA_READ: boolean;
     RA_UPDATE: boolean;
     RA_DELETE: boolean;
     R_REMARK: string;
     RA_R_ID_FK: any;
-    RA_MODULE_FK: any;
+    RA_MA_ID_FK: any;
     RA_CREATE_LABEL: string;
     RA_READ_LABEL: string;
     RA_UPDATE_LABEL: string;

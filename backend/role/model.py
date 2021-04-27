@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:09 version 2.1.680 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -30,7 +30,7 @@ class Role( API.db.Model, CrudModelMixin ):
     When modifing the file make sure that you remove the table from the configuration.
     """
     __field_list__       = ['R_ID', 'R_ROLE', 'R_REMARK']
-    __tablename__        = 'role'
+    __tablename__        = 'roles'
     R_ID                 = API.db.Column( "r_id", API.db.Integer, autoincrement = True, primary_key = True )
     R_ROLE               = API.db.Column( "r_role", API.db.String( 255 ), nullable = False )
     R_REMARK             = API.db.Column( "r_remark", API.db.LONGTEXT, nullable = True )
@@ -40,6 +40,12 @@ class Role( API.db.Model, CrudModelMixin ):
         return RoleMemory( self )
 
 
-class RoleMemory( DbBaseMemory ):
-    __model_cls__   = Role
+API.dbtables.register( Role )
 
+
+class RoleMemory( DbBaseMemory ):
+    __model_cls__       = Role
+    __tablename__       = 'roles'
+
+
+API.memorytables.register( RoleMemory )

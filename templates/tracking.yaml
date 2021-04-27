@@ -65,10 +65,24 @@ objects:
         position:                   cell
         icon:                       restore
         function:                   self.restoreRecord( idx, row )
+#    ignore_templates: []
+#    injection:
+#        module.ts:
+#            # This is needed as dialog.component.ts/dialog.component.html
+#            # are predefined
+#            # This only works when the dialog is called from the mixin
+#            dialog:                 DialogTestPlanComponent
     mixin:
+        angular:
+            table.component:
+                class:              TrackingBaseComponent
+                file:               table.mixin.ts
         python:
             init:
                 filename:           backend/tracking/tracking.py
+            view:
+                class:              TrackingViewMixin
+                filename:           backend/tracking/mixin.py
     table:
         name:                       TRACKING
         tabs:

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:08 version 2.1.680 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -25,10 +25,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
 import { CustDataTableComponent } from 'src/app/gencrud/crud/cust.data.table.component';
 import { isNullOrUndefined } from 'util';
-import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { LanguagesRecord } from './model';
 import { DialogLanguagesComponent } from './dialog.component';
 import { LanguagesDataService } from './service';
+import { TableDefintion } from 'src/app/gencrud/crud/model';
 
 
 @Component({
@@ -139,8 +139,7 @@ export class LanguagesTableComponent
     constructor( dataService: LanguagesDataService
                , profileService: GcProfileService
                , protected dialog: MatDialog
-               , public router: Router
- )
+               , public router: Router )
     {
         this.definition.dataService = dataService;
 		this.definition.profileService = profileService;

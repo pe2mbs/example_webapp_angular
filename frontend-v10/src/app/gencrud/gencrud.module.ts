@@ -127,6 +127,7 @@ import { FrontendErrorDialogComponent } from './error-dialog/frontend-errordialo
 import { BackendErrorDialogComponent } from './error-dialog/backend-errordialog.component';
 import { ErrorDialogService } from './error-dialog/errordialog.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MessageDialogComponent } from './message-dialog/message.dialog.component';
 
 
 
@@ -163,7 +164,6 @@ const importExportModules = [
 	MatGridListModule,
 	MatRadioModule,
 	MatDatepickerModule,
-	// MatNativeDateModule,
 	MatMomentDateModule,
 	MatTooltipModule,
 	MatSlideToggleModule,
@@ -239,7 +239,8 @@ const defaultRoute: Route = {
 		...declareExportComponents,
 		ErrorDialogComponent,
 		FrontendErrorDialogComponent,
-		BackendErrorDialogComponent
+		BackendErrorDialogComponent,
+		MessageDialogComponent
     ],
     entryComponents: [
 		GcHelpDialogComponent,
@@ -248,7 +249,8 @@ const defaultRoute: Route = {
 		GcDeleteDialog,
 		ErrorDialogComponent,
 		FrontendErrorDialogComponent,
-		BackendErrorDialogComponent
+		BackendErrorDialogComponent,
+		MessageDialogComponent
     ],
     providers: [
 		GcHelpService,

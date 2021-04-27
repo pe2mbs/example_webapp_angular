@@ -15,12 +15,21 @@ class UserViewMixin():
         self.registerRoute( 'authenticate', self.getUserAuthenticate, methods = [ 'POST' ] )
         self.registerRoute( 'signup', self.getUserSignup, methods = [ 'POST' ] )
         self.registerRoute( 'logout', self.userLogout, methods = [ 'POST' ] )
+        self.registerRoute( 'pagesize', self.pageSize, methods = [ 'GET' ] )
         return
 
     def userLogout( self ):
         return "", 200
 
+    def pageSize( self ):
+        self.checkAuthentication()
+        username = flask_jwt_extended.get_jwt_identity()
+        userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
+        return jsonify( pageSize = userRecord.U_LISTITEMS,
+                        pageSizeOptions = [ 5, 10, 25, 100 ] )
+
     def restoreProfile( self, username ):
+        self.checkAuthentication()
         if username not in ( '', None, 'undefined' ):
             API.logger.info( "Restore profile for user: {}".format( username ) )
             userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
@@ -61,14 +70,16 @@ class UserViewMixin():
 
 
     def storeProfile( self ):
+        self.checkAuthentication()
         profileData = request.json
         username = flask_jwt_extended.get_jwt_identity()
-        API.logger.info( "Store profile for user: {}".format( username ) )
         if username not in ( '', None, 'undefined' ):
+            API.logger.info( "Store profile for user: {}".format( username ) )
             userRecord: User = API.db.session.query( User ).filter( User.U_NAME == username ).one()
-            data = { 'theme': profileData.get( 'theme', 'light-theme' ), 'objects': profileData.get( 'objects', { } ) }
+            data = { 'theme': profileData.get( 'theme', 'light-theme' ),
+                     'objects': profileData.get( 'objects', { } ) }
             userRecord.U_PROFILE = json.dumps( data )
-            API.logger.info( "STORE.PROFILE: {}".format( data ) )
+            API.logger.info( "STORE.PROFILE: {}".format( userRecord.U_PROFILE ) )
             API.db.session.commit()
 
         else:

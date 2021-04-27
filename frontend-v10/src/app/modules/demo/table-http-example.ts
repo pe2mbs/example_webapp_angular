@@ -5,35 +5,10 @@ import { TrackingRecord } from './model';
 import { MatDialog } from '@angular/material/dialog';
 import { GcCrudServiceBase } from 'src/app/gencrud/crud/crud.service.base';
 import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
-import { TableColumn2, TableButton } from 'src/app/gencrud/crud/model';
+import { TableDefintion } from 'src/app/gencrud/crud/model';
 
 
 
-export interface GcTableFilter
-{
-	id: string;
-	value: any;
-}
-
-export interface TableDefintion<T>
-{
-	name: string;
-	helpTopic?: string;
-	defaultSortField: string;
-	defaultSortDirection: string;
-	sortDisableClear: boolean;
-	dataService?: GcCrudServiceBase<T>;
-	resolveList?: any;
-	profileService?: GcProfileService;
-	toggleUpdate?: boolean;
-	self?: any;
-	core?: any;
-	rowDoubleClick: any;
-	dialog?: MatDialog;
-	columns: TableColumn2[];
-	headerButtons?: TableButton[];
-	footerButtons?: TableButton[];
-}
 
 
 /**

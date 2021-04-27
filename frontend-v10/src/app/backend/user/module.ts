@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:10 version 2.1.680 by user mbertens
 */
 import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';

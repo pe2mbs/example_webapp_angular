@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:08 version 2.1.680 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -43,6 +43,12 @@ class LanguageReference( API.db.Model, CrudModelMixin ):
         return LanguageReferenceMemory( self )
 
 
-class LanguageReferenceMemory( DbBaseMemory ):
-    __model_cls__   = LanguageReference
+API.dbtables.register( LanguageReference )
 
+
+class LanguageReferenceMemory( DbBaseMemory ):
+    __model_cls__       = LanguageReference
+    __tablename__       = 'language_reference'
+
+
+API.memorytables.register( LanguageReferenceMemory )

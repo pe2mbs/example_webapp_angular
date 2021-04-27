@@ -1,7 +1,8 @@
 from flask import Blueprint
 import webapp2.api as API
+from webapp2.common.exceptions import *
+
 API.coreApi = Blueprint( 'coreApi', __name__ )
-from backend.core.exceptions import *
 
 
 def handle_core_exception( exc ):

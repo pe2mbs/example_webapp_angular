@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:10 version 2.1.680 by user mbertens
 #
 import webapp2.api as API
 from webapp2.common.dbmem import DbBaseMemory
@@ -34,7 +34,7 @@ class User( API.db.Model, CrudModelMixin ):
     U_ID                 = API.db.Column( "u_id", API.db.Integer, autoincrement = True, primary_key = True )
     U_ACTIVE             = API.db.Column( "u_active", API.db.Boolean, default = False )
     U_NAME               = API.db.Column( "u_name", API.db.String( 30 ), nullable = False )
-    U_ROLE               = API.db.Column( "u_role", API.db.Integer, API.db.ForeignKey( "role.r_id" ) )
+    U_ROLE               = API.db.Column( "u_role", API.db.Integer, API.db.ForeignKey( "roles.r_id" ) )
     U_HASH_PASSWORD      = API.db.Column( "u_hash_password", API.db.String( 255 ), nullable = False )
     U_MUST_CHANGE        = API.db.Column( "u_must_change", API.db.Boolean, default = False )
     U_FIRST_NAME         = API.db.Column( "u_first_name", API.db.String( 50 ), nullable = False )
@@ -53,6 +53,12 @@ class User( API.db.Model, CrudModelMixin ):
         return UserMemory( self )
 
 
-class UserMemory( DbBaseMemory ):
-    __model_cls__   = User
+API.dbtables.register( User )
 
+
+class UserMemory( DbBaseMemory ):
+    __model_cls__       = User
+    __tablename__       = 'user'
+
+
+API.memorytables.register( UserMemory )

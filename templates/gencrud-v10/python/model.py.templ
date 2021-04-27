@@ -71,5 +71,12 @@ class ${obj.cls}( ${ modelClasses( obj ) } ):
         return ${obj.cls}Memory( self )
 
 
+API.dbtables.register( ${obj.cls} )
+
+
 class ${obj.cls}Memory( DbBaseMemory ):
-    __model_cls__   = ${obj.cls}
+    __model_cls__       = ${obj.cls}
+    __tablename__       = '${ obj.table.name }'
+
+
+API.memorytables.register( ${obj.cls}Memory )

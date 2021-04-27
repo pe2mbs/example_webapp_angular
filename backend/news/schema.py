@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-10 05:37:32 version 2.1.677 by user mbertens
+#   gencrud: 2021-04-04 08:26:09 version 2.1.680 by user mbertens
 #
 import webapp2.api as API
 from marshmallow import fields, pre_load, post_dump

@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:27:09 version 2.1.680 by user mbertens
 */
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -91,8 +91,8 @@ export class ScreenRoleAccessComponent extends GcScreenBase<RoleAccessRecord> im
         this.formGroup = new FormGroup( {
             RA_R_ID: new FormControl( this.row.RA_R_ID || 0,
                                               [ Validators.required,  ]  ),
-            RA_MODULE: new FormControl( this.row.RA_MODULE || '',
-                                              [ Validators.required, Validators.maxLength( 50 ),  ]  ),
+            RA_MA_ID: new FormControl( this.row.RA_MA_ID || 0,
+                                              [ Validators.required,  ]  ),
             RA_CREATE: new FormControl( this.row.RA_CREATE || false,
                                               [  ]  ),
             RA_READ: new FormControl( this.row.RA_READ || false,
@@ -115,7 +115,7 @@ export class ScreenRoleAccessComponent extends GcScreenBase<RoleAccessRecord> im
                                      ).subscribe( dataList => {
             this.roleList = dataList;
         } ) );
-        this.registerSubscription( this.mod_accessService.getSelectList( 'MA_MODULE'
+        this.registerSubscription( this.mod_accessService.getSelectList( 'MA_ID'
                                     , 'MA_DESCRIPTION'
                                      ).subscribe( dataList => {
             this.mod_accessList = dataList;
@@ -127,7 +127,7 @@ export class ScreenRoleAccessComponent extends GcScreenBase<RoleAccessRecord> im
 	{
 		this.formGroup.patchValue( {
             RA_R_ID: this.row.RA_R_ID,
-            RA_MODULE: this.row.RA_MODULE,
+            RA_MA_ID: this.row.RA_MA_ID,
             RA_CREATE: this.row.RA_CREATE,
             RA_READ: this.row.RA_READ,
             RA_UPDATE: this.row.RA_UPDATE,
@@ -147,9 +147,9 @@ export class ScreenRoleAccessComponent extends GcScreenBase<RoleAccessRecord> im
         return ( this.formGroup.get( 'RA_R_ID' ) );
     }
 
-    public get RA_MODULE()
+    public get RA_MA_ID()
     {
-        return ( this.formGroup.get( 'RA_MODULE' ) );
+        return ( this.formGroup.get( 'RA_MA_ID' ) );
     }
 
     public get RA_CREATE()

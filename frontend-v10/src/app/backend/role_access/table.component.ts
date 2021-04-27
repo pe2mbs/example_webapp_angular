@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:09 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:27:09 version 2.1.680 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -25,11 +25,11 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
 import { CustDataTableComponent } from 'src/app/gencrud/crud/cust.data.table.component';
 import { isNullOrUndefined } from 'util';
-import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { RoleAccessRecord } from './model';
 import { RoleAccessDataService } from './service';
 import { RoleDataService } from '../role/service';
 import { ModuleAccessDataService } from '../mod_access/service';
+import { TableDefintion } from 'src/app/gencrud/crud/model';
 
 
 @Component({
@@ -85,14 +85,14 @@ export class RoleAccessTableComponent
                 }
             },
             {
-                columnDef: 'RA_MODULE',
+                columnDef: 'RA_MA_ID',
 				header: "Module",
 				display: true,
 				width: "50%",
 				filter: false,
 				sort: false,
                 cell: (row: RoleAccessRecord) => {
-                    return ( row.RA_MODULE_FK.MA_DESCRIPTION );
+                    return ( row.RA_MA_ID_FK.MA_DESCRIPTION );
                 }
             },
             {
@@ -153,9 +153,7 @@ export class RoleAccessTableComponent
     constructor( dataService: RoleAccessDataService
                , profileService: GcProfileService
                , protected dialog: MatDialog
-               , public router: Router
-                 , public roleService: RoleDataService
-                 , public mod_accessService: ModuleAccessDataService )
+               , public router: Router )
     {
         this.definition.dataService = dataService;
 		this.definition.profileService = profileService;

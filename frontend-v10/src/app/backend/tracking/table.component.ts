@@ -17,7 +17,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:09 version 2.1.680 by user mbertens
 */
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -25,9 +25,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { GcProfileService } from 'src/app/gencrud/profile/profile.service';
 import { CustDataTableComponent } from 'src/app/gencrud/crud/cust.data.table.component';
 import { isNullOrUndefined } from 'util';
-import { TableDefintion } from 'src/app/modules/demo/table-http-example';
 import { TrackingRecord } from './model';
+import { TrackingBaseComponent } from './table.mixin';
 import { TrackingDataService } from './service';
+import { TableDefintion } from 'src/app/gencrud/crud/model';
 
 
 @Component({
@@ -42,7 +43,7 @@ import { TrackingDataService } from './service';
 </app-cust-data-table>`,
     styleUrls: [ '../../gencrud/common-mat-card.scss' ]
 })
-export class TrackingTableComponent
+export class TrackingTableComponent extends TrackingBaseComponent
 {
     @ViewChild( CustDataTableComponent, { static: true } )	tableComponent: CustDataTableComponent;
     @Input()	id: string;
@@ -121,10 +122,11 @@ export class TrackingTableComponent
 
     constructor( dataService: TrackingDataService
                , profileService: GcProfileService
-               , protected dialog: MatDialog
-               , public router: Router
+               , dialog: MatDialog
+               , router: Router
  )
     {
+        super( dataService, profileService, dialog, router );
         this.definition.dataService = dataService;
 		this.definition.profileService = profileService;
 		this.definition.dialog = dialog;

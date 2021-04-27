@@ -16,7 +16,7 @@
 #   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #   Boston, MA 02110-1301 USA
 #
-#   gencrud: 2021-03-07 09:03:10 version 2.1.668 by user mbertens
+#   gencrud: 2021-04-04 08:26:09 version 2.1.680 by user mbertens
 #
 from flask import Blueprint, request, jsonify
 import webapp2.api as API
@@ -24,6 +24,7 @@ from webapp2.common.crud import CrudInterface, RecordLock
 import traceback
 from backend.tracking.model import Tracking
 from backend.tracking.schema import TrackingSchema
+from backend.tracking.mixin import TrackingViewMixin
 
 
 trackingApi = Blueprint( 'trackingApi', __name__ )
@@ -61,7 +62,7 @@ class TrackingRecordLock( RecordLock ):
         return
 
 
-class TrackingCurdInterface( CrudInterface ):
+class TrackingCurdInterface( CrudInterface, TrackingViewMixin ):
     _model_cls = Tracking
     _lock_cls = TrackingRecordLock
     _schema_cls = TrackingSchema()
@@ -71,6 +72,7 @@ class TrackingCurdInterface( CrudInterface ):
 
     def __init__( self ):
         CrudInterface.__init__( self, trackingApi )
+        TrackingViewMixin.__init__( self )
         return
 
     def beforeUpdate( self, record ):
@@ -78,6 +80,8 @@ class TrackingCurdInterface( CrudInterface ):
             if field in record:
                 del record[ field ]
 
+        if hasattr( TrackingViewMixin, 'beforeUpdate' ):
+            record = TrackingViewMixin.beforeUpdate( self, record )
 
 
         return record

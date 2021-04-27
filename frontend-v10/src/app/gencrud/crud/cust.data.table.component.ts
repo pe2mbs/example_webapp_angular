@@ -6,11 +6,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { isNullOrUndefined } from 'util';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { TableDefintion } from '../../modules/demo/table-http-example';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GcFilterRecord } from './filter.record';
 import { GcCrudServiceBase } from './crud.service.base';
-import { GcCrudPageInfo } from './model';
+import { GcCrudPageInfo, TableDefintion } from './model';
 import { GcDeleteDialog } from '../dialog/delete.dialog';
 import { GcProfileService } from '../profile/profile.service';
 
